@@ -1,0 +1,13 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WebAppMVC.Models
+{
+    public class Admin
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int AdminId { get; set; }
+        
+    }
+}
