@@ -11,5 +11,8 @@ namespace WebAppMVC.Models
         [ForeignKey(nameof(Categorys))]
         public int FK_CategoryId { get; set; }
         public Category Categorys { get; set; }
+        [ForeignKey(nameof(Products))]
+        public int FK_ProductId { get; set; }
+        public Product Products { get; set; }
     }
 }
