@@ -8,9 +8,9 @@ namespace WebAppMVC.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CartId { get; set; }
-        [ForeignKey(nameof(Users))]
-        public int FK_UserId { get; set; }
-        public User Users { get; set; }
+        [ForeignKey(nameof(KoalaCustomers))]
+        public string FK_KoalaCustomerId { get; set; }
+        public KoalaCustomer KoalaCustomers { get; set; }
         public string SessionId { get; set; }
         public int Status { get; set; }
         public string FirstMidName { get; set; }

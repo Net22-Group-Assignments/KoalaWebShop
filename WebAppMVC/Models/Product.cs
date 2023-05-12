@@ -12,8 +12,8 @@ namespace WebAppMVC.Models
         [StringLength(40)]
         public string Title { get; set; }
         [Required]
-        public float Price { get; set; }
-        public float Discount { get; set; }
+        public decimal Price { get; set; }
+        public decimal Discount { get; set; }
         [Required]
         [StringLength(500)]
         public string Summary { get; set; }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAppMVC.Data;
 
@@ -11,9 +12,11 @@ using WebAppMVC.Data;
 namespace WebAppMVC.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230512080735_secondMigraton")]
+    partial class secondMigraton
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,9 +185,6 @@ namespace WebAppMVC.Data.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FK_KoalaCustomerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("FirstMidName")
                         .HasColumnType("nvarchar(max)");
 
@@ -204,8 +204,6 @@ namespace WebAppMVC.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CartId");
-
-                    b.HasIndex("FK_KoalaCustomerId");
 
                     b.ToTable("Carts");
                 });
@@ -282,10 +280,6 @@ namespace WebAppMVC.Data.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<string>("KoalaCustomerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("LastLogin")
                         .HasColumnType("datetime2");
 
@@ -361,9 +355,6 @@ namespace WebAppMVC.Data.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FK_KoalaCustomerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("FirstMidName")
                         .HasColumnType("nvarchar(max)");
 
@@ -386,8 +377,6 @@ namespace WebAppMVC.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderId");
-
-                    b.HasIndex("FK_KoalaCustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -539,15 +528,6 @@ namespace WebAppMVC.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebAppMVC.Models.Cart", b =>
-                {
-                    b.HasOne("WebAppMVC.Models.KoalaCustomer", "KoalaCustomers")
-                        .WithMany()
-                        .HasForeignKey("FK_KoalaCustomerId");
-
-                    b.Navigation("KoalaCustomers");
-                });
-
             modelBuilder.Entity("WebAppMVC.Models.CartProduct", b =>
                 {
                     b.HasOne("WebAppMVC.Models.Cart", "Carts")
@@ -565,15 +545,6 @@ namespace WebAppMVC.Data.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("WebAppMVC.Models.Order", b =>
-                {
-                    b.HasOne("WebAppMVC.Models.KoalaCustomer", "KoalaCustomers")
-                        .WithMany()
-                        .HasForeignKey("FK_KoalaCustomerId");
-
-                    b.Navigation("KoalaCustomers");
                 });
 
             modelBuilder.Entity("WebAppMVC.Models.ProductCategory", b =>

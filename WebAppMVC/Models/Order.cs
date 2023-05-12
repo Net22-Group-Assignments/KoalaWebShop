@@ -8,12 +8,12 @@ namespace WebAppMVC.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
-        [ForeignKey(nameof(Users))]
-        public int FK_UserId { get; set; }
-        public User Users { get; set; }
+        [ForeignKey(nameof(KoalaCustomers))]
+        public string FK_KoalaCustomerId { get; set; }
+        public KoalaCustomer KoalaCustomers { get; set; }
         public int Status { get; set; }
-        public float ItemDiscount { get; set; }
-        public float Totalamount { get; set; }
+        public decimal ItemDiscount { get; set; }
+        public decimal Totalamount { get; set; }
         public int NumberOfItems { get; set; }
         public string FirstMidName { get; set; }
         public string LastName { get; set; }
