@@ -8,7 +8,7 @@ namespace WebAppMVC.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string KoalaCustomerId { get; set; }
+        public int KoalaCustomerId { get; set; }
         [Required]
         [StringLength(40)]
         public string FirstMidName { get; set; }
