@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebAppMVC.Models;
+using WebAppMVC.Models.ViewModels;
 
 namespace WebAppMVC.Data
 {
@@ -20,6 +21,7 @@ namespace WebAppMVC.Data
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<KoalaCustomer> KoalaCustomers { get; set; }
+        public DbSet<WebAppMVC.Models.ViewModels.ProductViewModel> ProductViewModel { get; set; }
 
     }
 }

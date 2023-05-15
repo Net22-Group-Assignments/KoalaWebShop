@@ -19,10 +19,7 @@ namespace WebAppMVC.Models
         public DateTime RegisteredAt { get; set; }
         [Required]
         public DateTime LastLogin { get; set; }
-        //[StringLength(500)]
-        //public string Profile { get; set; }
-        //[ForeignKey(nameof(Admins))]
-        //public int FK_AdminId { get; set; }
-        //public Admin Admins { get; set; }
+        [ForeignKey("Orders")]
+        ICollection<Order> Orders { get; set; }
     }
 }
