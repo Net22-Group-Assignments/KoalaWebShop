@@ -282,9 +282,11 @@ namespace WebAppMVC.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<string>("KoalaCustomerId")
+                    b.Property<int>("KoalaCustomerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KoalaCustomerId"));
 
                     b.Property<DateTime>("LastLogin")
                         .HasColumnType("datetime2");
