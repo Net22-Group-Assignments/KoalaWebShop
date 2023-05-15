@@ -8,7 +8,7 @@ namespace WebAppMVC.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int KoalaCustomerId { get; set; }
+        public string KoalaCustomerId { get; set; }
         [Required]
         [StringLength(40)]
         public string FirstMidName { get; set; }
@@ -19,7 +19,5 @@ namespace WebAppMVC.Models
         public DateTime RegisteredAt { get; set; }
         [Required]
         public DateTime LastLogin { get; set; }
-        [ForeignKey("Orders")]
-        ICollection<Order> Orders { get; set; }
     }
 }

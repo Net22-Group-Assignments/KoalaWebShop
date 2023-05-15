@@ -9,9 +9,9 @@ namespace WebAppMVC.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CartId { get; set; }
         [ForeignKey(nameof(KoalaCustomers))]
-        public int FK_KoalaCustomerId { get; set; }
+        public string FK_KoalaCustomerId { get; set; }
         public KoalaCustomer KoalaCustomers { get; set; }
-        public int SessionId { get; set; }
+        public string SessionId { get; set; }
         public int Status { get; set; }
         public string FirstMidName { get; set; }
         public string LastName { get; set; }
@@ -22,6 +22,5 @@ namespace WebAppMVC.Models
         public string Country { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Content { get; set; }
-        ICollection<Product>Products { get; set; }
     }
 }
