@@ -54,7 +54,7 @@ namespace WebAppMVC.Controllers
         }
 
         // Get all products matching search
-        public async Task<IActionResult> GetAllProducts(string searchString)
+        public async Task<IActionResult> GetAllProductsBySearch(string searchString)
         {
             List<ProductViewModel> list = new List<ProductViewModel>();
 
