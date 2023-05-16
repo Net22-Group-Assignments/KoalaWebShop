@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAppMVC.Models
 {
-    public class KoalaCustomer : IdentityUser
+    public class KoalaCustomer : IdentityUser<int>
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string KoalaCustomerId { get; set; }
+        // [Key]
+        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        // public string KoalaCustomerId { get; set; }
         [Required]
         [StringLength(40)]
         public string FirstMidName { get; set; }
