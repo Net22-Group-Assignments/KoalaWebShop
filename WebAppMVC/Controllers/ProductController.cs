@@ -10,11 +10,11 @@ using WebAppMVC.Models.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
-    public class ProductViewModelsController : Controller
+    public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductViewModelsController(ApplicationDbContext context)
+        public ProductController(ApplicationDbContext context)
         {
             _context = context;
         }
