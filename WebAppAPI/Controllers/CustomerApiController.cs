@@ -2,7 +2,7 @@
 
 namespace WebAppAPI.Controllers
 {
-    public class UserApiController : Controller
+    public class CustomerApiController : Controller
     {
         public IActionResult Index()
         {

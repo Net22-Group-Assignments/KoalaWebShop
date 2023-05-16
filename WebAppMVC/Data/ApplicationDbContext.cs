@@ -20,96 +20,96 @@ namespace WebAppMVC.Data
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<KoalaCustomer> KoalaCustomers { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
             
-            modelBuilder.Entity<KoalaCustomer>().HasData(
+        //    modelBuilder.Entity<KoalaCustomer>().HasData(
                 
-                new KoalaCustomer
-                {
-                    KoalaCustomerId = "1",
-                    FirstMidName = "Jon",
-                    LastName = "Westman",
-                    RegisteredAt= DateTime.Now,
-                    LastLogin= DateTime.Today,
+        //        new KoalaCustomer
+        //        {
+        //            Id = "1",
+        //            FirstMidName = "Jon",
+        //            LastName = "Westman",
+        //            RegisteredAt= DateTime.Now,
+        //            LastLogin= DateTime.Today,
 
-                },
-                new KoalaCustomer
-                {
+        //        },
+        //        new KoalaCustomer
+        //        {
                     
-                    KoalaCustomerId = "2",
-                    FirstMidName = "Björn",
-                    LastName = "Agnemo",
-                    RegisteredAt = DateTime.Now,
-                    LastLogin = DateTime.Today,
+        //            Id = "2",
+        //            FirstMidName = "Björn",
+        //            LastName = "Agnemo",
+        //            RegisteredAt = DateTime.Now,
+        //            LastLogin = DateTime.Today,
 
-                }, 
-                new KoalaCustomer
-                {
-                    KoalaCustomerId = "3",
-                    FirstMidName = "Oskar",
-                    LastName = "Åhling",
-                    RegisteredAt = DateTime.Now,
-                    LastLogin = DateTime.Today,
-                },
-                new KoalaCustomer
-                {
-                    KoalaCustomerId = "4",
-                    FirstMidName = "Reidar",
-                    LastName = "Nilsen",
-                    RegisteredAt = DateTime.Now,
-                    LastLogin = DateTime.Today,
+        //        }, 
+        //        new KoalaCustomer
+        //        {
+        //            KoalaCustomerId = "3",
+        //            FirstMidName = "Oskar",
+        //            LastName = "Åhling",
+        //            RegisteredAt = DateTime.Now,
+        //            LastLogin = DateTime.Today,
+        //        },
+        //        new KoalaCustomer
+        //        {
+        //            KoalaCustomerId = "4",
+        //            FirstMidName = "Reidar",
+        //            LastName = "Nilsen",
+        //            RegisteredAt = DateTime.Now,
+        //            LastLogin = DateTime.Today,
 
-                }, 
-                new KoalaCustomer
-                {
-                    KoalaCustomerId = "5",
-                    FirstMidName = "Ina",
-                    LastName = "Nilsson",
-                    RegisteredAt = DateTime.Now,
-                    LastLogin = DateTime.Today,
-                }, 
-                new KoalaCustomer
-                {
-                    KoalaCustomerId = "6",
-                    FirstMidName = "Martin",
-                    LastName = "Petersson",
-                    RegisteredAt = DateTime.Now,
-                    LastLogin = DateTime.Today,
-                }, 
-                new KoalaCustomer
-                {
-                    KoalaCustomerId = "7",
-                    FirstMidName = "Steve",
-                    LastName = "Carell",
-                    RegisteredAt = DateTime.Now,
-                    LastLogin = DateTime.Today,
-                },
-                new KoalaCustomer
-                {
-                    KoalaCustomerId = "8",
-                    FirstMidName = "Grogu",
-                    LastName = "Mandalorian",
-                    RegisteredAt = DateTime.Now,
-                    LastLogin = DateTime.Today,
-                },
-                 new KoalaCustomer
-                 {
-                     KoalaCustomerId = "9",
-                     FirstMidName = "Lotta",
-                     LastName = "Svensson",
-                     RegisteredAt = DateTime.Now,
-                     LastLogin = DateTime.Today,
-                 }, 
-                 new KoalaCustomer
-                 {
-                     KoalaCustomerId = "10",
-                     FirstMidName = "Emilia",
-                     LastName = "Ristersson",
-                     RegisteredAt = DateTime.Now,
-                     LastLogin = DateTime.Today,
-                 });
-        }
+        //        }, 
+        //        new KoalaCustomer
+        //        {
+        //            KoalaCustomerId = "5",
+        //            FirstMidName = "Ina",
+        //            LastName = "Nilsson",
+        //            RegisteredAt = DateTime.Now,
+        //            LastLogin = DateTime.Today,
+        //        }, 
+        //        new KoalaCustomer
+        //        {
+        //            KoalaCustomerId = "6",
+        //            FirstMidName = "Martin",
+        //            LastName = "Petersson",
+        //            RegisteredAt = DateTime.Now,
+        //            LastLogin = DateTime.Today,
+        //        }, 
+        //        new KoalaCustomer
+        //        {
+        //            KoalaCustomerId = "7",
+        //            FirstMidName = "Steve",
+        //            LastName = "Carell",
+        //            RegisteredAt = DateTime.Now,
+        //            LastLogin = DateTime.Today,
+        //        },
+        //        new KoalaCustomer
+        //        {
+        //            KoalaCustomerId = "8",
+        //            FirstMidName = "Grogu",
+        //            LastName = "Mandalorian",
+        //            RegisteredAt = DateTime.Now,
+        //            LastLogin = DateTime.Today,
+        //        },
+        //         new KoalaCustomer
+        //         {
+        //             KoalaCustomerId = "9",
+        //             FirstMidName = "Lotta",
+        //             LastName = "Svensson",
+        //             RegisteredAt = DateTime.Now,
+        //             LastLogin = DateTime.Today,
+        //         }, 
+        //         new KoalaCustomer
+        //         {
+        //             KoalaCustomerId = "10",
+        //             FirstMidName = "Emilia",
+        //             LastName = "Ristersson",
+        //             RegisteredAt = DateTime.Now,
+        //             LastLogin = DateTime.Today,
+        //         });
+        //}
 
     }
 
