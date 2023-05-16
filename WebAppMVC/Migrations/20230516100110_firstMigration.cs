@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace WebAppMVC.Migrations
 {
     /// <inheritdoc />
@@ -15,7 +17,8 @@ namespace WebAppMVC.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -29,8 +32,8 @@ namespace WebAppMVC.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    KoalaCustomerId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FirstMidName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     RegisteredAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -90,30 +93,12 @@ namespace WebAppMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductViewModel",
-                columns: table => new
-                {
-                    ProductViewModelId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductViewModel", x => x.ProductViewModelId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -134,7 +119,7 @@ namespace WebAppMVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -156,7 +141,7 @@ namespace WebAppMVC.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -173,8 +158,8 @@ namespace WebAppMVC.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -197,7 +182,7 @@ namespace WebAppMVC.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -219,7 +204,7 @@ namespace WebAppMVC.Migrations
                 {
                     CartId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_KoalaCustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    FK_KoalaCustomerId = table.Column<int>(type: "int", nullable: false),
                     SessionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     FirstMidName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -239,7 +224,8 @@ namespace WebAppMVC.Migrations
                         name: "FK_Carts_AspNetUsers_FK_KoalaCustomerId",
                         column: x => x.FK_KoalaCustomerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,7 +234,7 @@ namespace WebAppMVC.Migrations
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_KoalaCustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    FK_KoalaCustomerId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ItemDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Totalamount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -267,7 +253,8 @@ namespace WebAppMVC.Migrations
                         name: "FK_Orders_AspNetUsers_FK_KoalaCustomerId",
                         column: x => x.FK_KoalaCustomerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -344,6 +331,15 @@ namespace WebAppMVC.Migrations
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstMidName", "LastLogin", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegisteredAt", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { 3, 0, "b5cc80f0-aa1a-4ea6-bf64-cf6a80be299b", "jon.westman@mail.com", true, "Jon", new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local), "Westman", true, null, "JON.WESTMAN@MAIL.COM", "JON.WESTMAN@MAIL.COM", "AQAAAAIAAYagAAAAEOU7bhbnONZ9+bQcXYFSdQXq/K6Y8imoTaioToGDPMglmWrWLQtrRIzenDtEBxZGFQ==", null, false, new DateTime(2023, 5, 16, 12, 1, 10, 354, DateTimeKind.Local).AddTicks(2649), "SM733C7EK5SMBKPKXJBAAKBQYFFJCNIBNLB22YQ5OHXPJQFEUKQA", false, "jon.westman@mail.com" },
+                    { 4, 0, "3395e199-fb03-49ca-820e-68931ba4a706", "bjorn.agnemo@mail.com", true, "Björn", new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local), "Agnemo", true, null, "BJORN.AGNEMO@MAIL.COM", "BJORN.AGNEMO@MAIL.COM", "AQAAAAIAAYagAAAAEOU7bhbnONZ9+bQcXYFSdQXq/K6Y8imoTaioToGDPMglmWrWLQtrRIzenDtEBxZGFQ==", null, false, new DateTime(2023, 5, 16, 12, 1, 10, 354, DateTimeKind.Local).AddTicks(2744), "35XEIAGMU226SHUQ3IO3HDBWMXLXMYAOHULI77P3KXPHI52MDVRQ", false, "bjorn.agnemo@mail.com" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -450,9 +446,6 @@ namespace WebAppMVC.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductReviews");
-
-            migrationBuilder.DropTable(
-                name: "ProductViewModel");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

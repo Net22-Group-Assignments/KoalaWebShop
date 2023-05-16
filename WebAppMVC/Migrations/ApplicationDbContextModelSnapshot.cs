@@ -22,10 +22,13 @@ namespace WebAppMVC.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -49,7 +52,7 @@ namespace WebAppMVC.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,9 +66,8 @@ namespace WebAppMVC.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -74,7 +76,7 @@ namespace WebAppMVC.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,9 +90,8 @@ namespace WebAppMVC.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -99,7 +100,7 @@ namespace WebAppMVC.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
@@ -112,9 +113,8 @@ namespace WebAppMVC.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -123,13 +123,13 @@ namespace WebAppMVC.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -138,10 +138,10 @@ namespace WebAppMVC.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
@@ -182,8 +182,8 @@ namespace WebAppMVC.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FK_KoalaCustomerId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("FK_KoalaCustomerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstMidName")
                         .HasColumnType("nvarchar(max)");
@@ -260,8 +260,11 @@ namespace WebAppMVC.Migrations
 
             modelBuilder.Entity("WebAppMVC.Models.KoalaCustomer", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -281,10 +284,6 @@ namespace WebAppMVC.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("KoalaCustomerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastLogin")
                         .HasColumnType("datetime2");
@@ -341,6 +340,48 @@ namespace WebAppMVC.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b5cc80f0-aa1a-4ea6-bf64-cf6a80be299b",
+                            Email = "jon.westman@mail.com",
+                            EmailConfirmed = true,
+                            FirstMidName = "Jon",
+                            LastLogin = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            LastName = "Westman",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "JON.WESTMAN@MAIL.COM",
+                            NormalizedUserName = "JON.WESTMAN@MAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOU7bhbnONZ9+bQcXYFSdQXq/K6Y8imoTaioToGDPMglmWrWLQtrRIzenDtEBxZGFQ==",
+                            PhoneNumberConfirmed = false,
+                            RegisteredAt = new DateTime(2023, 5, 16, 12, 1, 10, 354, DateTimeKind.Local).AddTicks(2649),
+                            SecurityStamp = "SM733C7EK5SMBKPKXJBAAKBQYFFJCNIBNLB22YQ5OHXPJQFEUKQA",
+                            TwoFactorEnabled = false,
+                            UserName = "jon.westman@mail.com"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3395e199-fb03-49ca-820e-68931ba4a706",
+                            Email = "bjorn.agnemo@mail.com",
+                            EmailConfirmed = true,
+                            FirstMidName = "Björn",
+                            LastLogin = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            LastName = "Agnemo",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "BJORN.AGNEMO@MAIL.COM",
+                            NormalizedUserName = "BJORN.AGNEMO@MAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOU7bhbnONZ9+bQcXYFSdQXq/K6Y8imoTaioToGDPMglmWrWLQtrRIzenDtEBxZGFQ==",
+                            PhoneNumberConfirmed = false,
+                            RegisteredAt = new DateTime(2023, 5, 16, 12, 1, 10, 354, DateTimeKind.Local).AddTicks(2744),
+                            SecurityStamp = "35XEIAGMU226SHUQ3IO3HDBWMXLXMYAOHULI77P3KXPHI52MDVRQ",
+                            TwoFactorEnabled = false,
+                            UserName = "bjorn.agnemo@mail.com"
+                        });
                 });
 
             modelBuilder.Entity("WebAppMVC.Models.Order", b =>
@@ -361,8 +402,8 @@ namespace WebAppMVC.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FK_KoalaCustomerId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("FK_KoalaCustomerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstMidName")
                         .HasColumnType("nvarchar(max)");
@@ -488,47 +529,16 @@ namespace WebAppMVC.Migrations
                     b.ToTable("ProductReviews");
                 });
 
-            modelBuilder.Entity("WebAppMVC.Models.ViewModels.ProductViewModel", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.Property<int>("ProductViewModelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductViewModelId"));
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ProductViewModelId");
-
-                    b.ToTable("ProductViewModel");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("WebAppMVC.Models.KoalaCustomer", null)
                         .WithMany()
@@ -537,7 +547,7 @@ namespace WebAppMVC.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.HasOne("WebAppMVC.Models.KoalaCustomer", null)
                         .WithMany()
@@ -546,9 +556,9 @@ namespace WebAppMVC.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -561,7 +571,7 @@ namespace WebAppMVC.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.HasOne("WebAppMVC.Models.KoalaCustomer", null)
                         .WithMany()
@@ -574,7 +584,9 @@ namespace WebAppMVC.Migrations
                 {
                     b.HasOne("WebAppMVC.Models.KoalaCustomer", "KoalaCustomers")
                         .WithMany()
-                        .HasForeignKey("FK_KoalaCustomerId");
+                        .HasForeignKey("FK_KoalaCustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("KoalaCustomers");
                 });
@@ -602,7 +614,9 @@ namespace WebAppMVC.Migrations
                 {
                     b.HasOne("WebAppMVC.Models.KoalaCustomer", "KoalaCustomers")
                         .WithMany()
-                        .HasForeignKey("FK_KoalaCustomerId");
+                        .HasForeignKey("FK_KoalaCustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("KoalaCustomers");
                 });
