@@ -21,7 +21,6 @@ namespace WebAppMVC.Data
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<KoalaCustomer> KoalaCustomers { get; set; }
-        public DbSet<ProductViewModel> ProductViewModel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
