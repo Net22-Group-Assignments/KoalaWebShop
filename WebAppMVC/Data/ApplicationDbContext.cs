@@ -12,7 +12,6 @@ namespace WebAppMVC.Data
         {
         }
         
-        //public DbSet<Admin> Admins { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartProduct> CartProducts { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -21,7 +20,7 @@ namespace WebAppMVC.Data
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<KoalaCustomer> KoalaCustomers { get; set; }
-        public DbSet<WebAppMVC.Models.ViewModels.ProductViewModel> ProductViewModel { get; set; }
+        public DbSet<ProductViewModel> ProductViewModel { get; set; }
 
     }
 }
