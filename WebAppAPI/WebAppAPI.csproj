@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\DTO\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WebAppMVC\WebAppMVC.csproj" />
   </ItemGroup>
 

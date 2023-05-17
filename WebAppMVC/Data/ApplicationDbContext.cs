@@ -11,8 +11,6 @@ namespace WebAppMVC.Data
             : base(options)
         {
         }
-
-        //public DbSet<Admin> Admins { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartProduct> CartProducts { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -27,94 +25,18 @@ namespace WebAppMVC.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<KoalaCustomer>().HasData(
-            
+
                 DataGenerators.NewCustomer(email: "jon.westman@mail.com", firstMidName: "Jon", lastName: "Westman"),
-                DataGenerators.NewCustomer(email: "bjorn.agnemo@mail.com", firstMidName: "Björn", lastName: "Agnemo")
+                DataGenerators.NewCustomer(email: "bjorn.agnemo@mail.com", firstMidName: "Björn", lastName: "Agnemo"),
+                DataGenerators.NewCustomer(email: "Oskar.Ahling@mail.com", firstMidName: "Oskar", lastName: "Åhling"),
+                DataGenerators.NewCustomer(email: "Reidar.Nilsen@mail.com", firstMidName: "Reidar", lastName: "Nilsen"),
+                DataGenerators.NewCustomer(email: "Ina.Nilsson@mail.com", firstMidName: "Ina", lastName: "Nilsson"),
+                DataGenerators.NewCustomer(email: "Martin.Petersson@mail.com", firstMidName: "Martin", lastName: "Petersson"),
+                DataGenerators.NewCustomer(email: "Steve.Carell@mail.com", firstMidName: "Steve", lastName: "Carell"),
+                DataGenerators.NewCustomer(email: "Grogu.Mandelorian@mail.com", firstMidName: "Grogu", lastName: "Mandelorian"),
+                DataGenerators.NewCustomer(email: "Lotta.Svensson@mail.com", firstMidName: "Lotta", lastName: "Svensson"),
+                DataGenerators.NewCustomer(email: "Emilia.Ristersson@mail.com", firstMidName: "Emilia", lastName: "Ristersson")
             );
-            // new KoalaCustomer
-            // {
-            //     Id = 1,
-            //     FirstMidName = "Jon",
-            //     LastName = "Westman",
-            //     RegisteredAt = DateTime.Now,
-            //     LastLogin = DateTime.Today,
-            //
-            // });
-            // new KoalaCustomer
-            // {
-            //     
-            //     Id = 2,
-            //     FirstMidName = "Björn",
-            //     LastName = "Agnemo",
-            //     RegisteredAt = DateTime.Now,
-            //     LastLogin = DateTime.Today,
-            //
-            // }, 
-            // new KoalaCustomer
-            // {
-            //     KoalaCustomerId = "3",
-            //     FirstMidName = "Oskar",
-            //     LastName = "Åhling",
-            //     RegisteredAt = DateTime.Now,
-            //     LastLogin = DateTime.Today,
-            // },
-            // new KoalaCustomer
-            // {
-            //     KoalaCustomerId = "4",
-            //     FirstMidName = "Reidar",
-            //     LastName = "Nilsen",
-            //     RegisteredAt = DateTime.Now,
-            //     LastLogin = DateTime.Today,
-            //
-            // }, 
-            // new KoalaCustomer
-            // {
-            //     KoalaCustomerId = "5",
-            //     FirstMidName = "Ina",
-            //     LastName = "Nilsson",
-            //     RegisteredAt = DateTime.Now,
-            //     LastLogin = DateTime.Today,
-            // }, 
-            // new KoalaCustomer
-            // {
-            //     KoalaCustomerId = "6",
-            //     FirstMidName = "Martin",
-            //     LastName = "Petersson",
-            //     RegisteredAt = DateTime.Now,
-            //     LastLogin = DateTime.Today,
-            // }, 
-            // new KoalaCustomer
-            // {
-            //     KoalaCustomerId = "7",
-            //     FirstMidName = "Steve",
-            //     LastName = "Carell",
-            //     RegisteredAt = DateTime.Now,
-            //     LastLogin = DateTime.Today,
-            // },
-            // new KoalaCustomer
-            // {
-            //     KoalaCustomerId = "8",
-            //     FirstMidName = "Grogu",
-            //     LastName = "Mandalorian",
-            //     RegisteredAt = DateTime.Now,
-            //     LastLogin = DateTime.Today,
-            // },
-            //  new KoalaCustomer
-            //  {
-            //      KoalaCustomerId = "9",
-            //      FirstMidName = "Lotta",
-            //      LastName = "Svensson",
-            //      RegisteredAt = DateTime.Now,
-            //      LastLogin = DateTime.Today,
-            //  }, 
-            //  new KoalaCustomer
-            //  {
-            //      KoalaCustomerId = "10",
-            //      FirstMidName = "Emilia",
-            //      LastName = "Ristersson",
-            //      RegisteredAt = DateTime.Now,
-            //      LastLogin = DateTime.Today,
-            //  });
         }
     }
 }
