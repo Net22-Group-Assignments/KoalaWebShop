@@ -37,6 +37,14 @@ namespace WebAppMVC.Data
                 DataGenerators.NewCustomer(email: "Lotta.Svensson@mail.com", firstMidName: "Lotta", lastName: "Svensson"),
                 DataGenerators.NewCustomer(email: "Emilia.Ristersson@mail.com", firstMidName: "Emilia", lastName: "Ristersson")
             );
+            modelBuilder.Entity<Product>().HasData(
+                DataGenerators.NewProduct(title: "Jacket", price: 599, discount: 0, summary:"599", quantity: 1),
+                DataGenerators.NewProduct(title: "Pants", price: 499, discount: 50, summary: "449", quantity: 1),
+                DataGenerators.NewProduct(title: "HockeyStick", price: 1299, discount: 400, summary: "899", quantity: 1)
+                );
+            modelBuilder.Entity<ProductReview>().HasData(
+                DataGenerators.NewProductReview(fk_productid: 5, parentId: 4, title: "HockeyClub", rating: 9,Content: "I have used this for 10 years and still going strong 9/10")
+                );
         }
     }
 }
