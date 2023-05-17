@@ -14,6 +14,11 @@ namespace WebAppAPI.Repository
             _db = db;
             this.dbset = _db.Set<T>();
         }
+        public async Task CreateAsync(T entity)
+        {
+            await dbset.AddAsync(entity);
+            await SaveAsync();
+        }
 
         public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter = null)
         {

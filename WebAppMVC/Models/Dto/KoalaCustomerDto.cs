@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAppMVC.Models.KoalaDtoFolder
+namespace WebAppMVC.Models.Dto
 {
     public class KoalaCustomerDto
     {
