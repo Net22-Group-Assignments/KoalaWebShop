@@ -23,20 +23,20 @@ namespace WebAppMVC.Controllers
         //    return View(response);
         //}
 
-        //public async Task<IActionResult> Index()
-        //{
-        //    List<CurrencyViewModel> currencyList = new List<CurrencyViewModel>();
-        //    using (var httpClient = new HttpClient())
-        //    {
-        //        var response = await httpClient.GetAsync("https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK");
-        //        var request = response.Headers.Add("apikey", "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo");
-        //        using (request)
-        //        {
-        //            string apiResponse = await request.Content.ReadAsStringAsync();
-        //            currencyList = JsonConvert.DeserializeObject<List<CurrencyViewModel>>(apiResponse);
-        //        }
-        //    }
-        //        return View(currencyList);
-        //}
+        public async Task<IActionResult> Index()
+        {
+            List<CurrencyViewModel> currencyList = new List<CurrencyViewModel>();
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync("https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK");
+                var request = response.Headers.Add("apikey", "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo");
+                using (request)
+                {
+                    string apiResponse = await request.Content.ReadAsStringAsync();
+                    currencyList = JsonConvert.DeserializeObject<List<CurrencyViewModel>>(apiResponse);
+                }
+            }
+            return View(currencyList);
+        }
     }
 }
