@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebAppMVC.Models
+namespace WebAppAPI.Models.KoalaCustomerDto
 {
-    public class KoalaCustomer : IdentityUser
+    public class KoalaCustomerApiDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string KoalaCustomerId { get; set; }
         [Required]
         [StringLength(40)]
         public string FirstMidName { get; set; }
@@ -19,6 +15,5 @@ namespace WebAppMVC.Models
         public DateTime RegisteredAt { get; set; }
         [Required]
         public DateTime LastLogin { get; set; }
-
     }
 }

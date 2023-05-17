@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAppMVC.Data;
 
@@ -11,9 +12,11 @@ using WebAppMVC.Data;
 namespace WebAppMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230516204419_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -344,9 +347,9 @@ namespace WebAppMVC.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 3,
+                            Id = 11,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b5cc80f0-aa1a-4ea6-bf64-cf6a80be299b",
+                            ConcurrencyStamp = "d5235a4c-76de-4116-b96d-832a5ae0e43d",
                             Email = "jon.westman@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Jon",
@@ -355,18 +358,18 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "JON.WESTMAN@MAIL.COM",
                             NormalizedUserName = "JON.WESTMAN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOU7bhbnONZ9+bQcXYFSdQXq/K6Y8imoTaioToGDPMglmWrWLQtrRIzenDtEBxZGFQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDyBfyIwQfQLwPgoQ68v7EH1nCheUBVlb85wa50JQygVy061TmdSa3Qfhck3MWfQUQ==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 12, 1, 10, 354, DateTimeKind.Local).AddTicks(2649),
-                            SecurityStamp = "SM733C7EK5SMBKPKXJBAAKBQYFFJCNIBNLB22YQ5OHXPJQFEUKQA",
+                            RegisteredAt = new DateTime(2023, 5, 16, 22, 44, 18, 791, DateTimeKind.Local).AddTicks(9634),
+                            SecurityStamp = "HL6ILB3DGTLX6CWG5FYGORM5HUJ4LZ4GYE6AF354NG54PC6OJFHA",
                             TwoFactorEnabled = false,
                             UserName = "jon.westman@mail.com"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 12,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3395e199-fb03-49ca-820e-68931ba4a706",
+                            ConcurrencyStamp = "8f593cac-f367-4c99-a4c0-593235d5882a",
                             Email = "bjorn.agnemo@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Björn",
@@ -375,10 +378,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "BJORN.AGNEMO@MAIL.COM",
                             NormalizedUserName = "BJORN.AGNEMO@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOU7bhbnONZ9+bQcXYFSdQXq/K6Y8imoTaioToGDPMglmWrWLQtrRIzenDtEBxZGFQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDyBfyIwQfQLwPgoQ68v7EH1nCheUBVlb85wa50JQygVy061TmdSa3Qfhck3MWfQUQ==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 12, 1, 10, 354, DateTimeKind.Local).AddTicks(2744),
-                            SecurityStamp = "35XEIAGMU226SHUQ3IO3HDBWMXLXMYAOHULI77P3KXPHI52MDVRQ",
+                            RegisteredAt = new DateTime(2023, 5, 16, 22, 44, 18, 791, DateTimeKind.Local).AddTicks(9693),
+                            SecurityStamp = "FJNAYIRVEBW754UEHYOM4PWKOSRZPGCR74S4XOGP3IXVX5D3CVWQ",
                             TwoFactorEnabled = false,
                             UserName = "bjorn.agnemo@mail.com"
                         },

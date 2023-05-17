@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAppMVC.Data;
 
@@ -11,9 +12,11 @@ using WebAppMVC.Data;
 namespace WebAppMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230516093553_MergeFromBjörnChanges")]
+    partial class MergeFromBjörnChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -346,7 +349,7 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b5cc80f0-aa1a-4ea6-bf64-cf6a80be299b",
+                            ConcurrencyStamp = "47171075-2d8e-43ac-8d03-bf94a0d4ac2b",
                             Email = "jon.westman@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Jon",
@@ -355,10 +358,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "JON.WESTMAN@MAIL.COM",
                             NormalizedUserName = "JON.WESTMAN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOU7bhbnONZ9+bQcXYFSdQXq/K6Y8imoTaioToGDPMglmWrWLQtrRIzenDtEBxZGFQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK/UHEmz3TwOdGrPRQ96MQ7/nSwAp+2MFMtiBwCJQ6EdI8k037rtW8PFL8vOSFdfXA==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 12, 1, 10, 354, DateTimeKind.Local).AddTicks(2649),
-                            SecurityStamp = "SM733C7EK5SMBKPKXJBAAKBQYFFJCNIBNLB22YQ5OHXPJQFEUKQA",
+                            RegisteredAt = new DateTime(2023, 5, 16, 11, 35, 53, 553, DateTimeKind.Local).AddTicks(7454),
+                            SecurityStamp = "7YBEG6N75RUNAWOXV54JKAXZFZQY4B6VXBNERGCEQKKQTW6HUHFA",
                             TwoFactorEnabled = false,
                             UserName = "jon.westman@mail.com"
                         },
@@ -366,7 +369,7 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 4,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3395e199-fb03-49ca-820e-68931ba4a706",
+                            ConcurrencyStamp = "2e7fcc50-82de-4cc1-be72-ec0653fba86c",
                             Email = "bjorn.agnemo@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Björn",
@@ -375,172 +378,12 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "BJORN.AGNEMO@MAIL.COM",
                             NormalizedUserName = "BJORN.AGNEMO@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOU7bhbnONZ9+bQcXYFSdQXq/K6Y8imoTaioToGDPMglmWrWLQtrRIzenDtEBxZGFQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK/UHEmz3TwOdGrPRQ96MQ7/nSwAp+2MFMtiBwCJQ6EdI8k037rtW8PFL8vOSFdfXA==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 12, 1, 10, 354, DateTimeKind.Local).AddTicks(2744),
-                            SecurityStamp = "35XEIAGMU226SHUQ3IO3HDBWMXLXMYAOHULI77P3KXPHI52MDVRQ",
+                            RegisteredAt = new DateTime(2023, 5, 16, 11, 35, 53, 553, DateTimeKind.Local).AddTicks(7510),
+                            SecurityStamp = "HK5CPMWGT7AWBIO3VTTLMRP6BHYR2VIVND2YYZJZXJE6DE77TLBQ",
                             TwoFactorEnabled = false,
                             UserName = "bjorn.agnemo@mail.com"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "aa8bf9f4-7a9b-42b6-881c-8681f9808d77",
-                            Email = "Oskar.Ahling@mail.com",
-                            EmailConfirmed = true,
-                            FirstMidName = "Oskar",
-                            LastLogin = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastName = "Åhling",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "OSKAR.AHLING@MAIL.COM",
-                            NormalizedUserName = "OSKAR.AHLING@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDyBfyIwQfQLwPgoQ68v7EH1nCheUBVlb85wa50JQygVy061TmdSa3Qfhck3MWfQUQ==",
-                            PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 22, 44, 18, 791, DateTimeKind.Local).AddTicks(9702),
-                            SecurityStamp = "YH3AXUDGP2CGMA6LRCVCMP3BSPCK74FRTXCT4WRYTIF7D5NRVYUQ",
-                            TwoFactorEnabled = false,
-                            UserName = "Oskar.Ahling@mail.com"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "e1abd513-2a1c-42b5-b41b-d287c2d1984b",
-                            Email = "Reidar.Nilsen@mail.com",
-                            EmailConfirmed = true,
-                            FirstMidName = "Reidar",
-                            LastLogin = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastName = "Nilsen",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "REIDAR.NILSEN@MAIL.COM",
-                            NormalizedUserName = "REIDAR.NILSEN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDyBfyIwQfQLwPgoQ68v7EH1nCheUBVlb85wa50JQygVy061TmdSa3Qfhck3MWfQUQ==",
-                            PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 22, 44, 18, 791, DateTimeKind.Local).AddTicks(9711),
-                            SecurityStamp = "BEWA3FHZUINAOB64DO22VAFIO3OC24JFGRK7PNPRCZ3MK2UAH5RA",
-                            TwoFactorEnabled = false,
-                            UserName = "Reidar.Nilsen@mail.com"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "01140f0d-5e9f-409f-adae-072b706ff55b",
-                            Email = "Ina.Nilsson@mail.com",
-                            EmailConfirmed = true,
-                            FirstMidName = "Ina",
-                            LastLogin = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastName = "Nilsson",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "INA.NILSSON@MAIL.COM",
-                            NormalizedUserName = "INA.NILSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDyBfyIwQfQLwPgoQ68v7EH1nCheUBVlb85wa50JQygVy061TmdSa3Qfhck3MWfQUQ==",
-                            PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 22, 44, 18, 791, DateTimeKind.Local).AddTicks(9720),
-                            SecurityStamp = "5NDAKAVHTA5Z7TAQPTHAQ4MKRVRHKYFN7WVB3EJDCVHGU6LMV3NA",
-                            TwoFactorEnabled = false,
-                            UserName = "Ina.Nilsson@mail.com"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "4fbe0493-2aff-4d59-8fca-e0bdd03df84b",
-                            Email = "Martin.Petersson@mail.com",
-                            EmailConfirmed = true,
-                            FirstMidName = "Martin",
-                            LastLogin = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastName = "Petersson",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "MARTIN.PETERSSON@MAIL.COM",
-                            NormalizedUserName = "MARTIN.PETERSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDyBfyIwQfQLwPgoQ68v7EH1nCheUBVlb85wa50JQygVy061TmdSa3Qfhck3MWfQUQ==",
-                            PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 22, 44, 18, 791, DateTimeKind.Local).AddTicks(9729),
-                            SecurityStamp = "P2SDHRM3GSSWYMKJZW26TJDUB67NI65HRGKAFXNO7DR26MT4PG7A",
-                            TwoFactorEnabled = false,
-                            UserName = "Martin.Petersson@mail.com"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "21eab18b-4499-4b34-84bd-a75edc02e471",
-                            Email = "Steve.Carell@mail.com",
-                            EmailConfirmed = true,
-                            FirstMidName = "Steve",
-                            LastLogin = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastName = "Carell",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "STEVE.CARELL@MAIL.COM",
-                            NormalizedUserName = "STEVE.CARELL@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDyBfyIwQfQLwPgoQ68v7EH1nCheUBVlb85wa50JQygVy061TmdSa3Qfhck3MWfQUQ==",
-                            PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 22, 44, 18, 791, DateTimeKind.Local).AddTicks(9749),
-                            SecurityStamp = "IXT2IZC7XGM26EOG7QIVZLTSARIPCVYOJJIUI56MGOB5FQHM4JZQ",
-                            TwoFactorEnabled = false,
-                            UserName = "Steve.Carell@mail.com"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "87b8ff09-9000-4eb1-ae15-5344e43852e5",
-                            Email = "Grogu.Mandelorian@mail.com",
-                            EmailConfirmed = true,
-                            FirstMidName = "Grogu",
-                            LastLogin = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastName = "Mandelorian",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "GROGU.MANDELORIAN@MAIL.COM",
-                            NormalizedUserName = "GROGU.MANDELORIAN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDyBfyIwQfQLwPgoQ68v7EH1nCheUBVlb85wa50JQygVy061TmdSa3Qfhck3MWfQUQ==",
-                            PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 22, 44, 18, 791, DateTimeKind.Local).AddTicks(9758),
-                            SecurityStamp = "ZANUQC47CL53SQCBSNWTUNMXJUG33GAOGBWPSZG3EEJSPU22IDYA",
-                            TwoFactorEnabled = false,
-                            UserName = "Grogu.Mandelorian@mail.com"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "e6f97042-9953-4f9f-a813-56fdde9dd6f6",
-                            Email = "Lotta.Svensson@mail.com",
-                            EmailConfirmed = true,
-                            FirstMidName = "Lotta",
-                            LastLogin = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastName = "Svensson",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "LOTTA.SVENSSON@MAIL.COM",
-                            NormalizedUserName = "LOTTA.SVENSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDyBfyIwQfQLwPgoQ68v7EH1nCheUBVlb85wa50JQygVy061TmdSa3Qfhck3MWfQUQ==",
-                            PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 22, 44, 18, 791, DateTimeKind.Local).AddTicks(9787),
-                            SecurityStamp = "26BMRZ7BGRCN2FDEL5SCJN5DHSHBXC7ECBV5J6LLWK3J7MGBSL3A",
-                            TwoFactorEnabled = false,
-                            UserName = "Lotta.Svensson@mail.com"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5531053b-032f-4828-af3a-760e0a3990b8",
-                            Email = "Emilia.Ristersson@mail.com",
-                            EmailConfirmed = true,
-                            FirstMidName = "Emilia",
-                            LastLogin = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastName = "Ristersson",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "EMILIA.RISTERSSON@MAIL.COM",
-                            NormalizedUserName = "EMILIA.RISTERSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDyBfyIwQfQLwPgoQ68v7EH1nCheUBVlb85wa50JQygVy061TmdSa3Qfhck3MWfQUQ==",
-                            PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 16, 22, 44, 18, 791, DateTimeKind.Local).AddTicks(9796),
-                            SecurityStamp = "CLZRZLFQL6Z3LDYLFWCFWQ2NRSPQRVUDKZE2S2YUAX2R3NBNIA4A",
-                            TwoFactorEnabled = false,
-                            UserName = "Emilia.Ristersson@mail.com"
                         });
                 });
 
