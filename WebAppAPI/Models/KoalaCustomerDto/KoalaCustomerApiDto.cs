@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebAppAPI.Models.KoalaCustomerDto
 {
-    public class KoalaCustomerApiDto : IdentityUser
+    public class KoalaCustomerApiDto
     {
         [Required]
         [StringLength(40)]

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAppMVC.Models
 {
-    public class KoalaCustomerApi : IdentityUser<int>
+    public class KoalaCustomerApi
     {
         [Required]
         [StringLength(40)]

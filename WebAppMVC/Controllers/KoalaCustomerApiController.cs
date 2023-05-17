@@ -1,35 +1,34 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using WebAppAPI.Repository.IRepository;
+using Microsoft.AspNetCore.Http.HttpResults;
 using WebAppMVC.Models;
 
-namespace WebAppAPI.Controllers
+namespace WebAppMVC.Controllers
 {
-    [Route("api/WebAppAPI/KoalaCustomer")]
+    [Route("api/WebAppMVC")]
     [ApiController]
     public class KoalaCustomerApiController : Controller
     {
-        private readonly IRepository<KoalaCustomerApi> _koalaDb;
+        private readonly IRepository<KoalaCustomer> _KoalaDb;
         private readonly IMapper _mapper;
-        public KoalaCustomerApiController(IRepository<KoalaCustomerApi> koalaDb, IMapper mapper)
+        public KoalaCustomerApiController(IRepository<KoalaCustomer> koalaDb, IMapper mapper)
         {
-            _koalaDb = koalaDb;
+            _KoalaDb = koalaDb;
             _mapper = mapper;
         }
         //GetAllPersons
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<KoalaCustomerApi>>> GetAllKoala()
+        public async Task<ActionResult<IEnumerable<KoalaCustomer>>> GetAllKoalas()
         {
-            IEnumerable<KoalaCustomerApi> koalaList = await _koalaDb.GetAllAsync();
-            
+
+            IEnumerable<KoalaCustomer> koalaList = await _KoalaDb.GetAllAsync();
             return Ok(koalaList);
-
         }
-
-        //GetsinglePerson
-        [HttpGet("id:int", Name = "GetSinglePerson")]
+        //GetSinglePerson
+        [HttpGet("id:int", Name = "GetSingleCustomer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -39,12 +38,14 @@ namespace WebAppAPI.Controllers
             {
                 return BadRequest();
             }
-            var findCustomer = await _koalaDb.GetAsync(p => p.Id == koalaId);
-            if (findCustomer == null)
+            var findKoala = await _KoalaDb.GetAsync(p => p.Id == koalaId);
+            if (findKoala == null)
             {
                 return NotFound();
             }
-            return Ok(findCustomer);
+            return Ok(findKoala);
         }
     }
+    
 }
+

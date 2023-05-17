@@ -8,7 +8,7 @@ namespace WebAppAPI
     {
         public MappingConfig() 
         {
-            CreateMap<KoalaCustomerApi, KoalaCustomerApiDto>().ReverseMap();
+            CreateMap<KoalaCustomer, KoalaCustomerApiDto>().ReverseMap();
         }
     }
 }

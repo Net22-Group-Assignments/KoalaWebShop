@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
+using WebAppAPI;
+using WebAppAPI.Repository;
+using WebAppAPI.Repository.IRepository;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
 
@@ -13,7 +16,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 //Pre-load Data
-
+builder.Services.AddAutoMapper(typeof(MappingConfig)); //Automapper required for mapper to function
+builder.Services.AddScoped<IRepository<KoalaCustomer>, Repository<KoalaCustomer>>();
+builder.Services.AddScoped<IRepository<KoalaCustomer>, Repository<KoalaCustomer>>();
 
 //End of Pre-load data
 
@@ -30,12 +35,23 @@ builder.Services.AddDefaultIdentity<KoalaCustomer>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
     app.UseMigrationsEndPoint();
 }
 else
