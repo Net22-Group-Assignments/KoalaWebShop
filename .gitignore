@@ -495,3 +495,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### Project specific
+
+# We don't want to write over each others connection strings
+**/appsettings.json
+
+# We decided not to share migrations
+**/Migrations
