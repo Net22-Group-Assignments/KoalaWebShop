@@ -2,26 +2,28 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 using Newtonsoft.Json;
+using RestSharp;
 using System;
 using WebAppMVC.Models.ViewModels;
+using Method = RestSharp.Method;
 
 namespace WebAppMVC.Controllers
 {
     public class CurrencyController : Controller
     {
-        //public async Task<IActionResult> GetCurrency()
-        //{
-        //    var client = new RestClient("https://api.apilayer.com/exchangerates_data/latest?symbols={symbols}&base={base}");
-        //    client.Timeout = -1;
+        [HttpGet]
+        public async Task<IActionResult> GetCurrency()
+        {
+            var client = new RestClient("https://api.apilayer.com/exchangerates_data/latest?symbols={symbols}&base={base}");
 
-        //    var request = new Restrequest(Method.GET);
-        //    request.AddHeader("apikey", "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo");
+            var request = new RestRequest(Method.Get.ToString());
+            request.AddHeader("apikey", "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo");
 
-        //    IRestResponse response = client.Execute(request);
-        //    Console.WriteLine(response.Content);
+            RestResponse response = await client.ExecuteAsync(request);
+            Console.WriteLine(response.Content);
 
-        //    return View(response);
-        //}
+            return View(response);
+        }
 
         public async Task<IActionResult> Index()
         {
