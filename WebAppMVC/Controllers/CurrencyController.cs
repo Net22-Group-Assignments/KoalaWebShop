@@ -1,44 +1,36 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
-using Newtonsoft.Json;
-using RestSharp;
-using System;
-using WebAppMVC.Models.ViewModels;
-using Method = RestSharp.Method;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace WebAppMVC.Controllers
 {
     public class CurrencyController : Controller
     {
-        [HttpGet]
-        public async Task<IActionResult> GetCurrency()
-        {
-            var client = new RestClient("https://api.apilayer.com/exchangerates_data/latest?symbols={symbols}&base={base}");
-
-            var request = new RestRequest(Method.Get.ToString());
-            request.AddHeader("apikey", "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo");
-
-            RestResponse response = await client.ExecuteAsync(request);
-            Console.WriteLine(response.Content);
-
-            return View(response);
-        }
+        private static readonly HttpClient client = new HttpClient();
 
         public async Task<IActionResult> Index()
         {
-            List<CurrencyViewModel> currencyList = new List<CurrencyViewModel>();
-            using (var httpClient = new HttpClient())
+            string apiUrl = "https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK";
+            string apiKey = "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo";
+
+            string fullUrl = $"{apiUrl}&apikey={apiKey}";
+
+            var request = new HttpRequestMessage(HttpMethod.Get, fullUrl);
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
             {
-                var response = await httpClient.GetAsync("https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK");
-                var request = response.Headers.Add("apikey", "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo");
-                using (request)
-                {
-                    string apiResponse = await request.Content.ReadAsStringAsync();
-                    currencyList = JsonConvert.DeserializeObject<List<CurrencyViewModel>>(apiResponse);
-                }
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine(responseBody);
+
+                return View(responseBody);
+			}
+            else
+            {
+                string errorMessage = $"API request failed with status code: {response.StatusCode}";
             }
-            return View(currencyList);
-        }
+
+            return View(response);
+		}
     }
 }
