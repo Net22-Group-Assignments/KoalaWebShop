@@ -28,9 +28,9 @@ namespace WebAppMVC.Controllers
             else
             {
                 string errorMessage = $"API request failed with status code: {response.StatusCode}";
-            }
 
-            return View(response);
+                return View(errorMessage);
+            }
 		}
     }
 }
