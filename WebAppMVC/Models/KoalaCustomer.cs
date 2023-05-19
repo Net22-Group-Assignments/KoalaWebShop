@@ -14,8 +14,13 @@ namespace WebAppMVC.Models
         [StringLength(40)]
         public string LastName { get; set; }
         [Required]
-        public DateTime RegisteredAt { get; set; }
+        [StringLength(50)]
+        public string Adress { get; set; }
         [Required]
-        public DateTime LastLogin { get; set; }
+        public DateTime RegisteredAt { get; set; }
+
+        ICollection<Order> Orders { get; set; }
+        ICollection<Review> Reviews { get; set; }
+    
     }
 }

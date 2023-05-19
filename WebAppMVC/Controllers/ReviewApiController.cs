@@ -9,12 +9,12 @@ namespace WebAppMVC.Controllers
 {
     [Route("api/WebAppMVC/ProductReview")]
     [ApiController]
-    public class ProductReviewApiController : Controller
+    public class ReviewApiController : Controller
     {
 
-        private readonly IRepository<ProductReview> _KoalaDb;
+        private readonly IRepository<Review> _KoalaDb;
         private readonly IMapper _mapper;
-        public ProductReviewApiController(IRepository<ProductReview> koalaDb, IMapper mapper)
+        public ReviewApiController(IRepository<Review> koalaDb, IMapper mapper)
         {
             _KoalaDb = koalaDb;
             _mapper = mapper;
@@ -22,10 +22,10 @@ namespace WebAppMVC.Controllers
         //GetAllPersons
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<ProductReview>>> GetAllKoalas()
+        public async Task<ActionResult<IEnumerable<Review>>> GetAllKoalas()
         {
 
-            IEnumerable<ProductReview> koalaList = await _KoalaDb.GetAllAsync();
+            IEnumerable<Review> koalaList = await _KoalaDb.GetAllAsync();
             return Ok(koalaList);
         }
         //GetSinglePerson
@@ -39,7 +39,7 @@ namespace WebAppMVC.Controllers
             {
                 return BadRequest();
             }
-            var findKoala = await _KoalaDb.GetAsync(p => p.ParentId == koalaId);
+            var findKoala = await _KoalaDb.GetAsync(p => p.FK_ProductId == koalaId);
             if (findKoala == null)
             {
                 return NotFound();

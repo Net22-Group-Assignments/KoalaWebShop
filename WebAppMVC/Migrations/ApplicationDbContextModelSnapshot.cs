@@ -161,76 +161,23 @@ namespace WebAppMVC.Migrations
 
             modelBuilder.Entity("WebAppMVC.Models.Cart", b =>
                 {
-                    b.Property<int>("CartId")
+                    b.Property<int>("cartId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cartId"));
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FK_KoalaCustomerId")
+                    b.Property<int>("FkCustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstMidName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Province")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SessionId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
+                    b.Property<int?>("KoalaIdId")
                         .HasColumnType("int");
 
-                    b.HasKey("CartId");
+                    b.HasKey("cartId");
 
-                    b.HasIndex("FK_KoalaCustomerId");
+                    b.HasIndex("KoalaIdId");
 
                     b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("WebAppMVC.Models.CartProduct", b =>
-                {
-                    b.Property<int>("CartProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartProductId"));
-
-                    b.Property<int>("FK_CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fk_ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CartProductId");
-
-                    b.HasIndex("FK_CartId");
-
-                    b.HasIndex("Fk_ProductId");
-
-                    b.ToTable("CartProducts");
                 });
 
             modelBuilder.Entity("WebAppMVC.Models.Category", b =>
@@ -242,20 +189,42 @@ namespace WebAppMVC.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
                     b.Property<string>("Content")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("parentId")
-                        .HasColumnType("int");
-
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 5,
+                            Content = "Everything used in sports can be found in this category",
+                            Title = "Sport"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            Content = "Everything used in fashion can be found in this category",
+                            Title = "Fashion"
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            Content = "Everything used in outdoor life can be found in this category",
+                            Title = "Outdoor life"
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            Content = "Everything used in Electronic can be found in this category",
+                            Title = "Electronic"
+                        });
                 });
 
             modelBuilder.Entity("WebAppMVC.Models.KoalaCustomer", b =>
@@ -268,6 +237,11 @@ namespace WebAppMVC.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Adress")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -284,9 +258,6 @@ namespace WebAppMVC.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<DateTime>("LastLogin")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -346,19 +317,19 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 11,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8e1bb637-e0c5-464b-8044-6412093341b0",
+                            Adress = "Fakestreet101",
+                            ConcurrencyStamp = "7d16478c-80ec-43fe-94e3-07ab13c38cf1",
                             Email = "jon.westman@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Jon",
-                            LastLogin = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Westman",
                             LockoutEnabled = true,
                             NormalizedEmail = "JON.WESTMAN@MAIL.COM",
                             NormalizedUserName = "JON.WESTMAN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDoyfTlMB0jADWZi4GV4Ruk37UU8LTDvv104FXZN6n+5KPD5fwYqr5bGlnaznCLL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5284),
-                            SecurityStamp = "H6POSIUH4PJ7RQAD6ALP3IMZOMKOWLYCFOLLV4GJTDUWFCMCZHBA",
+                            RegisteredAt = new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8453),
+                            SecurityStamp = "YVMQM56ICOUIV5F2OTMNZEU7H5HJCMXINV2OVSATBYNOTQV4LQHA",
                             TwoFactorEnabled = false,
                             UserName = "jon.westman@mail.com"
                         },
@@ -366,19 +337,19 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 12,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "78c856bd-e298-47bb-9e75-6577df35f93c",
+                            Adress = "Fakestreet102",
+                            ConcurrencyStamp = "36752463-45e4-449b-b456-08ab7afeb9eb",
                             Email = "bjorn.agnemo@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Björn",
-                            LastLogin = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Agnemo",
                             LockoutEnabled = true,
                             NormalizedEmail = "BJORN.AGNEMO@MAIL.COM",
                             NormalizedUserName = "BJORN.AGNEMO@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDoyfTlMB0jADWZi4GV4Ruk37UU8LTDvv104FXZN6n+5KPD5fwYqr5bGlnaznCLL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5344),
-                            SecurityStamp = "PUQXX4HYCCRCSKR4GJR5HZSXBXCGUSZKZ5HVSRFO5YHK4NZCFWTQ",
+                            RegisteredAt = new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8503),
+                            SecurityStamp = "YWIHECMCFSWL4BGOB252Z47U4VKFPRKFZ6A4UAZ4GPU6I4QILVRQ",
                             TwoFactorEnabled = false,
                             UserName = "bjorn.agnemo@mail.com"
                         },
@@ -386,19 +357,19 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 13,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "764a01a4-7809-4afd-86cf-2ec58cab883a",
+                            Adress = "Fakestreet103",
+                            ConcurrencyStamp = "5a025181-5ac6-463a-ac89-86223b236f54",
                             Email = "Oskar.Ahling@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Oskar",
-                            LastLogin = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Åhling",
                             LockoutEnabled = true,
                             NormalizedEmail = "OSKAR.AHLING@MAIL.COM",
                             NormalizedUserName = "OSKAR.AHLING@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDoyfTlMB0jADWZi4GV4Ruk37UU8LTDvv104FXZN6n+5KPD5fwYqr5bGlnaznCLL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5353),
-                            SecurityStamp = "NFZAJKPKZQEYKTDFCQNRMHUMDQJNPXID4WNE22T4T3MTUTVAO3QA",
+                            RegisteredAt = new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8512),
+                            SecurityStamp = "NA7K6GWHHX65PQFBVTFFN7OSUOFVAM4JVLQVBODJ6JEWOYC545VA",
                             TwoFactorEnabled = false,
                             UserName = "Oskar.Ahling@mail.com"
                         },
@@ -406,19 +377,19 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 14,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0339d3ce-ab5f-4968-8b81-52f699546bd6",
+                            Adress = "Fakestreet104",
+                            ConcurrencyStamp = "0a60cf9a-0cd3-4753-b5a7-a1ff2da7a7a1",
                             Email = "Reidar.Nilsen@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Reidar",
-                            LastLogin = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Nilsen",
                             LockoutEnabled = true,
                             NormalizedEmail = "REIDAR.NILSEN@MAIL.COM",
                             NormalizedUserName = "REIDAR.NILSEN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDoyfTlMB0jADWZi4GV4Ruk37UU8LTDvv104FXZN6n+5KPD5fwYqr5bGlnaznCLL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5362),
-                            SecurityStamp = "265SSYKJCUZJUZI6XCKIYNVB7VNBAZJ3RGYJE47UKEQK4GAAPG7Q",
+                            RegisteredAt = new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8520),
+                            SecurityStamp = "7HV7D4HPGACVN2LNYY4M62SVYGDTP5FODUBDAZXGVMMTP572XR7A",
                             TwoFactorEnabled = false,
                             UserName = "Reidar.Nilsen@mail.com"
                         },
@@ -426,19 +397,19 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 15,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "76f48fe2-b5d2-4bd3-803e-cced588cb1f1",
+                            Adress = "Fakestreet105",
+                            ConcurrencyStamp = "28668eee-bded-457b-a357-74bf2069e455",
                             Email = "Ina.Nilsson@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Ina",
-                            LastLogin = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Nilsson",
                             LockoutEnabled = true,
                             NormalizedEmail = "INA.NILSSON@MAIL.COM",
                             NormalizedUserName = "INA.NILSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDoyfTlMB0jADWZi4GV4Ruk37UU8LTDvv104FXZN6n+5KPD5fwYqr5bGlnaznCLL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5370),
-                            SecurityStamp = "VBLGU4BTHRK43Z4LWQLLDE74IILFYW2HJPLXB46RCGB6AJGW6U6A",
+                            RegisteredAt = new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8529),
+                            SecurityStamp = "MCFK7TKJXNZ3NYJFD4GOCGPM4FCTOG3RN26JIJD4COMHGFXSLBDQ",
                             TwoFactorEnabled = false,
                             UserName = "Ina.Nilsson@mail.com"
                         },
@@ -446,19 +417,19 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 16,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7b7a54b5-9eb3-4496-87a2-868a4894ca9e",
+                            Adress = "Fakestreet106",
+                            ConcurrencyStamp = "7f22b9ba-550b-4a7b-ba46-5cf12c6694f5",
                             Email = "Martin.Petersson@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Martin",
-                            LastLogin = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Petersson",
                             LockoutEnabled = true,
                             NormalizedEmail = "MARTIN.PETERSSON@MAIL.COM",
                             NormalizedUserName = "MARTIN.PETERSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDoyfTlMB0jADWZi4GV4Ruk37UU8LTDvv104FXZN6n+5KPD5fwYqr5bGlnaznCLL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5379),
-                            SecurityStamp = "IZSESYZXYDAHDVWGDW6U7CQGFKYF3XHSF256RSRXTL3RADPB7F4A",
+                            RegisteredAt = new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8536),
+                            SecurityStamp = "UKU22CFLDWTSV46BP37CLQVBOWMLW4M3I36HBRVDNTP7ZN3DH7LA",
                             TwoFactorEnabled = false,
                             UserName = "Martin.Petersson@mail.com"
                         },
@@ -466,19 +437,19 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 17,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8f46e635-e17a-4fe2-b6a9-367dd0a81637",
+                            Adress = "Fakestreet107",
+                            ConcurrencyStamp = "ae454e74-aa4a-4e85-ac28-0a93be9fcb4b",
                             Email = "Steve.Carell@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Steve",
-                            LastLogin = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Carell",
                             LockoutEnabled = true,
                             NormalizedEmail = "STEVE.CARELL@MAIL.COM",
                             NormalizedUserName = "STEVE.CARELL@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDoyfTlMB0jADWZi4GV4Ruk37UU8LTDvv104FXZN6n+5KPD5fwYqr5bGlnaznCLL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5387),
-                            SecurityStamp = "IC2BEKPQWAWP7Q3W6UDCL4A45BYOGYNYNOLVQD5CQEUOVHJF2EPA",
+                            RegisteredAt = new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8554),
+                            SecurityStamp = "Z4GZ6RD6AVH63PUB3AL5LTEDYRVMJGV2T2UWH4I3OL5PD7NGOBDQ",
                             TwoFactorEnabled = false,
                             UserName = "Steve.Carell@mail.com"
                         },
@@ -486,19 +457,19 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 18,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "86d62059-9e0a-4ff1-8a72-cae992dd8ccc",
+                            Adress = "Fakestreet108",
+                            ConcurrencyStamp = "618e149c-aa8a-4b54-8d23-eea6849428fd",
                             Email = "Grogu.Mandelorian@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Grogu",
-                            LastLogin = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Mandelorian",
                             LockoutEnabled = true,
                             NormalizedEmail = "GROGU.MANDELORIAN@MAIL.COM",
                             NormalizedUserName = "GROGU.MANDELORIAN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDoyfTlMB0jADWZi4GV4Ruk37UU8LTDvv104FXZN6n+5KPD5fwYqr5bGlnaznCLL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5396),
-                            SecurityStamp = "ESQXPPNTO57VTTYQNXU7DSH2K6NMHC6RNOWQNBH3P6MJFST5LKQA",
+                            RegisteredAt = new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8579),
+                            SecurityStamp = "7234TR6OXKDKU5JGXAZXCTCWCDODEF4BIYOUJCUI4AFCXSPHJ4CQ",
                             TwoFactorEnabled = false,
                             UserName = "Grogu.Mandelorian@mail.com"
                         },
@@ -506,19 +477,19 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 19,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "47a430af-928b-4339-98f8-952e44854bd1",
+                            Adress = "Fakestreet109",
+                            ConcurrencyStamp = "89b3e1c0-5507-4551-9211-9314311e7d09",
                             Email = "Lotta.Svensson@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Lotta",
-                            LastLogin = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Svensson",
                             LockoutEnabled = true,
                             NormalizedEmail = "LOTTA.SVENSSON@MAIL.COM",
                             NormalizedUserName = "LOTTA.SVENSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDoyfTlMB0jADWZi4GV4Ruk37UU8LTDvv104FXZN6n+5KPD5fwYqr5bGlnaznCLL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5406),
-                            SecurityStamp = "2VOSYYGSDQ3SX2B4VQV6XV3JE5PN6ZLXDXNCQKLONIIHUIEJU5PA",
+                            RegisteredAt = new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8587),
+                            SecurityStamp = "CDJ6YGPKEGLGTHRLUH5QNSGMD2UEYXK3SZMZ6TUULH5Y4HQFIXBA",
                             TwoFactorEnabled = false,
                             UserName = "Lotta.Svensson@mail.com"
                         },
@@ -526,19 +497,19 @@ namespace WebAppMVC.Migrations
                         {
                             Id = 20,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "85912c12-1e84-4899-959a-367127694b82",
+                            Adress = "Fakestreet110",
+                            ConcurrencyStamp = "798de012-b68c-438e-b653-cb2c92a8aa6b",
                             Email = "Emilia.Ristersson@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Emilia",
-                            LastLogin = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             LastName = "Ristersson",
                             LockoutEnabled = true,
                             NormalizedEmail = "EMILIA.RISTERSSON@MAIL.COM",
                             NormalizedUserName = "EMILIA.RISTERSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDoyfTlMB0jADWZi4GV4Ruk37UU8LTDvv104FXZN6n+5KPD5fwYqr5bGlnaznCLL4w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5414),
-                            SecurityStamp = "IG5XZO7FH2WVO33PCDZRSQVGKYCF4FPF2JFRBDUHLDUQCGRVVDKQ",
+                            RegisteredAt = new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8596),
+                            SecurityStamp = "5DPYZVILA2FNVUHR4PQWR5ZX4GYRFTTZZDEMGHFUNAA6SRNP3EYQ",
                             TwoFactorEnabled = false,
                             UserName = "Emilia.Ristersson@mail.com"
                         });
@@ -546,49 +517,18 @@ namespace WebAppMVC.Migrations
 
             modelBuilder.Entity("WebAppMVC.Models.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("cartId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cartId"));
 
-                    b.Property<string>("Content")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FK_KoalaCustomerId")
+                    b.Property<int>("FkCustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstMidName")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("cartId");
 
-                    b.Property<decimal>("ItemDiscount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfItems")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhoneNr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Totalamount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("OrderId");
-
-                    b.HasIndex("FK_KoalaCustomerId");
+                    b.HasIndex("FkCustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -601,11 +541,11 @@ namespace WebAppMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int?>("FkCategory")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("OrdercartId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -613,83 +553,98 @@ namespace WebAppMVC.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int?>("cartId")
+                        .HasColumnType("int");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("FkCategory");
+
+                    b.HasIndex("OrdercartId");
+
+                    b.HasIndex("cartId");
 
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
-                            ProductId = 8,
-                            CreatedAt = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
-                            Discount = 0m,
+                            ProductId = 11,
                             Price = 599m,
-                            Quantity = 1,
-                            Summary = "599",
-                            Title = "Jacket",
-                            UpdatedAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5607)
+                            Quantity = 5,
+                            Title = "Jacket"
                         },
                         new
                         {
-                            ProductId = 9,
-                            CreatedAt = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
-                            Discount = 50m,
+                            ProductId = 12,
                             Price = 499m,
-                            Quantity = 1,
-                            Summary = "449",
-                            Title = "Pants",
-                            UpdatedAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5610)
+                            Quantity = 6,
+                            Title = "Pants"
                         },
                         new
                         {
-                            ProductId = 10,
-                            CreatedAt = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
-                            Discount = 400m,
+                            ProductId = 13,
                             Price = 1299m,
-                            Quantity = 1,
-                            Summary = "899",
-                            Title = "HockeyStick",
-                            UpdatedAt = new DateTime(2023, 5, 18, 0, 8, 37, 969, DateTimeKind.Local).AddTicks(5612)
+                            Quantity = 11,
+                            Title = "HockeyStick"
+                        },
+                        new
+                        {
+                            ProductId = 14,
+                            Price = 399m,
+                            Quantity = 12,
+                            Title = "Football"
+                        },
+                        new
+                        {
+                            ProductId = 15,
+                            Price = 2099m,
+                            Quantity = 10,
+                            Title = "Snowboard"
+                        },
+                        new
+                        {
+                            ProductId = 16,
+                            Price = 1199m,
+                            Quantity = 5,
+                            Title = "HeadPhones"
+                        },
+                        new
+                        {
+                            ProductId = 17,
+                            Price = 649m,
+                            Quantity = 3,
+                            Title = "GamingMouse"
+                        },
+                        new
+                        {
+                            ProductId = 18,
+                            Price = 1799m,
+                            Quantity = 7,
+                            Title = "Mechanicle Keyboard"
+                        },
+                        new
+                        {
+                            ProductId = 19,
+                            Price = 2199m,
+                            Quantity = 2,
+                            Title = "ComputerScreen"
+                        },
+                        new
+                        {
+                            ProductId = 20,
+                            Price = 99m,
+                            Quantity = 15,
+                            Title = "MousePad"
                         });
                 });
 
-            modelBuilder.Entity("WebAppMVC.Models.ProductCategory", b =>
-                {
-                    b.Property<int>("ProductCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductCategoryId"));
-
-                    b.Property<int>("FK_CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FK_ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductCategoryId");
-
-                    b.HasIndex("FK_CategoryId");
-
-                    b.HasIndex("FK_ProductId");
-
-                    b.ToTable("ProductCategories");
-                });
-
-            modelBuilder.Entity("WebAppMVC.Models.ProductReview", b =>
+            modelBuilder.Entity("WebAppMVC.Models.Review", b =>
                 {
                     b.Property<int>("ProductReviewId")
                         .ValueGeneratedOnAdd()
@@ -707,33 +662,14 @@ namespace WebAppMVC.Migrations
                     b.Property<int>("FK_ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ParentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductReviewId");
 
                     b.HasIndex("FK_ProductId");
 
-                    b.ToTable("ProductReviews");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductReviewId = 2,
-                            Content = "I have used this for 10 years and still going strong 9/10",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FK_ProductId = 5,
-                            ParentId = 4,
-                            Rating = 9,
-                            Title = "HockeyClub"
-                        });
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -789,73 +725,60 @@ namespace WebAppMVC.Migrations
 
             modelBuilder.Entity("WebAppMVC.Models.Cart", b =>
                 {
-                    b.HasOne("WebAppMVC.Models.KoalaCustomer", "KoalaCustomers")
+                    b.HasOne("WebAppMVC.Models.KoalaCustomer", "KoalaId")
                         .WithMany()
-                        .HasForeignKey("FK_KoalaCustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("KoalaIdId");
 
-                    b.Navigation("KoalaCustomers");
+                    b.Navigation("KoalaId");
                 });
 
-            modelBuilder.Entity("WebAppMVC.Models.CartProduct", b =>
+            modelBuilder.Entity("WebAppMVC.Models.Order", b =>
                 {
-                    b.HasOne("WebAppMVC.Models.Cart", "Carts")
+                    b.HasOne("WebAppMVC.Models.KoalaCustomer", "koalaId")
                         .WithMany()
-                        .HasForeignKey("FK_CartId")
+                        .HasForeignKey("FkCustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("koalaId");
+                });
+
+            modelBuilder.Entity("WebAppMVC.Models.Product", b =>
+                {
+                    b.HasOne("WebAppMVC.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("FkCategory");
+
+                    b.HasOne("WebAppMVC.Models.Order", null)
+                        .WithMany("products")
+                        .HasForeignKey("OrdercartId");
+
+                    b.HasOne("WebAppMVC.Models.Cart", null)
+                        .WithMany("Products")
+                        .HasForeignKey("cartId");
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("WebAppMVC.Models.Review", b =>
+                {
                     b.HasOne("WebAppMVC.Models.Product", "Products")
                         .WithMany()
-                        .HasForeignKey("Fk_ProductId")
+                        .HasForeignKey("FK_ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Carts");
+                    b.Navigation("Products");
+                });
 
+            modelBuilder.Entity("WebAppMVC.Models.Cart", b =>
+                {
                     b.Navigation("Products");
                 });
 
             modelBuilder.Entity("WebAppMVC.Models.Order", b =>
                 {
-                    b.HasOne("WebAppMVC.Models.KoalaCustomer", "KoalaCustomers")
-                        .WithMany()
-                        .HasForeignKey("FK_KoalaCustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("KoalaCustomers");
-                });
-
-            modelBuilder.Entity("WebAppMVC.Models.ProductCategory", b =>
-                {
-                    b.HasOne("WebAppMVC.Models.Category", "Categorys")
-                        .WithMany()
-                        .HasForeignKey("FK_CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebAppMVC.Models.Product", "Products")
-                        .WithMany()
-                        .HasForeignKey("FK_ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Categorys");
-
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("WebAppMVC.Models.ProductReview", b =>
-                {
-                    b.HasOne("WebAppMVC.Models.Product", "Products")
-                        .WithMany()
-                        .HasForeignKey("FK_ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Products");
+                    b.Navigation("products");
                 });
 #pragma warning restore 612, 618
         }

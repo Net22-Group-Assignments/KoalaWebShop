@@ -13,14 +13,15 @@ namespace WebAppMVC.Models
         public string Title { get; set; }
         [Required]
         public decimal Price { get; set; }
-        public decimal Discount { get; set; }
-        [Required]
-        [StringLength(500)]
-        public string Summary { get; set; }
         [Required]
         public int Quantity { get; set; }
-        [Required]
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+       
+        //ForeginKEy
+        [ForeignKey("Category")]
+        public int? FkCategory { get; set; }
+        public Category? Category { get; set; }
+
+        ICollection<Review>? Reviews { get; set; }
+        
     }
 }
