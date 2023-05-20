@@ -16,9 +16,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 //Pre-load Data
-builder.Services.AddAutoMapper(typeof(MappingConfig)); //Automapper required for mapper to function
 builder.Services.AddScoped<IRepository<KoalaCustomer>, Repository<KoalaCustomer>>();
-builder.Services.AddScoped<IRepository<KoalaCustomer>, Repository<KoalaCustomer>>();
+builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
+builder.Services.AddScoped<IRepository<Review>, Repository<Review>>();
 
 //End of Pre-load data
 
@@ -40,6 +40,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(typeof(MappingConfig)); //Automapper required for mapper to function
 var app = builder.Build();
 app.UseSwaggerUI(options =>
 {

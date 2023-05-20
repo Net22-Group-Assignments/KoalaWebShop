@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using WebAppMVC.Models;
-using WebAppMVC.Models.KoalaDtoFolder;
+using WebAppMVC.Models.Dto;
 
 namespace WebAppAPI
 {
@@ -9,6 +9,8 @@ namespace WebAppAPI
         public MappingConfig()
         {
             CreateMap<KoalaCustomer, KoalaCustomerDto>().ReverseMap();
+            CreateMap<Review, ReviewDto>().ReverseMap();
+            CreateMap<Product, ProductDto>().ReverseMap();
         }
     }
 }

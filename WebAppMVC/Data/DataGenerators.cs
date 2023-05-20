@@ -11,8 +11,11 @@ public class DataGenerators
     private static byte[] bytes = new byte[32];
     
     private static int idPool = 1;
+    private static int productIdPool = 1;
+    private static int reviewIdPool = 1;
+    private static int categoryIdPool = 1;
 
-    internal static KoalaCustomer NewCustomer(string email, string firstMidName, string lastName)
+    internal static KoalaCustomer NewCustomer(string email, string firstMidName, string lastName, string adress)
     { 
         Random.Shared.NextBytes(bytes);
         var customer = new KoalaCustomer()
@@ -21,22 +24,54 @@ public class DataGenerators
             UserName = email,
             FirstMidName = firstMidName,
             LastName = lastName,
+            Adress = adress,
             NormalizedUserName = email.ToUpper(),
             Email = email,
             NormalizedEmail = email.ToUpper(),
+            PhoneNumber = null,
             EmailConfirmed = true,
             PasswordHash = passwordHash,
             SecurityStamp = Base32.Rfc4648.Encode(bytes),
-            PhoneNumber = null,
             PhoneNumberConfirmed = false,
             TwoFactorEnabled = false,
             LockoutEnd = null,
             LockoutEnabled = true,
             AccessFailedCount = 0,
             RegisteredAt = DateTime.Now,
-            LastLogin = DateTime.Today
         };
 
         return customer;
+    }
+    internal static Product NewProduct(string title, decimal price, int quantity)
+    {
+        var product = new Product()
+        {
+            ProductId = productIdPool++,
+            Title = title,
+            Price= price,
+            Quantity = quantity,
+        };
+        return product;
+    }
+    internal static Review NewProductReview(int fk_productid, string title, int rating, string Content)
+    {
+        var productReview = new Review()
+        {
+            ProductReviewId= reviewIdPool++,
+            FK_ProductId= fk_productid,
+            Title= title,
+            Content= Content
+        };
+        return productReview;
+    }
+    internal static Category NewCategory(string title, string content) 
+    {
+        var category = new Category()
+        {
+            CategoryId = categoryIdPool++,
+            Title= title,
+            Content= content
+        };
+        return category;
     }
 }

@@ -1,17 +1,20 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using WebAppAPI.Repository.IRepository;
+using Microsoft.AspNetCore.Http.HttpResults;
 using WebAppMVC.Models;
 
 namespace WebAppMVC.Controllers
 {
-    [Route("api/WebAppMVC")]
+    [Route("api/WebAppMVC/ProductReview")]
     [ApiController]
-    public class KoalaCustomerApiController : Controller
+    public class ReviewApiController : Controller
     {
-        private readonly IRepository<KoalaCustomer> _KoalaDb;
+
+        private readonly IRepository<Review> _KoalaDb;
         private readonly IMapper _mapper;
-        public KoalaCustomerApiController(IRepository<KoalaCustomer> koalaDb, IMapper mapper)
+        public ReviewApiController(IRepository<Review> koalaDb, IMapper mapper)
         {
             _KoalaDb = koalaDb;
             _mapper = mapper;
@@ -19,14 +22,14 @@ namespace WebAppMVC.Controllers
         //GetAllPersons
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<KoalaCustomer>>> GetAllKoalas()
+        public async Task<ActionResult<IEnumerable<Review>>> GetAllKoalas()
         {
 
-            IEnumerable<KoalaCustomer> koalaList = await _KoalaDb.GetAllAsync();
+            IEnumerable<Review> koalaList = await _KoalaDb.GetAllAsync();
             return Ok(koalaList);
         }
         //GetSinglePerson
-        [HttpGet("id:int", Name = "GetSingleCustomer")]
+        [HttpGet("id:int", Name = "GetProductReview")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -36,13 +39,13 @@ namespace WebAppMVC.Controllers
             {
                 return BadRequest();
             }
-            var findKoala = await _KoalaDb.GetAsync(p => p.Id == koalaId);
+            var findKoala = await _KoalaDb.GetAsync(p => p.FK_ProductId == koalaId);
             if (findKoala == null)
             {
                 return NotFound();
             }
             return Ok(findKoala);
         }
+
     }
 }
-

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebAppMVC.Migrations
 {
     /// <inheritdoc />
-    public partial class MergeFromBjörnChanges : Migration
+    public partial class InitalizeDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,8 +36,8 @@ namespace WebAppMVC.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstMidName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    Adress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     RegisteredAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastLogin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -64,32 +64,12 @@ namespace WebAppMVC.Migrations
                 {
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    parentId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.CategoryId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    ProductId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Summary = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.ProductId);
                 });
 
             migrationBuilder.CreateTable(
@@ -202,132 +182,90 @@ namespace WebAppMVC.Migrations
                 name: "Carts",
                 columns: table => new
                 {
-                    CartId = table.Column<int>(type: "int", nullable: false)
+                    cartId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_KoalaCustomerId = table.Column<int>(type: "int", nullable: false),
-                    SessionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    FirstMidName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNr = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Province = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    FkCustomerId = table.Column<int>(type: "int", nullable: false),
+                    KoalaIdId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carts", x => x.CartId);
+                    table.PrimaryKey("PK_Carts", x => x.cartId);
                     table.ForeignKey(
-                        name: "FK_Carts_AspNetUsers_FK_KoalaCustomerId",
-                        column: x => x.FK_KoalaCustomerId,
+                        name: "FK_Carts_AspNetUsers_KoalaIdId",
+                        column: x => x.KoalaIdId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    cartId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_KoalaCustomerId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    ItemDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Totalamount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    NumberOfItems = table.Column<int>(type: "int", nullable: false),
-                    FirstMidName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNr = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
+                    FkCustomerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.PrimaryKey("PK_Orders", x => x.cartId);
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_FK_KoalaCustomerId",
-                        column: x => x.FK_KoalaCustomerId,
+                        name: "FK_Orders_AspNetUsers_FkCustomerId",
+                        column: x => x.FkCustomerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductCategories",
+                name: "Products",
                 columns: table => new
                 {
-                    ProductCategoryId = table.Column<int>(type: "int", nullable: false)
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_CategoryId = table.Column<int>(type: "int", nullable: false),
-                    FK_ProductId = table.Column<int>(type: "int", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    FkCategory = table.Column<int>(type: "int", nullable: true),
+                    OrdercartId = table.Column<int>(type: "int", nullable: true),
+                    cartId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductCategories", x => x.ProductCategoryId);
+                    table.PrimaryKey("PK_Products", x => x.ProductId);
                     table.ForeignKey(
-                        name: "FK_ProductCategories_Categories_FK_CategoryId",
-                        column: x => x.FK_CategoryId,
+                        name: "FK_Products_Carts_cartId",
+                        column: x => x.cartId,
+                        principalTable: "Carts",
+                        principalColumn: "cartId");
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_FkCategory",
+                        column: x => x.FkCategory,
                         principalTable: "Categories",
-                        principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CategoryId");
                     table.ForeignKey(
-                        name: "FK_ProductCategories_Products_FK_ProductId",
-                        column: x => x.FK_ProductId,
-                        principalTable: "Products",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Products_Orders_OrdercartId",
+                        column: x => x.OrdercartId,
+                        principalTable: "Orders",
+                        principalColumn: "cartId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductReviews",
+                name: "Reviews",
                 columns: table => new
                 {
                     ProductReviewId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_ProductId = table.Column<int>(type: "int", nullable: false),
-                    ParentId = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FK_ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductReviews", x => x.ProductReviewId);
+                    table.PrimaryKey("PK_Reviews", x => x.ProductReviewId);
                     table.ForeignKey(
-                        name: "FK_ProductReviews_Products_FK_ProductId",
+                        name: "FK_Reviews_Products_FK_ProductId",
                         column: x => x.FK_ProductId,
-                        principalTable: "Products",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CartProducts",
-                columns: table => new
-                {
-                    CartProductId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Fk_ProductId = table.Column<int>(type: "int", nullable: false),
-                    FK_CartId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CartProducts", x => x.CartProductId);
-                    table.ForeignKey(
-                        name: "FK_CartProducts_Carts_FK_CartId",
-                        column: x => x.FK_CartId,
-                        principalTable: "Carts",
-                        principalColumn: "CartId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartProducts_Products_Fk_ProductId",
-                        column: x => x.Fk_ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
@@ -335,11 +273,47 @@ namespace WebAppMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstMidName", "LastLogin", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegisteredAt", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "Adress", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstMidName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegisteredAt", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 3, 0, "47171075-2d8e-43ac-8d03-bf94a0d4ac2b", "jon.westman@mail.com", true, "Jon", new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local), "Westman", true, null, "JON.WESTMAN@MAIL.COM", "JON.WESTMAN@MAIL.COM", "AQAAAAIAAYagAAAAEK/UHEmz3TwOdGrPRQ96MQ7/nSwAp+2MFMtiBwCJQ6EdI8k037rtW8PFL8vOSFdfXA==", null, false, new DateTime(2023, 5, 16, 11, 35, 53, 553, DateTimeKind.Local).AddTicks(7454), "7YBEG6N75RUNAWOXV54JKAXZFZQY4B6VXBNERGCEQKKQTW6HUHFA", false, "jon.westman@mail.com" },
-                    { 4, 0, "2e7fcc50-82de-4cc1-be72-ec0653fba86c", "bjorn.agnemo@mail.com", true, "Björn", new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Local), "Agnemo", true, null, "BJORN.AGNEMO@MAIL.COM", "BJORN.AGNEMO@MAIL.COM", "AQAAAAIAAYagAAAAEK/UHEmz3TwOdGrPRQ96MQ7/nSwAp+2MFMtiBwCJQ6EdI8k037rtW8PFL8vOSFdfXA==", null, false, new DateTime(2023, 5, 16, 11, 35, 53, 553, DateTimeKind.Local).AddTicks(7510), "HK5CPMWGT7AWBIO3VTTLMRP6BHYR2VIVND2YYZJZXJE6DE77TLBQ", false, "bjorn.agnemo@mail.com" }
+                    { 11, 0, "Fakestreet101", "7d16478c-80ec-43fe-94e3-07ab13c38cf1", "jon.westman@mail.com", true, "Jon", "Westman", true, null, "JON.WESTMAN@MAIL.COM", "JON.WESTMAN@MAIL.COM", "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==", null, false, new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8453), "YVMQM56ICOUIV5F2OTMNZEU7H5HJCMXINV2OVSATBYNOTQV4LQHA", false, "jon.westman@mail.com" },
+                    { 12, 0, "Fakestreet102", "36752463-45e4-449b-b456-08ab7afeb9eb", "bjorn.agnemo@mail.com", true, "Björn", "Agnemo", true, null, "BJORN.AGNEMO@MAIL.COM", "BJORN.AGNEMO@MAIL.COM", "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==", null, false, new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8503), "YWIHECMCFSWL4BGOB252Z47U4VKFPRKFZ6A4UAZ4GPU6I4QILVRQ", false, "bjorn.agnemo@mail.com" },
+                    { 13, 0, "Fakestreet103", "5a025181-5ac6-463a-ac89-86223b236f54", "Oskar.Ahling@mail.com", true, "Oskar", "Åhling", true, null, "OSKAR.AHLING@MAIL.COM", "OSKAR.AHLING@MAIL.COM", "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==", null, false, new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8512), "NA7K6GWHHX65PQFBVTFFN7OSUOFVAM4JVLQVBODJ6JEWOYC545VA", false, "Oskar.Ahling@mail.com" },
+                    { 14, 0, "Fakestreet104", "0a60cf9a-0cd3-4753-b5a7-a1ff2da7a7a1", "Reidar.Nilsen@mail.com", true, "Reidar", "Nilsen", true, null, "REIDAR.NILSEN@MAIL.COM", "REIDAR.NILSEN@MAIL.COM", "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==", null, false, new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8520), "7HV7D4HPGACVN2LNYY4M62SVYGDTP5FODUBDAZXGVMMTP572XR7A", false, "Reidar.Nilsen@mail.com" },
+                    { 15, 0, "Fakestreet105", "28668eee-bded-457b-a357-74bf2069e455", "Ina.Nilsson@mail.com", true, "Ina", "Nilsson", true, null, "INA.NILSSON@MAIL.COM", "INA.NILSSON@MAIL.COM", "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==", null, false, new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8529), "MCFK7TKJXNZ3NYJFD4GOCGPM4FCTOG3RN26JIJD4COMHGFXSLBDQ", false, "Ina.Nilsson@mail.com" },
+                    { 16, 0, "Fakestreet106", "7f22b9ba-550b-4a7b-ba46-5cf12c6694f5", "Martin.Petersson@mail.com", true, "Martin", "Petersson", true, null, "MARTIN.PETERSSON@MAIL.COM", "MARTIN.PETERSSON@MAIL.COM", "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==", null, false, new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8536), "UKU22CFLDWTSV46BP37CLQVBOWMLW4M3I36HBRVDNTP7ZN3DH7LA", false, "Martin.Petersson@mail.com" },
+                    { 17, 0, "Fakestreet107", "ae454e74-aa4a-4e85-ac28-0a93be9fcb4b", "Steve.Carell@mail.com", true, "Steve", "Carell", true, null, "STEVE.CARELL@MAIL.COM", "STEVE.CARELL@MAIL.COM", "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==", null, false, new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8554), "Z4GZ6RD6AVH63PUB3AL5LTEDYRVMJGV2T2UWH4I3OL5PD7NGOBDQ", false, "Steve.Carell@mail.com" },
+                    { 18, 0, "Fakestreet108", "618e149c-aa8a-4b54-8d23-eea6849428fd", "Grogu.Mandelorian@mail.com", true, "Grogu", "Mandelorian", true, null, "GROGU.MANDELORIAN@MAIL.COM", "GROGU.MANDELORIAN@MAIL.COM", "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==", null, false, new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8579), "7234TR6OXKDKU5JGXAZXCTCWCDODEF4BIYOUJCUI4AFCXSPHJ4CQ", false, "Grogu.Mandelorian@mail.com" },
+                    { 19, 0, "Fakestreet109", "89b3e1c0-5507-4551-9211-9314311e7d09", "Lotta.Svensson@mail.com", true, "Lotta", "Svensson", true, null, "LOTTA.SVENSSON@MAIL.COM", "LOTTA.SVENSSON@MAIL.COM", "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==", null, false, new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8587), "CDJ6YGPKEGLGTHRLUH5QNSGMD2UEYXK3SZMZ6TUULH5Y4HQFIXBA", false, "Lotta.Svensson@mail.com" },
+                    { 20, 0, "Fakestreet110", "798de012-b68c-438e-b653-cb2c92a8aa6b", "Emilia.Ristersson@mail.com", true, "Emilia", "Ristersson", true, null, "EMILIA.RISTERSSON@MAIL.COM", "EMILIA.RISTERSSON@MAIL.COM", "AQAAAAIAAYagAAAAEFrSRXmpzJHexZy2nKw2V+n87wZAm0zy27J97Wedsi7IDgPv0UDT0FbHzynhFGxSfw==", null, false, new DateTime(2023, 5, 19, 11, 27, 26, 972, DateTimeKind.Local).AddTicks(8596), "5DPYZVILA2FNVUHR4PQWR5ZX4GYRFTTZZDEMGHFUNAA6SRNP3EYQ", false, "Emilia.Ristersson@mail.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "CategoryId", "Content", "Title" },
+                values: new object[,]
+                {
+                    { 5, "Everything used in sports can be found in this category", "Sport" },
+                    { 6, "Everything used in fashion can be found in this category", "Fashion" },
+                    { 7, "Everything used in outdoor life can be found in this category", "Outdoor life" },
+                    { 8, "Everything used in Electronic can be found in this category", "Electronic" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "ProductId", "FkCategory", "OrdercartId", "Price", "Quantity", "Title", "cartId" },
+                values: new object[,]
+                {
+                    { 11, null, null, 599m, 5, "Jacket", null },
+                    { 12, null, null, 499m, 6, "Pants", null },
+                    { 13, null, null, 1299m, 11, "HockeyStick", null },
+                    { 14, null, null, 399m, 12, "Football", null },
+                    { 15, null, null, 2099m, 10, "Snowboard", null },
+                    { 16, null, null, 1199m, 5, "HeadPhones", null },
+                    { 17, null, null, 649m, 3, "GamingMouse", null },
+                    { 18, null, null, 1799m, 7, "Mechanicle Keyboard", null },
+                    { 19, null, null, 2199m, 2, "ComputerScreen", null },
+                    { 20, null, null, 99m, 15, "MousePad", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -382,38 +356,33 @@ namespace WebAppMVC.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartProducts_FK_CartId",
-                table: "CartProducts",
-                column: "FK_CartId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CartProducts_Fk_ProductId",
-                table: "CartProducts",
-                column: "Fk_ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Carts_FK_KoalaCustomerId",
+                name: "IX_Carts_KoalaIdId",
                 table: "Carts",
-                column: "FK_KoalaCustomerId");
+                column: "KoalaIdId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_FK_KoalaCustomerId",
+                name: "IX_Orders_FkCustomerId",
                 table: "Orders",
-                column: "FK_KoalaCustomerId");
+                column: "FkCustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductCategories_FK_CategoryId",
-                table: "ProductCategories",
-                column: "FK_CategoryId");
+                name: "IX_Products_cartId",
+                table: "Products",
+                column: "cartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductCategories_FK_ProductId",
-                table: "ProductCategories",
-                column: "FK_ProductId");
+                name: "IX_Products_FkCategory",
+                table: "Products",
+                column: "FkCategory");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductReviews_FK_ProductId",
-                table: "ProductReviews",
+                name: "IX_Products_OrdercartId",
+                table: "Products",
+                column: "OrdercartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_FK_ProductId",
+                table: "Reviews",
                 column: "FK_ProductId");
         }
 
@@ -436,19 +405,13 @@ namespace WebAppMVC.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CartProducts");
-
-            migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "ProductCategories");
-
-            migrationBuilder.DropTable(
-                name: "ProductReviews");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Carts");
@@ -457,7 +420,7 @@ namespace WebAppMVC.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
