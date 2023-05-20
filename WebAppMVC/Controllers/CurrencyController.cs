@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
+using System.Text.Json;
 
 namespace WebAppMVC.Controllers
 {
@@ -19,7 +21,19 @@ namespace WebAppMVC.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+
                 string responseBody = await response.Content.ReadAsStringAsync();
+
+                JsonDocument jsonDoc = JsonDocument.Parse(responseBody);
+
+                string usd = jsonDoc.RootElement.GetProperty("rates").GetProperty("USD").ToString();
+				string eur = jsonDoc.RootElement.GetProperty("rates").GetProperty("EUR").ToString();
+				string sek = jsonDoc.RootElement.GetProperty("rates").GetProperty("SEK").ToString();
+				string currency = jsonDoc.RootElement.GetProperty("rates").ToString();
+
+				Console.WriteLine($"usd: {usd}\neur: {eur}\nsek: {sek}");
+
+                Console.WriteLine(currency);
 
                 Console.WriteLine(responseBody);
 
