@@ -20,7 +20,6 @@ namespace WebAppMVC.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<KoalaCustomer> KoalaCustomers { get; set; }
-        public DbSet<ProductViewModel> ProductViewModel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
