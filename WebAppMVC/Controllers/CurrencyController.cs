@@ -5,12 +5,13 @@ using NuGet.Protocol;
 using System.Text.Json;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
+using WebAppMVC.Models.CurrencyModel;
 using WebAppMVC.Models.ViewModels;
 using static WebAppMVC.Repository.HttpClientRepository;
 
 namespace WebAppMVC.Controllers
 {
-    public class CurrencyController : Controller
+	public class CurrencyController : Controller
 	{
 		private readonly ApplicationDbContext _context;
 		public async Task<IActionResult> Index()
@@ -35,11 +36,12 @@ namespace WebAppMVC.Controllers
 					JsonDocument jsonDoc = JsonDocument.Parse(responseBody);
 
 					Currency currency = JsonConvert.DeserializeObject<Currency>(responseBody);
-					
+
 					currencies.Add(currency);
 
-					_context.Add(currency);
-					_context.SaveChanges();
+
+					//_context.Add(currency);
+					//_context.SaveChanges();
 
 					CloseHttpClient();
 
