@@ -13,8 +13,8 @@ namespace WebAppMVC.Controllers
 {
 	public class CurrencyController : Controller
 	{
-		private readonly ApplicationDbContext _context;
-		public async Task<IActionResult> Index()
+		private ApplicationDbContext _context;
+        public async Task<ActionResult> Index()
 		{
 			List<Currency> currencies = new List<Currency>();
 
@@ -35,13 +35,12 @@ namespace WebAppMVC.Controllers
 
 					JsonDocument jsonDoc = JsonDocument.Parse(responseBody);
 
-					Currency currency = JsonConvert.DeserializeObject<Currency>(responseBody);
+					var currency = JsonConvert.DeserializeObject<Currency>(responseBody);
 
-					currencies.Add(currency);
+					Console.WriteLine($"{currency.success}\n{currency.timestamp}\n{currency.@base}\n{currency.date}\n{currency.rates}");
 
-
-					//_context.Add(currency);
-					//_context.SaveChanges();
+					_context.Add(currency);
+					_context.SaveChanges();
 
 					CloseHttpClient();
 
