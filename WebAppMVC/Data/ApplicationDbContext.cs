@@ -8,7 +8,7 @@ namespace WebAppMVC.Data
 {
     public class ApplicationDbContext : IdentityDbContext<KoalaCustomer, IdentityRole<int>, int>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
@@ -18,8 +18,9 @@ namespace WebAppMVC.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<KoalaCustomer> KoalaCustomers { get; set; }
+		public DbSet<Currency> Currencies { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
@@ -54,6 +55,7 @@ namespace WebAppMVC.Data
                 DataGenerators.NewCategory(title: "Outdoor life", content: "Everything used in outdoor life can be found in this category"),
                 DataGenerators.NewCategory(title: "Electronic", content: "Everything used in Electronic can be found in this category")
                 );
+            
             
         }
     }
