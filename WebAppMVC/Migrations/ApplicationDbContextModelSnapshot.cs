@@ -180,6 +180,29 @@ namespace WebAppMVC.Migrations
                     b.ToTable("Carts");
                 });
 
+            modelBuilder.Entity("WebAppMVC.Models.CartProduct", b =>
+                {
+                    b.Property<int>("CartProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartProductId"));
+
+                    b.Property<int>("FK_CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartProductId");
+
+                    b.HasIndex("FK_CartId");
+
+                    b.HasIndex("Fk_ProductId");
+
+                    b.ToTable("CartProducts");
+                });
+
             modelBuilder.Entity("WebAppMVC.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -195,6 +218,9 @@ namespace WebAppMVC.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("parentId")
+                        .HasColumnType("int");
 
                     b.HasKey("CategoryId");
 
@@ -224,7 +250,7 @@ namespace WebAppMVC.Migrations
                             CategoryId = 8,
                             Content = "Everything used in Electronic can be found in this category",
                             Title = "Electronic"
-                        });
+                });
                 });
 
             modelBuilder.Entity("WebAppMVC.Models.KoalaCustomer", b =>
@@ -258,6 +284,13 @@ namespace WebAppMVC.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("KoalaCustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastLogin")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -556,6 +589,11 @@ namespace WebAppMVC.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -665,7 +703,14 @@ namespace WebAppMVC.Migrations
                     b.Property<int>("FK_ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductReviewId");
@@ -765,11 +810,19 @@ namespace WebAppMVC.Migrations
 
             modelBuilder.Entity("WebAppMVC.Models.Review", b =>
                 {
+                    b.HasOne("WebAppMVC.Models.Category", "Categorys")
+                        .WithMany()
+                        .HasForeignKey("FK_CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WebAppMVC.Models.Product", "Products")
                         .WithMany()
                         .HasForeignKey("FK_ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Categorys");
 
                     b.Navigation("Products");
                 });

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebAppMVC.Models;
+using WebAppMVC.Models.ViewModels;
 
 namespace WebAppMVC.Data
 {
@@ -11,12 +12,15 @@ namespace WebAppMVC.Data
             : base(options)
         {
         }
+        
+        //public DbSet<Admin> Admins { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<KoalaCustomer> KoalaCustomers { get; set; }
+        public DbSet<ProductViewModel> ProductViewModel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
