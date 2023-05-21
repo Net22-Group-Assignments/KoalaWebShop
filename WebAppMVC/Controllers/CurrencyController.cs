@@ -15,6 +15,8 @@ namespace WebAppMVC.Controllers
 		private readonly ApplicationDbContext _context;
 		public async Task<IActionResult> Index()
 		{
+			List<Currency> currencies = new List<Currency>();
+
 			string apiUrl = "https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK";
 			string apiKey = "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo";
 
@@ -33,18 +35,11 @@ namespace WebAppMVC.Controllers
 					JsonDocument jsonDoc = JsonDocument.Parse(responseBody);
 
 					Currency currency = JsonConvert.DeserializeObject<Currency>(responseBody);
+					
+					currencies.Add(currency);
 
-
-					//string usd = jsonDoc.RootElement.GetProperty("rates").GetProperty("USD").ToString();
-					//string eur = jsonDoc.RootElement.GetProperty("rates").GetProperty("EUR").ToString();
-					//string sek = jsonDoc.RootElement.GetProperty("rates").GetProperty("SEK").ToString();
-					//string currency = jsonDoc.RootElement.GetProperty("rates").ToString();
-
-					//Console.WriteLine($"usd: {usd}\neur: {eur}\nsek: {sek}");
-
-					//Console.WriteLine(currency);
-
-					//Console.WriteLine(responseBody);
+					_context.Add(currency);
+					_context.SaveChanges();
 
 					CloseHttpClient();
 
