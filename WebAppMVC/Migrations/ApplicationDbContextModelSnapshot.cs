@@ -180,29 +180,6 @@ namespace WebAppMVC.Migrations
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("WebAppMVC.Models.CartProduct", b =>
-                {
-                    b.Property<int>("CartProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartProductId"));
-
-                    b.Property<int>("FK_CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fk_ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CartProductId");
-
-                    b.HasIndex("FK_CartId");
-
-                    b.HasIndex("Fk_ProductId");
-
-                    b.ToTable("CartProducts");
-                });
-
             modelBuilder.Entity("WebAppMVC.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -218,9 +195,6 @@ namespace WebAppMVC.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("parentId")
-                        .HasColumnType("int");
 
                     b.HasKey("CategoryId");
 
@@ -250,7 +224,7 @@ namespace WebAppMVC.Migrations
                             CategoryId = 8,
                             Content = "Everything used in Electronic can be found in this category",
                             Title = "Electronic"
-                });
+                        });
                 });
 
             modelBuilder.Entity("WebAppMVC.Models.KoalaCustomer", b =>
@@ -273,6 +247,9 @@ namespace WebAppMVC.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Credits")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -284,13 +261,6 @@ namespace WebAppMVC.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("KoalaCustomerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastLogin")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -351,7 +321,8 @@ namespace WebAppMVC.Migrations
                             Id = 11,
                             AccessFailedCount = 0,
                             Adress = "Fakestreet101",
-                            ConcurrencyStamp = "779a7cd8-130e-4aa7-93e5-446aed4e8152",
+                            ConcurrencyStamp = "d7bfc7ee-fb1c-4ede-98be-9e20fb19003d",
+                            Credits = 0m,
                             Email = "jon.westman@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Jon",
@@ -359,10 +330,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "JON.WESTMAN@MAIL.COM",
                             NormalizedUserName = "JON.WESTMAN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEL1wizaAIe0HinHm7p6EHzjsaalFaiuitoPS+DMVtiUtUPK8L7Qy2ddKEmGiKvmxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIedkCCPHmONNWQM1F/pyBw41+gpisgXd0hCJeTcxoI2BXVHwTL7Dat8W2PBL8Gx0g==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 21, 11, 7, 55, 405, DateTimeKind.Local).AddTicks(6114),
-                            SecurityStamp = "OYOPO3Q3X7Z3D65G4A5RIJRWMGE2WPMPKPWKT7JIBJF3VG6VJ4NA",
+                            RegisteredAt = new DateTime(2023, 5, 21, 20, 56, 0, 690, DateTimeKind.Local).AddTicks(6790),
+                            SecurityStamp = "Y2IHT4GUKPRN7JT26TDEHD7PRLMOW25YN5K72Z2ACG6ZVR6UPLEQ",
                             TwoFactorEnabled = false,
                             UserName = "jon.westman@mail.com"
                         },
@@ -371,7 +342,8 @@ namespace WebAppMVC.Migrations
                             Id = 12,
                             AccessFailedCount = 0,
                             Adress = "Fakestreet102",
-                            ConcurrencyStamp = "2d518292-ad86-4797-ad33-05ab0047d2db",
+                            ConcurrencyStamp = "82e0cdcd-b3a9-46e4-a81a-8b661dc11a3b",
+                            Credits = 0m,
                             Email = "bjorn.agnemo@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Björn",
@@ -379,10 +351,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "BJORN.AGNEMO@MAIL.COM",
                             NormalizedUserName = "BJORN.AGNEMO@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEL1wizaAIe0HinHm7p6EHzjsaalFaiuitoPS+DMVtiUtUPK8L7Qy2ddKEmGiKvmxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIedkCCPHmONNWQM1F/pyBw41+gpisgXd0hCJeTcxoI2BXVHwTL7Dat8W2PBL8Gx0g==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 21, 11, 7, 55, 405, DateTimeKind.Local).AddTicks(6210),
-                            SecurityStamp = "JQUPMFAP5OFMWVEU25IWA7IHY4YG7SQTVDUI7VU3ARUHZBBZPN5A",
+                            RegisteredAt = new DateTime(2023, 5, 21, 20, 56, 0, 690, DateTimeKind.Local).AddTicks(6848),
+                            SecurityStamp = "5OFW53TQCX2KQFALM6OP7O6AEFTTJNKW747UWDJD7BXUXYFTHGDA",
                             TwoFactorEnabled = false,
                             UserName = "bjorn.agnemo@mail.com"
                         },
@@ -391,7 +363,8 @@ namespace WebAppMVC.Migrations
                             Id = 13,
                             AccessFailedCount = 0,
                             Adress = "Fakestreet103",
-                            ConcurrencyStamp = "73b919fe-426d-4175-be51-8d1e5d123715",
+                            ConcurrencyStamp = "622501aa-6026-4dc6-a727-06d3885113ba",
+                            Credits = 0m,
                             Email = "Oskar.Ahling@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Oskar",
@@ -399,10 +372,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "OSKAR.AHLING@MAIL.COM",
                             NormalizedUserName = "OSKAR.AHLING@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEL1wizaAIe0HinHm7p6EHzjsaalFaiuitoPS+DMVtiUtUPK8L7Qy2ddKEmGiKvmxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIedkCCPHmONNWQM1F/pyBw41+gpisgXd0hCJeTcxoI2BXVHwTL7Dat8W2PBL8Gx0g==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 21, 11, 7, 55, 405, DateTimeKind.Local).AddTicks(6220),
-                            SecurityStamp = "F33ZIG3LMMNCGSETL2AN4JTJN2657BASY4J72A6NGDOSRBYH5UZA",
+                            RegisteredAt = new DateTime(2023, 5, 21, 20, 56, 0, 690, DateTimeKind.Local).AddTicks(6856),
+                            SecurityStamp = "LDZ5KILPTMC4BT2TBUZHF3LRZLLVQP7FYJ3BCI3IVSKHV2MNSEJA",
                             TwoFactorEnabled = false,
                             UserName = "Oskar.Ahling@mail.com"
                         },
@@ -411,7 +384,8 @@ namespace WebAppMVC.Migrations
                             Id = 14,
                             AccessFailedCount = 0,
                             Adress = "Fakestreet104",
-                            ConcurrencyStamp = "25734deb-ae93-4b1d-9ecf-e58065f22c7e",
+                            ConcurrencyStamp = "763497d0-c4ce-4c1e-a75b-e023a4ebb854",
+                            Credits = 0m,
                             Email = "Reidar.Nilsen@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Reidar",
@@ -419,10 +393,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "REIDAR.NILSEN@MAIL.COM",
                             NormalizedUserName = "REIDAR.NILSEN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEL1wizaAIe0HinHm7p6EHzjsaalFaiuitoPS+DMVtiUtUPK8L7Qy2ddKEmGiKvmxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIedkCCPHmONNWQM1F/pyBw41+gpisgXd0hCJeTcxoI2BXVHwTL7Dat8W2PBL8Gx0g==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 21, 11, 7, 55, 405, DateTimeKind.Local).AddTicks(6229),
-                            SecurityStamp = "622VTMMPQULDRA5V4QQ47HRHIB6HKR5ZHVMHOH3YS5KPK6ESBJOA",
+                            RegisteredAt = new DateTime(2023, 5, 21, 20, 56, 0, 690, DateTimeKind.Local).AddTicks(6865),
+                            SecurityStamp = "5PNG3VNETOQIVXNHD6TKSZTUO4FTLNDHUX3IHBPEZXUTNBCO65XQ",
                             TwoFactorEnabled = false,
                             UserName = "Reidar.Nilsen@mail.com"
                         },
@@ -431,7 +405,8 @@ namespace WebAppMVC.Migrations
                             Id = 15,
                             AccessFailedCount = 0,
                             Adress = "Fakestreet105",
-                            ConcurrencyStamp = "e45422da-ed53-44cc-addb-83bf2b988c58",
+                            ConcurrencyStamp = "67093266-7df5-420d-a9ec-ba9ff1d0e599",
+                            Credits = 0m,
                             Email = "Ina.Nilsson@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Ina",
@@ -439,10 +414,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "INA.NILSSON@MAIL.COM",
                             NormalizedUserName = "INA.NILSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEL1wizaAIe0HinHm7p6EHzjsaalFaiuitoPS+DMVtiUtUPK8L7Qy2ddKEmGiKvmxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIedkCCPHmONNWQM1F/pyBw41+gpisgXd0hCJeTcxoI2BXVHwTL7Dat8W2PBL8Gx0g==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 21, 11, 7, 55, 405, DateTimeKind.Local).AddTicks(6247),
-                            SecurityStamp = "ZO5ERT2XTU2GFEPVJMJNZSPFDLFGVBPA4XWTMGVSU243MZXMH3JQ",
+                            RegisteredAt = new DateTime(2023, 5, 21, 20, 56, 0, 690, DateTimeKind.Local).AddTicks(6873),
+                            SecurityStamp = "KVV7NPXUJDRYIM4K3CM2J3UEJRQW6PEBSTDCOVFBDLVXQVRHJORA",
                             TwoFactorEnabled = false,
                             UserName = "Ina.Nilsson@mail.com"
                         },
@@ -451,7 +426,8 @@ namespace WebAppMVC.Migrations
                             Id = 16,
                             AccessFailedCount = 0,
                             Adress = "Fakestreet106",
-                            ConcurrencyStamp = "ad09a618-48a4-48c7-99da-af493cfc5808",
+                            ConcurrencyStamp = "1224a18a-354e-4aec-a1f6-59ea65208595",
+                            Credits = 0m,
                             Email = "Martin.Petersson@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Martin",
@@ -459,10 +435,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "MARTIN.PETERSSON@MAIL.COM",
                             NormalizedUserName = "MARTIN.PETERSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEL1wizaAIe0HinHm7p6EHzjsaalFaiuitoPS+DMVtiUtUPK8L7Qy2ddKEmGiKvmxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIedkCCPHmONNWQM1F/pyBw41+gpisgXd0hCJeTcxoI2BXVHwTL7Dat8W2PBL8Gx0g==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 21, 11, 7, 55, 405, DateTimeKind.Local).AddTicks(6255),
-                            SecurityStamp = "RXAPWF6FKIFML4GGSI4RQ3X5YSUD7ZG3NHXRPG4KGJKSGGRX5NDQ",
+                            RegisteredAt = new DateTime(2023, 5, 21, 20, 56, 0, 690, DateTimeKind.Local).AddTicks(6881),
+                            SecurityStamp = "I2CO2ETGSM6G2AWS5JNWR6H4TG75UJJZOKQOHDHN2577LMGFJZHQ",
                             TwoFactorEnabled = false,
                             UserName = "Martin.Petersson@mail.com"
                         },
@@ -471,7 +447,8 @@ namespace WebAppMVC.Migrations
                             Id = 17,
                             AccessFailedCount = 0,
                             Adress = "Fakestreet107",
-                            ConcurrencyStamp = "299896ca-c437-4519-8842-f1d3ad229ac5",
+                            ConcurrencyStamp = "1c203ab6-69f3-427e-b276-fdc79c692ae3",
+                            Credits = 0m,
                             Email = "Steve.Carell@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Steve",
@@ -479,10 +456,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "STEVE.CARELL@MAIL.COM",
                             NormalizedUserName = "STEVE.CARELL@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEL1wizaAIe0HinHm7p6EHzjsaalFaiuitoPS+DMVtiUtUPK8L7Qy2ddKEmGiKvmxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIedkCCPHmONNWQM1F/pyBw41+gpisgXd0hCJeTcxoI2BXVHwTL7Dat8W2PBL8Gx0g==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 21, 11, 7, 55, 405, DateTimeKind.Local).AddTicks(6264),
-                            SecurityStamp = "T3YLAN3BGKZG6HU42UUX3HJPJH5SKEF4C24K3KV4VFHSRJFWJEGA",
+                            RegisteredAt = new DateTime(2023, 5, 21, 20, 56, 0, 690, DateTimeKind.Local).AddTicks(6889),
+                            SecurityStamp = "ZCO7V56LYQYPBCGYEWC4BHQKNJQAMBNBEVO46DFZFQ723WN65EFQ",
                             TwoFactorEnabled = false,
                             UserName = "Steve.Carell@mail.com"
                         },
@@ -491,7 +468,8 @@ namespace WebAppMVC.Migrations
                             Id = 18,
                             AccessFailedCount = 0,
                             Adress = "Fakestreet108",
-                            ConcurrencyStamp = "24fa530b-6e01-4111-8e72-a25e455db50d",
+                            ConcurrencyStamp = "0b187c1a-0f0e-4fe7-b4cc-add396aa0a94",
+                            Credits = 0m,
                             Email = "Grogu.Mandelorian@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Grogu",
@@ -499,10 +477,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "GROGU.MANDELORIAN@MAIL.COM",
                             NormalizedUserName = "GROGU.MANDELORIAN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEL1wizaAIe0HinHm7p6EHzjsaalFaiuitoPS+DMVtiUtUPK8L7Qy2ddKEmGiKvmxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIedkCCPHmONNWQM1F/pyBw41+gpisgXd0hCJeTcxoI2BXVHwTL7Dat8W2PBL8Gx0g==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 21, 11, 7, 55, 405, DateTimeKind.Local).AddTicks(6274),
-                            SecurityStamp = "VDE4J6M7XV2DVQOJD3S3NOKJVBS5NXTG7VRQLR2WWKFACB3BPIKQ",
+                            RegisteredAt = new DateTime(2023, 5, 21, 20, 56, 0, 690, DateTimeKind.Local).AddTicks(6897),
+                            SecurityStamp = "FR7S5XOPD5QQDP5POBUCBRC5OM6YPVDTUPUFZHWBBRBUW3IEDJWQ",
                             TwoFactorEnabled = false,
                             UserName = "Grogu.Mandelorian@mail.com"
                         },
@@ -511,7 +489,8 @@ namespace WebAppMVC.Migrations
                             Id = 19,
                             AccessFailedCount = 0,
                             Adress = "Fakestreet109",
-                            ConcurrencyStamp = "8092b283-c362-4e42-b9fa-2e9fcaca8799",
+                            ConcurrencyStamp = "28a0a36d-66dc-4012-9e12-6be9604c3318",
+                            Credits = 0m,
                             Email = "Lotta.Svensson@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Lotta",
@@ -519,10 +498,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "LOTTA.SVENSSON@MAIL.COM",
                             NormalizedUserName = "LOTTA.SVENSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEL1wizaAIe0HinHm7p6EHzjsaalFaiuitoPS+DMVtiUtUPK8L7Qy2ddKEmGiKvmxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIedkCCPHmONNWQM1F/pyBw41+gpisgXd0hCJeTcxoI2BXVHwTL7Dat8W2PBL8Gx0g==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 21, 11, 7, 55, 405, DateTimeKind.Local).AddTicks(6283),
-                            SecurityStamp = "UYZME6OAWYCNHQ7ZLW4YGDXRTHSEGZ7TD2IQIKQXIZYSPLJXDCSQ",
+                            RegisteredAt = new DateTime(2023, 5, 21, 20, 56, 0, 690, DateTimeKind.Local).AddTicks(6909),
+                            SecurityStamp = "6AWYIKKBXR6Y7HVDAZK5TJ66UIAWLEGK7MCH4SYEE4ZYJ4DJ6Z2A",
                             TwoFactorEnabled = false,
                             UserName = "Lotta.Svensson@mail.com"
                         },
@@ -531,7 +510,8 @@ namespace WebAppMVC.Migrations
                             Id = 20,
                             AccessFailedCount = 0,
                             Adress = "Fakestreet110",
-                            ConcurrencyStamp = "88916175-1e2b-417a-b7cc-c662b00fc072",
+                            ConcurrencyStamp = "58ef79c2-aeba-43db-8425-cf15be28267b",
+                            Credits = 0m,
                             Email = "Emilia.Ristersson@mail.com",
                             EmailConfirmed = true,
                             FirstMidName = "Emilia",
@@ -539,10 +519,10 @@ namespace WebAppMVC.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "EMILIA.RISTERSSON@MAIL.COM",
                             NormalizedUserName = "EMILIA.RISTERSSON@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEL1wizaAIe0HinHm7p6EHzjsaalFaiuitoPS+DMVtiUtUPK8L7Qy2ddKEmGiKvmxA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIedkCCPHmONNWQM1F/pyBw41+gpisgXd0hCJeTcxoI2BXVHwTL7Dat8W2PBL8Gx0g==",
                             PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2023, 5, 21, 11, 7, 55, 405, DateTimeKind.Local).AddTicks(6291),
-                            SecurityStamp = "XUXRNDZAC5V27IWEWCJZR2STN7TGHINGRNG4KJSRS6AKYL6GWXIA",
+                            RegisteredAt = new DateTime(2023, 5, 21, 20, 56, 0, 690, DateTimeKind.Local).AddTicks(6917),
+                            SecurityStamp = "BMWIJVBLNRCIWX7ZK3RT276HI6RKJPHCGUTPO2KEU2BUZBLNHDAQ",
                             TwoFactorEnabled = false,
                             UserName = "Emilia.Ristersson@mail.com"
                         });
@@ -588,11 +568,6 @@ namespace WebAppMVC.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -703,14 +678,7 @@ namespace WebAppMVC.Migrations
                     b.Property<int>("FK_ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ParentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductReviewId");
@@ -810,19 +778,11 @@ namespace WebAppMVC.Migrations
 
             modelBuilder.Entity("WebAppMVC.Models.Review", b =>
                 {
-                    b.HasOne("WebAppMVC.Models.Category", "Categorys")
-                        .WithMany()
-                        .HasForeignKey("FK_CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("WebAppMVC.Models.Product", "Products")
                         .WithMany()
                         .HasForeignKey("FK_ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Categorys");
 
                     b.Navigation("Products");
                 });

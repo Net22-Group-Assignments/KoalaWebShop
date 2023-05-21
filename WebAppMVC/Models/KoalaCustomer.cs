@@ -13,6 +13,7 @@ namespace WebAppMVC.Models
         [Required]
         [StringLength(40)]
         public string LastName { get; set; }
+        public decimal Credits { get; set; }
         [Required]
         [StringLength(50)]
         public string Adress { get; set; }
