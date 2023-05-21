@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebAppMVC.Models.CurrencyModel;
 
 namespace WebAppMVC.Models
 {
@@ -13,13 +14,5 @@ namespace WebAppMVC.Models
 		public Rates rates { get; set; }
     }
 
-	public class Rates
-	{
-		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RatesId { get; set; }
-        public decimal SEK { get; set; }
-		public decimal USD { get; set; }
-		public decimal EUR { get; set; }
-	}
+
 }
