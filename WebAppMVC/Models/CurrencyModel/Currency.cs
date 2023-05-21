@@ -9,7 +9,9 @@ namespace WebAppMVC.Models
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int CurrencyId { get; set; }
-		public string Base { get; set; } = "SEK";
+        public string success { get; set; }
+        public int timestamp { get; set; }
+        public string @base { get; set; }
 		public string date { get; set; }
 		public Rates rates { get; set; }
     }
