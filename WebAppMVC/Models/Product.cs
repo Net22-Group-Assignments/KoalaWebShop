@@ -15,7 +15,7 @@ namespace WebAppMVC.Models
         public decimal Price { get; set; }
         [Required]
         public int Quantity { get; set; }
-       
+        public string? ImgURL { get; set; }
         //ForeginKEy
         [ForeignKey("Category")]
         public int? FkCategory { get; set; }

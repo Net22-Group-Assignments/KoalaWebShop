@@ -13,6 +13,7 @@ namespace WebAppMVC.Models
         public DateTime CreatedAt { get; set; }
         [Required]
         public string Content { get; set; }
+        public string ImgURL { get; set; }
 
         //ForeginKey
         [ForeignKey("Products")]
