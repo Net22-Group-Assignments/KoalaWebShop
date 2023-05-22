@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using NuGet.Protocol;
 using System.Text.Json;
+using WebAppMVC.Data;
+using WebAppMVC.Models;
+using WebAppMVC.Models.CurrencyModel;
 using WebAppMVC.Models.ViewModels;
 using static WebAppMVC.Repository.HttpClientRepository;
 
@@ -9,10 +13,14 @@ namespace WebAppMVC.Controllers
 {
 	public class CurrencyController : Controller
 	{
-		public async Task<IActionResult> Index()
-		{
-			List<CurrencyViewModel> list = new List<CurrencyViewModel>();
+		private readonly ApplicationDbContext _context;
+        public CurrencyController(ApplicationDbContext context)
+        {
+			_context = context;
+        }
 
+        public async Task<ActionResult> Index()
+		{
 			string apiUrl = "https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK";
 			string apiKey = "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo";
 
@@ -28,22 +36,14 @@ namespace WebAppMVC.Controllers
 
 					string responseBody = await response.Content.ReadAsStringAsync();
 
-					JsonDocument jsonDoc = JsonDocument.Parse(responseBody);
+					var currency = JsonConvert.DeserializeObject<Currency>(responseBody);
 
-					string usd = jsonDoc.RootElement.GetProperty("rates").GetProperty("USD").ToString();
-					string eur = jsonDoc.RootElement.GetProperty("rates").GetProperty("EUR").ToString();
-					string sek = jsonDoc.RootElement.GetProperty("rates").GetProperty("SEK").ToString();
-					string currency = jsonDoc.RootElement.GetProperty("rates").ToString();
-
-					Console.WriteLine($"usd: {usd}\neur: {eur}\nsek: {sek}");
-
-					Console.WriteLine(currency);
-
-					Console.WriteLine(responseBody);
+					_context.Currencies.Add(currency);
+					await _context.SaveChangesAsync();
 
 					CloseHttpClient();
 
-					return View(responseBody);
+					return View(currency);
 				}
 				else
 				{
