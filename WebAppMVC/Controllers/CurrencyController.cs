@@ -13,11 +13,14 @@ namespace WebAppMVC.Controllers
 {
 	public class CurrencyController : Controller
 	{
-		private ApplicationDbContext _context;
+		private readonly ApplicationDbContext _context;
+        public CurrencyController(ApplicationDbContext context)
+        {
+			_context = context;
+        }
+
         public async Task<ActionResult> Index()
 		{
-			List<Currency> currencies = new List<Currency>();
-
 			string apiUrl = "https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK";
 			string apiKey = "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo";
 
@@ -33,18 +36,14 @@ namespace WebAppMVC.Controllers
 
 					string responseBody = await response.Content.ReadAsStringAsync();
 
-					JsonDocument jsonDoc = JsonDocument.Parse(responseBody);
-
 					var currency = JsonConvert.DeserializeObject<Currency>(responseBody);
 
-					Console.WriteLine($"{currency.success}\n{currency.timestamp}\n{currency.@base}\n{currency.date}\n{currency.rates}");
-
-					_context.Add(currency);
-					_context.SaveChanges();
+					_context.Currencies.Add(currency);
+					await _context.SaveChangesAsync();
 
 					CloseHttpClient();
 
-					return View(responseBody);
+					return View(currency);
 				}
 				else
 				{
