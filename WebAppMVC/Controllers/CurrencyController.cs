@@ -11,49 +11,64 @@ using static WebAppMVC.Repository.HttpClientRepository;
 
 namespace WebAppMVC.Controllers
 {
-	public class CurrencyController : Controller
-	{
-		private readonly ApplicationDbContext _context;
+    public class CurrencyController : Controller
+    {
+        private readonly ApplicationDbContext _context;
         public CurrencyController(ApplicationDbContext context)
         {
-			_context = context;
+            _context = context;
         }
 
         public async Task<ActionResult> Index()
-		{
-			string apiUrl = "https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK";
-			string apiKey = "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo";
+        {
+            string apiUrl = "https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK";
+            string apiKey = "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo";
 
-			string fullUrl = $"{apiUrl}&apikey={apiKey}";
+            string fullUrl = $"{apiUrl}&apikey={apiKey}";
 
-			var request = new HttpRequestMessage(HttpMethod.Get, fullUrl);
+            var request = new HttpRequestMessage(HttpMethod.Get, fullUrl);
 
-			using (var response = await GetHttpClient().SendAsync(request))
-			{
+            using (var httpClient = GetHttpClient())
+            {
+                httpClient.Timeout = TimeSpan.FromSeconds(10);
 
-				if (response.IsSuccessStatusCode)
-				{
+                using (var response = await httpClient.SendAsync(request))
+                {
 
-					string responseBody = await response.Content.ReadAsStringAsync();
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
 
-					var currency = JsonConvert.DeserializeObject<Currency>(responseBody);
+                        var currency = JsonConvert.DeserializeObject<Currency>(responseBody);
 
-					_context.Currencies.Add(currency);
-					await _context.SaveChangesAsync();
+                        if (!_context.Currencies.Any())
+                        {
+                            _context.Currencies.Add(currency);
+                            await _context.SaveChangesAsync();
 
-					CloseHttpClient();
+                            //CloseHttpClient();
+                        }
+                        else
+                        {
+                            _context.Currencies.Update(currency);
+                            await _context.SaveChangesAsync();
 
-					return View(currency);
-				}
-				else
-				{
-					string errorMessage = $"API request failed with status code: {response.StatusCode}";
+                            //CloseHttpClient();
+                        }
 
-					CloseHttpClient();
 
-					return View(errorMessage);
-				}
-			}
-		}
-	}
+                        return View(currency);
+                    }
+                    else
+                    {
+                        string errorMessage = $"API request failed with status code: {response.StatusCode}";
+
+                        //CloseHttpClient();
+
+                        return View(errorMessage);
+                    }
+                }
+            }
+        }
+    }
 }
