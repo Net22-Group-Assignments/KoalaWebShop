@@ -28,7 +28,7 @@ namespace WebAppMVC.Controllers
 
             var request = new HttpRequestMessage(HttpMethod.Get, fullUrl);
 
-            using (var httpClient = GetHttpClient())
+            using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(10);
 
@@ -46,14 +46,12 @@ namespace WebAppMVC.Controllers
                             _context.Currencies.Add(currency);
                             await _context.SaveChangesAsync();
 
-                            //CloseHttpClient();
                         }
                         else
                         {
                             _context.Currencies.Update(currency);
                             await _context.SaveChangesAsync();
 
-                            //CloseHttpClient();
                         }
 
 
@@ -63,8 +61,7 @@ namespace WebAppMVC.Controllers
                     {
                         string errorMessage = $"API request failed with status code: {response.StatusCode}";
 
-                        //CloseHttpClient();
-
+                        
                         return View(errorMessage);
                     }
                 }
