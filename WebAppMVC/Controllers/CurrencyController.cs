@@ -29,7 +29,7 @@ namespace WebAppMVC.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                httpClient.Timeout = TimeSpan.FromSeconds(10);
+                httpClient.Timeout = TimeSpan.FromSeconds(90);
 
                 using (var response = await httpClient.SendAsync(request))
                 {
@@ -48,13 +48,20 @@ namespace WebAppMVC.Controllers
                         }
                         else
                         {
-                            _context.Currencies.Update(currency);
+                            var oldCurrency = await _context.Currencies.Include(c => c.rates).FirstOrDefaultAsync();
+                            oldCurrency.success = currency.success;
+                            oldCurrency.timestamp = currency.timestamp;
+                            oldCurrency.@base = currency.@base;
+                            oldCurrency.date = currency.date;
+                            oldCurrency.rates.SEK = currency.rates.SEK;
+                            oldCurrency.rates.USD = currency.rates.USD;
+                            oldCurrency.rates.EUR = currency.rates.EUR;
+
                             await _context.SaveChangesAsync();
 
                         }
 
-
-                        return View(currency);
+                        return View();
                     }
                     else
                     {
