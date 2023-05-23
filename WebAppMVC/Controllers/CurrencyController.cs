@@ -7,7 +7,6 @@ using WebAppMVC.Data;
 using WebAppMVC.Models;
 using WebAppMVC.Models.CurrencyModel;
 using WebAppMVC.Models.ViewModels;
-using static WebAppMVC.Repository.HttpClientRepository;
 
 namespace WebAppMVC.Controllers
 {
