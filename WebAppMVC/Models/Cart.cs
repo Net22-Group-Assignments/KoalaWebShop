@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAppMVC.Models
@@ -7,20 +8,12 @@ namespace WebAppMVC.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CartId { get; set; }
-        [ForeignKey(nameof(KoalaCustomers))]
-        public int FK_KoalaCustomerId { get; set; }
-        public KoalaCustomer KoalaCustomers { get; set; }
-        public string SessionId { get; set; }
-        public int Status { get; set; }
-        public string FirstMidName { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNr { get; set; }
-        public string Email { get; set; }
-        public string City { get; set; }
-        public string Province { get; set; }
-        public string Country { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public string Content { get; set; }
+        public int cartId { get; set; }
+        //ForeignKey for Customer
+        [ForeignKey("koalaId")]
+        public int FkCustomerId { get; set; }
+        public KoalaCustomer KoalaId { get; set; }
+        public ICollection<Product> Products { get; set; }
+
     }
 }

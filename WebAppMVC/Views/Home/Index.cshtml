@@ -1,8 +1,43 @@
-﻿@{
+﻿@model IEnumerable<WebAppMVC.Models.Product>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@*<!DOCTYPE html>*@
+
+<h1>KoalaWebbShop</h1>
+
+<form asap-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by productname or category: <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to full list</a>
+        </p>
+    </div>
+</form>
+
+<div id="container-container">
+    <table>
+        <tbody class="table" id="display-container">
+            @foreach (var item in Model)
+            {
+                <tr class="d-xxl-table-cell">
+                    <td class="table-bordered" id="Display">
+                        @Html.DisplayFor(modelItem => item.Title)
+                        <br />
+                        @Html.DisplayFor(modelItem => item.Price)
+                        <br />
+                        @Html.DisplayFor(modelItem => item.ImgURL)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.ProductId">Detail</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+

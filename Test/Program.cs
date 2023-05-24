@@ -1,5 +1,5 @@
 
-namespace WebAppAPI
+namespace Test
 {
     public class Program
     {
