@@ -21,15 +21,16 @@ namespace WebAppMVC.Controllers
         {
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CurrentFilter"] = searchString;
-            var products = from p in _context.Products.Include(c => c.Category)
-                           select p;
+            var products = from p in _context.Products.Include(c => c.Category) select p;
             if (!string.IsNullOrEmpty(searchString))
             {
-                products = products.Where(p => p.Title.Contains(searchString)
-                                        || p.Category.Title.Contains(searchString));
+                products = products.Where(
+                    p => p.Title.Contains(searchString) || p.Category.Title.Contains(searchString)
+                );
             }
             return View(await products.AsNoTracking().ToListAsync());
         }
+
         //Get: Product
         public async Task<IActionResult> Edit(int? id)
         {
@@ -44,6 +45,7 @@ namespace WebAppMVC.Controllers
             }
             return View(product);
         }
+
         //post: productedit
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
@@ -53,8 +55,19 @@ namespace WebAppMVC.Controllers
             {
                 return NotFound();
             }
-            var productToUpdate = await _context.Products.AsNoTracking().FirstOrDefaultAsync(p => p.ProductId == id);
-            if (await TryUpdateModelAsync<Product>(productToUpdate, "", p => p.Title, p => p.Category, p => p.Price, p => p.Quantity))
+            var productToUpdate = await _context.Products
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.ProductId == id);
+            if (
+                await TryUpdateModelAsync<Product>(
+                    productToUpdate,
+                    "",
+                    p => p.Title,
+                    p => p.Category,
+                    p => p.Price,
+                    p => p.Quantity
+                )
+            )
             {
                 try
                 {
@@ -67,29 +80,35 @@ namespace WebAppMVC.Controllers
                 }
             }
             return View(productToUpdate);
-
-
         }
+
         //Get productDetails
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null ||_context.Products == null)
+            if (id == null || _context.Products == null)
             {
                 return NotFound();
             }
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.ProductId == id);
             if (product == null)
             {
                 return NotFound();
             }
+
             return View(product);
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(
+                new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+                }
+            );
         }
     }
 }
