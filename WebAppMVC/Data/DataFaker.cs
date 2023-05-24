@@ -88,7 +88,7 @@ public class DataFaker
     private static IReadOnlyCollection<Product> GenerateProducts(
         IEnumerable<Category> categories,
         int amount = 100,
-        float discountChance = 0.10f,
+        float discountChance = 0.25f,
         int maxReviews = 5,
         int maxQuantity = 100,
         bool databaseGeneratedIdentity = true
