@@ -7,6 +7,7 @@ using WebAppAPI.Repository;
 using WebAppAPI.Repository.IRepository;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
+using WebAppMVC.Services;
 
 var seedData = false;
 var dryRun = false;
@@ -36,10 +37,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 );
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//Pre-load Data
+//Pre-load Data IRepository
 builder.Services.AddScoped<IRepository<KoalaCustomer>, Repository<KoalaCustomer>>();
 builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
 builder.Services.AddScoped<IRepository<Review>, Repository<Review>>();
+//AddServices
+builder.Services.AddScoped<CartService>();
 
 //End of Pre-load data
 
