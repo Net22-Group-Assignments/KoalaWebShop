@@ -9,6 +9,7 @@ namespace WebAppMVC.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int cartId { get; set; }
+        
         //ForeignKey for Customer
         [ForeignKey("koalaId")]
         public int FkCustomerId { get; set; }

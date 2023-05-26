@@ -1,13 +1,21 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using NuGet.Protocol.Core.Types;
+using System.Configuration;
 using WebAppAPI;
 using WebAppAPI.Repository;
 using WebAppAPI.Repository.IRepository;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//IConfig
+//endofIconfig
+
+    
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
