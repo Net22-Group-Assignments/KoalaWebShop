@@ -121,70 +121,80 @@ namespace WebAppMVC.Data
                         price: 599,
                         quantity: 5,
                         content: "A nice jacket",
-                        category: fashionCategory
+                        category: fashionCategory,
+                        imageUrl: "https://americasuits.com/image/cache/wp/gj/resident-evil-4-leon-kennedy-jacket/resident-evil-4-leon-kennedy-jacket-1100x1100h.webp"
                     ),
                     DataGenerators.NewProduct(
                         title: "Pants",
                         price: 499,
                         quantity: 6,
                         content: "So-so pants",
-                        category: fashionCategory
+                        category: fashionCategory,
+                        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/d/da/Trousers-colourisolated.jpg"
                     ),
                     DataGenerators.NewProduct(
                         title: "HockeyStick",
                         price: 1299,
                         quantity: 11,
                         content: "Stick it to the (goal)-man",
-                        category: sportCategory
+                        category: sportCategory,
+                        imageUrl: "https://4.bp.blogspot.com/-WHe4vnmCBkQ/V__MkZOfOPI/AAAAAAAAD-0/17GkfCHqXZ8XArU_uSJgdk4h9TV-kFFnACLcB/s1600/titantsm99.jpg"
                     ),
                     DataGenerators.NewProduct(
                         title: "Football",
                         price: 399,
                         quantity: 12,
                         content: "In sweden we say joxa med trasan",
-                        category: sportCategory
+                        category: sportCategory,
+                        imageUrl: "https://www.thesoccerstore.co.uk/wp-content/uploads/Old-Mitre-Football.jpg"
                     ),
                     DataGenerators.NewProduct(
                         title: "Snowboard",
                         price: 2099,
                         quantity: 10,
                         content: "Rad!!!",
-                        category: outdoorCategory
+                        category: outdoorCategory,
+                        imageUrl: "https://th-thumbnailer.cdn-si-edu.com/nrlGXEDS63adOwlk-QTZeLM8yw4=/fit-in/1072x0/filters:focal(585x830:586x831)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer_public/56/5a/565a1afc-62ae-462e-a5f3-1ba4a65b68c1/janfeb2022_e04_prologue.jpg"
                     ),
                     DataGenerators.NewProduct(
                         title: "HeadPhones",
                         price: 1199,
                         quantity: 5,
                         content: "Tinnitus-inducing guaranteed",
-                        category: electronicCategory
+                        category: electronicCategory,
+                        imageUrl: "https://flashbak.com/wp-content/uploads/2018/02/1975-Sears-Wishbook2017-11-25-20_45_53-1280x766.jpg"
                     ),
                     DataGenerators.NewProduct(
                         title: "GamingMouse",
                         price: 649,
                         quantity: 3,
                         content: "5 giga-dpi and infinite APM",
-                        category: electronicCategory
+                        category: electronicCategory,
+                        imageUrl: "https://i.pcmag.com/imagery/articles/07kXnVL7WadXYRlXGpKwS6x-1.jpg"
                     ),
                     DataGenerators.NewProduct(
                         title: "Mechanicle Keyboard",
                         price: 1799,
                         quantity: 7,
                         content: "Clickity-Clackity!",
-                        category: electronicCategory
+                        category: electronicCategory,
+                        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/47/Space-cadet.jpg"
                     ),
                     DataGenerators.NewProduct(
                         title: "ComputerScreen",
                         price: 2199,
                         quantity: 2,
                         content: "100 lbs of CRT",
-                        category: electronicCategory
+                        category: electronicCategory,
+                        imageUrl: "https://archive.mith.umd.edu/vintage-computers/archive/fullsize/img_1417_32dd1d0df0.jpg"
                     ),
                     DataGenerators.NewProduct(
                         title: "MousePad",
                         price: 99,
                         quantity: 15,
                         content: "Signed by Ninja",
-                        category: electronicCategory
+                        category: electronicCategory,
+                        imageUrl: "https://i3.cpcache.com/merchandise/3_750x750_Front_Color-NA.jpg?AttributeValue=NA&c=False&OrientationNo=1&region={%22name%22:%22FrontCenter%22,%22width%22:8,%22height%22:8,%22alignment%22:%22MiddleCenter%22,%22orientation%22:1,%22dpi%22:100,%22crop_x%22:0,%22crop_y%22:0,%22crop_h%22:800,%22crop_w%22:800,%22scale%22:0,%22template%22:{%22id%22:20445850,%22params%22:{}}}&cid=PUartJBjiF%2fyg4FdKqiggQ%3d%3d+%7c%7c+Bo%2fDnDkn7FICaYkBchZRUQ%3d%3d&ProductNo=145782874"
                     )
                 );
         }

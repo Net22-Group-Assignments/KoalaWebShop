@@ -55,7 +55,8 @@ public class DataGenerators
         decimal price,
         int quantity,
         string content,
-        Category category = null
+        Category category = null,
+        string imageUrl = null
     )
     {
         var product = new Product()
@@ -65,6 +66,7 @@ public class DataGenerators
             Price = price,
             Quantity = quantity,
             Content = content,
+            ImgURL = imageUrl
         };
 
         if (category is not null)

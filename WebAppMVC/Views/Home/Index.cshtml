@@ -3,41 +3,29 @@
     ViewData["Title"] = "Home Page";
 }
 
-@*<!DOCTYPE html>*@
-
-<h1>KoalaWebbShop</h1>
-
-<form asap-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Find by productname or category: <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to full list</a>
-        </p>
-    </div>
-</form>
-
-<div id="container-container">
-    <table>
-        <tbody class="table" id="display-container">
-            @foreach (var item in Model)
-            {
-                <tr class="d-xxl-table-cell">
-                    <td class="table-bordered" id="Display">
-                        @Html.DisplayFor(modelItem => item.Title)
-                        <br />
+<div class="columns is-multiline is-mobile">
+    @foreach (var item in Model)
+    {
+        <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">@Html.DisplayFor(modelItem => item.Title)</p>
+                </header>
+                <div class="card-image">
+                    <figure class="image is-square">
+                        <img src="@item.ImgURL" alt=""/>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="content">
                         @Html.DisplayFor(modelItem => item.Price)
-                        <br />
-                        @Html.DisplayFor(modelItem => item.ImgURL)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.ProductId">Detail</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <a class="card-footer-item" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
+                    <a class="card-footer-item" asp-action="Details" asp-route-id="@item.ProductId">Detail</a>
+                </footer>
+            </div>
+        </div>
+    }
 </div>
-
-
