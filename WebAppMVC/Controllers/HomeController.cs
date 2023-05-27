@@ -57,7 +57,7 @@ namespace WebAppMVC.Controllers
             }
             var productToUpdate = await _context.Products
                 .AsNoTracking()
-                .FirstOrDefaultAsync(p => p.ProductId == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
             if (
                 await TryUpdateModelAsync<Product>(
                     productToUpdate,
@@ -91,7 +91,7 @@ namespace WebAppMVC.Controllers
             }
             var product = await _context.Products
                 .Include(p => p.Category)
-                .FirstOrDefaultAsync(p => p.ProductId == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
             if (product == null)
             {
                 return NotFound();

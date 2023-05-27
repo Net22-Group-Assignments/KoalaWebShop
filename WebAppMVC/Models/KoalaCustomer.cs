@@ -10,18 +10,23 @@ namespace WebAppMVC.Models
         [Required]
         [StringLength(40)]
         public string FirstMidName { get; set; }
+
         [Required]
         [StringLength(40)]
         public string LastName { get; set; }
+
         public decimal Credits { get; set; }
+
         [Required]
         [StringLength(50)]
-        public string Adress { get; set; }
+        public string Address { get; set; }
+
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime RegisteredAt { get; set; }
 
-        ICollection<Order> Orders { get; set; }
-        ICollection<Review> Reviews { get; set; }
-    
+        public ICollection<Order> Orders { get; set; }
+
+        public ICollection<Review> Reviews { get; set; }
     }
 }

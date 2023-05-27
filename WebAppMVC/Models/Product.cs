@@ -7,7 +7,7 @@ namespace WebAppMVC.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ProductId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(40)]
@@ -26,11 +26,10 @@ namespace WebAppMVC.Models
         public int Quantity { get; set; }
         public string ImgURL { get; set; }
 
-        //ForeginKEy
-        [ForeignKey("Category")]
-        public int? FkCategory { get; set; }
-        public Category? Category { get; set; }
+        // Foreign Key
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
 
-        public ICollection<Review>? Reviews { get; set; }
+        public ICollection<Review> Reviews { get; set; }
     }
 }

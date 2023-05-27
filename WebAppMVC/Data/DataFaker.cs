@@ -76,7 +76,7 @@ public class DataFaker
 
         if (!databaseGeneratedIdentity)
         {
-            categoryFaker = categoryFaker.RuleFor(category => category.CategoryId, categoryIds++);
+            categoryFaker = categoryFaker.RuleFor(category => category.Id, categoryIds++);
         }
 
         return Enumerable
@@ -128,7 +128,7 @@ public class DataFaker
 
         if (!databaseGeneratedIdentity)
         {
-            productFaker = productFaker.RuleFor(product => product.ProductId, productIds);
+            productFaker = productFaker.RuleFor(product => product.Id, productIds);
         }
 
         return Enumerable.Range(1, amount).Select(i => SeedRow(productFaker, i)).ToList();
@@ -154,7 +154,7 @@ public class DataFaker
 
         if (!databaseGeneratedIdentity)
         {
-            reviewFaker = reviewFaker.RuleFor(review => review.ProductReviewId, reviewIds++);
+            reviewFaker = reviewFaker.RuleFor(review => review.Id, reviewIds++);
         }
 
         return Enumerable

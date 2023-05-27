@@ -19,10 +19,56 @@ namespace WebAppMVC.Data
         public DbSet<Review> Reviews { get; set; }
         public DbSet<KoalaCustomer> KoalaCustomers { get; set; }
         public DbSet<Currency> Currencies { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<KoalaCustomer>(customer =>
+            {
+                customer
+                    .HasMany(c => c.Orders)
+                    .WithOne(o => o.Customer)
+                    .HasForeignKey(o => o.CustomerId);
+                customer
+                    .HasMany(c => c.Reviews)
+                    .WithOne(r => r.Customer)
+                    .HasForeignKey(r => r.CustomerId);
+            });
+
+            modelBuilder.Entity<Product>(product =>
+            {
+                product.HasOne(p => p.Category).WithMany().HasForeignKey(p => p.CategoryId);
+                product
+                    .HasMany(p => p.Reviews)
+                    .WithOne(r => r.Product)
+                    .HasForeignKey(r => r.ProductId);
+            });
+
+            modelBuilder.Entity<Cart>(cart =>
+            {
+                cart.HasOne(c => c.Customer).WithOne();
+            });
+
+            modelBuilder.Entity<CartItem>(cartItem =>
+            {
+                cartItem
+                    .HasOne(ci => ci.Cart)
+                    .WithMany(ca => ca.CartItems)
+                    .HasForeignKey(ci => ci.CartId);
+                cartItem.HasOne(ci => ci.Product).WithMany().HasForeignKey(ci => ci.ProductId);
+            });
+
+            modelBuilder.Entity<OrderItem>(orderItem =>
+            {
+                orderItem
+                    .HasOne(oi => oi.Order)
+                    .WithMany(o => o.OrderItems)
+                    .HasForeignKey(oi => oi.OrderId);
+                orderItem.HasOne(oi => oi.Product).WithMany().HasForeignKey(oi => oi.ProductId);
+            });
 
             modelBuilder
                 .Entity<KoalaCustomer>()
@@ -31,61 +77,61 @@ namespace WebAppMVC.Data
                         email: "jon.westman@mail.com",
                         firstMidName: "Jon",
                         lastName: "Westman",
-                        adress: "Fakestreet101"
+                        address: "Fakestreet101"
                     ),
                     DataGenerators.NewCustomer(
                         email: "bjorn.agnemo@mail.com",
                         firstMidName: "Björn",
                         lastName: "Agnemo",
-                        adress: "Fakestreet102"
+                        address: "Fakestreet102"
                     ),
                     DataGenerators.NewCustomer(
                         email: "Oskar.Ahling@mail.com",
                         firstMidName: "Oskar",
                         lastName: "Åhling",
-                        adress: "Fakestreet103"
+                        address: "Fakestreet103"
                     ),
                     DataGenerators.NewCustomer(
                         email: "Reidar.Nilsen@mail.com",
                         firstMidName: "Reidar",
                         lastName: "Nilsen",
-                        adress: "Fakestreet104"
+                        address: "Fakestreet104"
                     ),
                     DataGenerators.NewCustomer(
                         email: "Ina.Nilsson@mail.com",
                         firstMidName: "Ina",
                         lastName: "Nilsson",
-                        adress: "Fakestreet105"
+                        address: "Fakestreet105"
                     ),
                     DataGenerators.NewCustomer(
                         email: "Martin.Petersson@mail.com",
                         firstMidName: "Martin",
                         lastName: "Petersson",
-                        adress: "Fakestreet106"
+                        address: "Fakestreet106"
                     ),
                     DataGenerators.NewCustomer(
                         email: "Steve.Carell@mail.com",
                         firstMidName: "Steve",
                         lastName: "Carell",
-                        adress: "Fakestreet107"
+                        address: "Fakestreet107"
                     ),
                     DataGenerators.NewCustomer(
                         email: "Grogu.Mandelorian@mail.com",
                         firstMidName: "Grogu",
                         lastName: "Mandelorian",
-                        adress: "Fakestreet108"
+                        address: "Fakestreet108"
                     ),
                     DataGenerators.NewCustomer(
                         email: "Lotta.Svensson@mail.com",
                         firstMidName: "Lotta",
                         lastName: "Svensson",
-                        adress: "Fakestreet109"
+                        address: "Fakestreet109"
                     ),
                     DataGenerators.NewCustomer(
                         email: "Emilia.Ristersson@mail.com",
                         firstMidName: "Emilia",
                         lastName: "Ristersson",
-                        adress: "Fakestreet110"
+                        address: "Fakestreet110"
                     )
                 );
 

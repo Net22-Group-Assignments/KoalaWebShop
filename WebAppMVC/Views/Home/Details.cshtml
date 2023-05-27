@@ -48,14 +48,13 @@
             @Html.DisplayFor(model => model.Content)
         </dd>
     </dl>
-    <form asp-action="AddToCart" asp-route-id="@Model.ProductId" asp-controller="Cart">
+    <form asp-action="AddToCart" asp-route-id="@Model.Id" asp-controller="Cart">
         <div class="form-group">
             <input type="submit" value="Save" class="btn btn-primary" />
         </div>
     </form>
 </div>
 <div>
-    <a asp-action""
-    <a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

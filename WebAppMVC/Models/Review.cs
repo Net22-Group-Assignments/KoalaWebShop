@@ -7,17 +7,26 @@ namespace WebAppMVC.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ProductReviewId { get; set; }
-        public string Title { get; set; }
-        [Required]
-        public DateTime CreatedAt { get; set; }
-        [Required]
-        public string Content { get; set; }
-        
+        public int Id { get; set; }
 
-        //ForeginKey
-        [ForeignKey("Products")]
-        public int FK_ProductId { get; set; }
-        public Product Products { get; set; }
+        [Required]
+        [StringLength(40)]
+        public string Title { get; set; }
+
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreatedAt { get; set; }
+
+        [Required]
+        [StringLength(500)]
+        public string Content { get; set; }
+
+        // Foreign Key
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+        
+        // Foreign Key
+        public int CustomerId { get; set; }
+        public KoalaCustomer Customer { get; set; }
     }
 }

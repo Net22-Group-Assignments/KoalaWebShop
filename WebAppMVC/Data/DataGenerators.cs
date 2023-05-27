@@ -21,7 +21,7 @@ public class DataGenerators
         string email,
         string firstMidName,
         string lastName,
-        string adress
+        string address
     )
     {
         Random.Shared.NextBytes(bytes);
@@ -31,7 +31,7 @@ public class DataGenerators
             UserName = email,
             FirstMidName = firstMidName,
             LastName = lastName,
-            Adress = adress,
+            Address = address,
             NormalizedUserName = email.ToUpper(),
             Email = email,
             NormalizedEmail = email.ToUpper(),
@@ -61,7 +61,7 @@ public class DataGenerators
     {
         var product = new Product()
         {
-            ProductId = productIdPool++,
+            Id = productIdPool++,
             Title = title,
             Price = price,
             Quantity = quantity,
@@ -71,7 +71,7 @@ public class DataGenerators
 
         if (category is not null)
         {
-            product.FkCategory = category.CategoryId;
+            product.CategoryId = category.Id;
         }
 
         return product;
@@ -86,8 +86,8 @@ public class DataGenerators
     {
         var productReview = new Review()
         {
-            ProductReviewId = reviewIdPool++,
-            FK_ProductId = fk_productid,
+            Id = reviewIdPool++,
+            ProductId = fk_productid,
             Title = title,
             Content = Content
         };
@@ -98,7 +98,7 @@ public class DataGenerators
     {
         var category = new Category()
         {
-            CategoryId = categoryIdPool++,
+            Id = categoryIdPool++,
             Title = title,
             Content = content
         };

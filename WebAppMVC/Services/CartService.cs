@@ -19,7 +19,7 @@ namespace WebAppMVC.Services
             if (Customer != null) 
             {
                 Cart cart = new Cart();
-                cart.KoalaId = Customer;
+                cart.Customer = Customer;
                 _db.Carts.Add(cart);
                 await _db.SaveChangesAsync();
             }
