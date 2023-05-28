@@ -6,17 +6,24 @@ namespace WebAppMVC.Data;
 
 public class DataGenerators
 {
-    private static readonly string passwordHash =
-        new PasswordHasher<KoalaCustomer>().HashPassword(null, "secret");
+    private static readonly string passwordHash = new PasswordHasher<KoalaCustomer>().HashPassword(
+        null,
+        "secret"
+    );
     private static byte[] bytes = new byte[32];
-    
+
     private static int idPool = 1;
     private static int productIdPool = 1;
     private static int reviewIdPool = 1;
     private static int categoryIdPool = 1;
 
-    internal static KoalaCustomer NewCustomer(string email, string firstMidName, string lastName, string adress)
-    { 
+    internal static KoalaCustomer NewCustomer(
+        string email,
+        string firstMidName,
+        string lastName,
+        string address
+    )
+    {
         Random.Shared.NextBytes(bytes);
         var customer = new KoalaCustomer()
         {
@@ -24,7 +31,7 @@ public class DataGenerators
             UserName = email,
             FirstMidName = firstMidName,
             LastName = lastName,
-            Adress = adress,
+            Address = address,
             NormalizedUserName = email.ToUpper(),
             Email = email,
             NormalizedEmail = email.ToUpper(),
@@ -42,35 +49,58 @@ public class DataGenerators
 
         return customer;
     }
-    internal static Product NewProduct(string title, decimal price, int quantity)
+
+    internal static Product NewProduct(
+        string title,
+        decimal price,
+        int quantity,
+        string content,
+        Category category = null,
+        string imageUrl = null
+    )
     {
         var product = new Product()
         {
-            ProductId = productIdPool++,
+            Id = productIdPool++,
             Title = title,
-            Price= price,
+            Price = price,
             Quantity = quantity,
+            Content = content,
+            ImgURL = imageUrl
         };
+
+        if (category is not null)
+        {
+            product.CategoryId = category.Id;
+        }
+
         return product;
     }
-    internal static Review NewProductReview(int fk_productid, string title, int rating, string Content)
+
+    internal static Review NewProductReview(
+        int fk_productid,
+        string title,
+        int rating,
+        string Content
+    )
     {
         var productReview = new Review()
         {
-            ProductReviewId= reviewIdPool++,
-            FK_ProductId= fk_productid,
-            Title= title,
-            Content= Content
+            Id = reviewIdPool++,
+            ProductId = fk_productid,
+            Title = title,
+            Content = Content
         };
         return productReview;
     }
-    internal static Category NewCategory(string title, string content) 
+
+    internal static Category NewCategory(string title, string content)
     {
         var category = new Category()
         {
-            CategoryId = categoryIdPool++,
-            Title= title,
-            Content= content
+            Id = categoryIdPool++,
+            Title = title,
+            Content = content
         };
         return category;
     }

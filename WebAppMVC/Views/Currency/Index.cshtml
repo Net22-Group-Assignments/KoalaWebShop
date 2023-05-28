@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<WebAppMVC.Models.ViewModels.CurrencyViewModel>
+
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
@@ -9,62 +10,27 @@
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.success)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.timestamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.@base)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.rates.SEK)
-            </th>
-             <th>
-                @Html.DisplayNameFor(model => model.rates.USD)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.rates.EUR)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.success)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.timestamp)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.@base)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.rates.SEK)
-                </td>
-                  <td>
-                    @Html.DisplayFor(modelItem => item.rates.USD)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.rates.EUR)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.CurrencyId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.CurrencyId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.CurrencyId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Base)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Rate)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Base)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Rate)
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

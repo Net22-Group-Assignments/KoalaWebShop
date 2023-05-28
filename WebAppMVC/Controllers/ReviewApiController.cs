@@ -14,11 +14,13 @@ namespace WebAppMVC.Controllers
 
         private readonly IRepository<Review> _KoalaDb;
         private readonly IMapper _mapper;
+
         public ReviewApiController(IRepository<Review> koalaDb, IMapper mapper)
         {
             _KoalaDb = koalaDb;
             _mapper = mapper;
         }
+
         //GetAllPersons
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -28,6 +30,7 @@ namespace WebAppMVC.Controllers
             IEnumerable<Review> koalaList = await _KoalaDb.GetAllAsync();
             return Ok(koalaList);
         }
+
         //GetSinglePerson
         [HttpGet("id:int", Name = "GetProductReview")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -39,7 +42,7 @@ namespace WebAppMVC.Controllers
             {
                 return BadRequest();
             }
-            var findKoala = await _KoalaDb.GetAsync(p => p.FK_ProductId == koalaId);
+            var findKoala = await _KoalaDb.GetAsync(p => p.ProductId == koalaId);
             if (findKoala == null)
             {
                 return NotFound();
