@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using WebAppMVC.Models;
 using WebAppMVC.Models.Dto;
 
-namespace WebAppMVC.Controllers
+namespace WebAppMVC.Controllers.ApiFolder
 {
     [Route("api/WebAppMVC/Product")]
     [ApiController]
