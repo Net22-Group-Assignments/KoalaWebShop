@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 
 namespace WebAppMVC.Controllers
 {
-	[Authorize(Roles = "Admin")]
+	//[Authorize(Roles ="Admin")]
 	public class AppRolesController : Controller
 	{
-		private readonly RoleManager<IdentityRole> _roleManager;
-        public AppRolesController(RoleManager<IdentityRole> roleManager)
+		private readonly RoleManager<IdentityRole<int>> _roleManager;
+        public AppRolesController(RoleManager<IdentityRole<int>> roleManager)
         {
 			_roleManager = roleManager;
 
@@ -31,7 +31,7 @@ namespace WebAppMVC.Controllers
 		{
 			if (!_roleManager.RoleExistsAsync(model.Name).GetAwaiter().GetResult())
 			{
-				_roleManager.CreateAsync(new IdentityRole(model.Name)).GetAwaiter().GetResult();
+				_roleManager.CreateAsync(new IdentityRole<int>(model.Name)).GetAwaiter().GetResult();
 			}
 			return RedirectToAction("Index");
 		}

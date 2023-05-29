@@ -11,7 +11,7 @@ using WebAppMVC.Models.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
-	[Authorize(Roles ="Admin")]
+	//[Authorize(Roles ="Admin")]
 	public class CurrencyController : Controller
 	{
 		private readonly ApplicationDbContext _context;
@@ -19,8 +19,13 @@ namespace WebAppMVC.Controllers
 		{
 			_context = context;
 		}
+		public IActionResult Index()
+		{
+			var currency = _context.Currencies;
+			return View(currency);
+		}
 
-		public async Task<ActionResult> Index()
+		public async Task<ActionResult> GetCurrency()
 		{
 			string apiUrl = "https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK";
 			string apiKey = "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo";
