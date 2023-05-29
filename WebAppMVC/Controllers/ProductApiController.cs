@@ -4,10 +4,11 @@ using WebAppAPI.Repository.IRepository;
 using Microsoft.AspNetCore.Http.HttpResults;
 using WebAppMVC.Models;
 using WebAppMVC.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppMVC.Controllers
 {
-    [Route("api/WebAppMVC/Product")]
+	[Route("api/WebAppMVC/Product")]
     [ApiController]
     public class ProductApiController : Controller
     {
