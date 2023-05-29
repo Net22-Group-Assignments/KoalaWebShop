@@ -22,7 +22,7 @@ namespace WebAppMVC.Models
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
 
             var context = services.GetService<ApplicationDbContext>();
-            string SessionId = session.GetString("Id");
+            string SessionId = session.GetString("Id") ?? Guid.NewGuid().ToString();
             //if (SessionId == null)
             //{
             //    session = _customer.(User);
