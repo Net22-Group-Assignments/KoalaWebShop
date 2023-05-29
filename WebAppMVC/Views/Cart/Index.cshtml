@@ -1,0 +1,38 @@
+﻿@model WebAppMVC.Models.SetCart
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>AddToCart</h1>
+<h2>Hello Cart, dis works!</h2>
+
+@if (Model.CartItems.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.CartItems)
+            {
+                var total = x.Product.Price * x.Quantity;
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelitem => x.Product.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelitem => x.Product.Price)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h1>Cart Is empty</h1>
+}
+

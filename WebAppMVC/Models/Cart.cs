@@ -11,8 +11,8 @@ namespace WebAppMVC.Models
         public int Id { get; set; }
 
         //ForeignKey for Customer
-        public int CustomerId { get; set; }
-        public KoalaCustomer Customer { get; set; }
+        public int? CustomerId { get; set; }
+        public KoalaCustomer? Customer { get; set; }
 
         public ICollection<CartItem> CartItems { get; set; }
     }

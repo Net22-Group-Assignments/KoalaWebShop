@@ -2,6 +2,7 @@ using CommandLine;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
+using System.Configuration;
 using WebAppAPI;
 using WebAppAPI.Repository;
 using WebAppAPI.Repository.IRepository;
@@ -43,6 +44,30 @@ builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
 builder.Services.AddScoped<IRepository<Review>, Repository<Review>>();
 //AddServices
 builder.Services.AddScoped<CartService>();
+
+//Test
+builder.Services.AddScoped<SetCart>(sp => SetCart.GetCart(sp));
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    // options.IdleTimeout = TimeSpan.FromSeconds(10);
+});
+//-----
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options => {
+    options.IdleTimeout = TimeSpan.FromMinutes(1);
+});
+builder.Services.AddMvcCore();
+
+
+//Endoftest
+
+//app.UseSession();
+//app.UseMvc();
+
 
 //End of Pre-load data
 
@@ -105,6 +130,9 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.UseSession();
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

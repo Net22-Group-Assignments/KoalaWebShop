@@ -6,7 +6,7 @@ using WebAppMVC.Models;
 using WebAppMVC.Models.Dto;
 using Microsoft.AspNetCore.Authorization;
 
-namespace WebAppMVC.Controllers
+namespace WebAppMVC.Controllers.ApiFolder
 {
 	[Route("api/WebAppMVC/Product")]
     [ApiController]
