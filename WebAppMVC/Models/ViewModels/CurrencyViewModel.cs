@@ -2,8 +2,10 @@
 {
     public class CurrencyViewModel
     {
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public string Base { get; set; }
-        public decimal Rate { get; set; }
-    }
+        public decimal RateSEK { get; set; }
+		public decimal RateUSD { get; set; }
+		public decimal RateEUR { get; set; }
+	}
 }
