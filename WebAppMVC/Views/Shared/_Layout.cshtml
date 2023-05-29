@@ -1,85 +1,89 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<KoalaCustomer> SignInManager
+@inject UserManager<KoalaCustomer> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebAppMVC</title>
-    <link rel="stylesheet" href="~/lib/bulma/css/bulma.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/WebAppMVC.styles.css" asp-append-version="true" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - WebAppMVC</title>
+	<link rel="stylesheet" href="~/lib/bulma/css/bulma.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/WebAppMVC.styles.css" asp-append-version="true" />
 </head>
 <body>
-<header>
-    <nav class="navbar has-shadow is-link" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                KOALA
-            </a>
-                <a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="AppRoles" asp-action="Index">
-                    Roles
-                </a>
-                <a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Currency" asp-action="Index">
-                    Currency
-                </a>
+	<header>
+		<nav class="navbar has-shadow is-link" role="navigation" aria-label="main navigation">
+			<div class="navbar-brand">
+				<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">
+					KOALA
+				</a>
+				
+				<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="AppRoles" asp-action="Index">
+					Roles
+				</a>
+				<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Currency" asp-action="Index">
+					Currency
+				</a>
 
-                <form class="navbar-item" asp-action="Index" method="get">
-                    <div class="field has-addons">
-                        <div class="control">
-                            <input class="input is-info is-light is-rounded" type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Productname or category" />
-                        </div>
-                        <div class="control">
-                            <input class="button is-info is-light is-rounded" type="submit" value="Search" />
-                        </div>
-                    </div>
-                </form>
+				<form class="navbar-item" asp-action="Index" method="get">
+					<div class="field has-addons">
+						<div class="control">
+							<input class="input is-info is-light is-rounded" type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Productname or category" />
+						</div>
+						<div class="control">
+							<input class="button is-info is-light is-rounded" type="submit" value="Search" />
+						</div>
+					</div>
+				</form>
 
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
+				<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+				</a>
 
-            </div>
+			</div>
 
-            <div id="navbar-menu" class="navbar-menu">
-                <div class="navbar-start">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li>
-                            <a class="navbar-item" asp-area="" asp-controller="Home" asp-action="Index">
-                                Home
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="navbar-item" asp-area="" asp-controller="Cart" asp-action="Index">
-                                Cart
-                            </a>
-                        <li />
-                    </ul>
+			<div id="navbar-menu" class="navbar-menu">
+				<div class="navbar-start">
+					<ul class="navbar-nav flex-grow-1">
+						<li>
+							<a class="navbar-item" asp-area="" asp-controller="Home" asp-action="Index">
+								Home
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="navbar-item" asp-area="" asp-controller="Cart" asp-action="Index">
+								Cart
+							</a>
+						<li />
+					</ul>
 
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <div class="navbar-end">
-                <partial name="_LoginPartial" />
-            </div>
+			<div class="navbar-end">
+				<partial name="_LoginPartial" />
+			</div>
 
-        </nav>
-    </header>
+		</nav>
+	</header>
 
-    <main role="main" class="section has-background-info-light">
-        <div class="container">
-            @RenderBody()
-        </div>
-    </main>
+	<main role="main" class="section has-background-info-light">
+		<div class="container">
+			@RenderBody()
+		</div>
+	</main>
 
-    <footer class="footer">
-        <div class="container">
-            &copy; 2023 - WebAppMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<footer class="footer">
+		<div class="container">
+			&copy; 2023 - WebAppMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+		</div>
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	@* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

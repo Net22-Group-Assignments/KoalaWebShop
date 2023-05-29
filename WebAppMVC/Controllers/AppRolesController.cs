@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace WebAppMVC.Controllers
 {
-	//[Authorize(Roles ="Admin")]
+	[Authorize(Roles ="Admin")]
 	public class AppRolesController : Controller
 	{
 		private readonly RoleManager<IdentityRole<int>> _roleManager;

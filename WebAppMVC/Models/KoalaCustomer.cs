@@ -21,7 +21,7 @@ namespace WebAppMVC.Models
         public string Address { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime RegisteredAt { get; set; }
+        public DateTime RegisteredAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<Order> Orders { get; set; }
 

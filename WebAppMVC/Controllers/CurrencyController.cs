@@ -11,7 +11,7 @@ using WebAppMVC.Models.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
-	//[Authorize(Roles ="Admin")]
+	[Authorize(Roles ="Admin")]
 	public class CurrencyController : Controller
 	{
 		private readonly ApplicationDbContext _context;
@@ -68,7 +68,7 @@ namespace WebAppMVC.Controllers
 
 						}
 
-						return View();
+						return RedirectToAction("Index");
 					}
 					else
 					{
