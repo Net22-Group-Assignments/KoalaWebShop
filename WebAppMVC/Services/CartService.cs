@@ -1,34 +1,132 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
 
-namespace WebAppMVC.Services
-{
-    public class CartService
-    {
-        private readonly ApplicationDbContext _db;
+namespace WebAppMVC.Services;
 
-        public CartService(ApplicationDbContext db)
+public class CartService
+{
+    private readonly ApplicationDbContext _db;
+
+    public CartService(ApplicationDbContext db)
+    {
+        _db = db;
+    }
+
+    private async Task<Cart> InitializeCart(KoalaCustomer customer)
+    {
+        var cart = await _db.Carts
+            .Include(c => c.CartItems)
+            .ThenInclude(ci => ci.Product)
+            .FirstOrDefaultAsync(c => c.Customer.Id == customer.Id);
+        if (cart is null)
         {
-            _db = db;
+            cart = new Cart { Customer = customer, CartItems = new List<CartItem>() };
+            _db.Carts.Add(cart);
+            await _db.SaveChangesAsync();
         }
 
-        public async Task<Cart> InitializeCart(string userName)
-        {
-            KoalaCustomer Customer = await _db.KoalaCustomers.FirstOrDefaultAsync(u=>u.UserName.Equals(userName));
-            if (Customer != null) 
-            {
-                Cart cart = new Cart();
-                cart.Customer = Customer;
-                _db.Carts.Add(cart);
-                await _db.SaveChangesAsync();
-            }
-            if (Customer == null)
-            {
-                ExceptionHandlerOptions.ReferenceEquals(Customer, null);
-            }
-            
-            return null;
-        } 
+        return cart;
     }
+
+    public async Task AddToCart(int productId, int quantity, KoalaCustomer customer)
+    {
+        var cart = await InitializeCart(customer);
+
+        var cartItem = cart.CartItems.FirstOrDefault(p => p.ProductId == productId);
+
+        if (cartItem is null)
+        {
+            var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == productId);
+
+            cartItem = new CartItem
+            {
+                Cart = cart,
+                Product = product,
+                Quantity = quantity
+            };
+
+            cart.CartItems.Add(cartItem);
+        }
+        else
+        {
+            cartItem.Quantity += quantity;
+        }
+
+        await _db.SaveChangesAsync();
+    }
+
+    public async Task ReduceQuantity(int cartItemId, KoalaCustomer customer)
+    {
+        var cart = await InitializeCart(customer);
+
+        var cartItem = cart.CartItems.FirstOrDefault(c => c.Id == cartItemId);
+
+        if (cartItem != null)
+        {
+            if (cartItem.Quantity > 1)
+            {
+                cartItem.Quantity--;
+            }
+            else
+            {
+                cart.CartItems.Remove(cartItem);
+            }
+        }
+        await _db.SaveChangesAsync();
+    }
+
+    //
+    // public async Task<int> IncreaseQuantity(Product product)
+    // {
+    //     var cartItem = GetCartItem(product);
+    //     var remainingQuantity = 0;
+    //
+    //     if (cartItem is { Quantity: > 0 })
+    //     {
+    //         remainingQuantity = ++cartItem.Quantity;
+    //     }
+    //     await _db.SaveChangesAsync();
+    //
+    //     return remainingQuantity;
+    // }
+    //
+    public async Task RemoveFromCart(int cartItemId, KoalaCustomer customer)
+    {
+        var cart = await InitializeCart(customer);
+
+        var cartItem = cart.CartItems.FirstOrDefault(c => c.Id == cartItemId);
+
+        if (cartItem != null)
+        {
+            cart.CartItems.Remove(cartItem);
+        }
+        await _db.SaveChangesAsync();
+    }
+
+    //
+    // public async Task ClearCart()
+    // {
+    //     Cart.CartItems.Clear();
+    //
+    //     await _db.SaveChangesAsync();
+    // }
+
+    public async Task<IEnumerable<CartItem>> GetAllCartItems(KoalaCustomer customer)
+    {
+        var cart = await InitializeCart(customer);
+
+        return cart.CartItems;
+    }
+
+    // private CartItem GetCartItem(int productId)
+    // {
+    //     return _cart.CartItems.FirstOrDefault(p => p.Id == productId);
+    // }
+
+    // public decimal GetCartTotal()
+    // {
+    //     return cart.CartItems.Select(ci => ci.Product.Price * ci.Quantity).Sum();
+    // }
 }

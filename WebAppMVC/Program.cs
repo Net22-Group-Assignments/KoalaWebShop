@@ -42,32 +42,6 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IRepository<KoalaCustomer>, Repository<KoalaCustomer>>();
 builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
 builder.Services.AddScoped<IRepository<Review>, Repository<Review>>();
-//AddServices
-builder.Services.AddScoped<CartService>();
-
-//Test
-builder.Services.AddScoped<SetCart>(sp => SetCart.GetCart(sp));
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
-{
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-    // options.IdleTimeout = TimeSpan.FromSeconds(10);
-});
-//-----
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options => {
-    options.IdleTimeout = TimeSpan.FromMinutes(1);
-});
-builder.Services.AddMvcCore();
-
-
-//Endoftest
-
-//app.UseSession();
-//app.UseMvc();
-
 
 //End of Pre-load data
 
@@ -85,6 +59,9 @@ builder.Services
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+
+//AddServices
+builder.Services.AddScoped<CartService>();
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -130,9 +107,6 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseSession();
-
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
