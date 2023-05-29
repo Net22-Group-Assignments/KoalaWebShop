@@ -52,14 +52,14 @@ namespace WebAppMVC.Data
                 cart.HasOne(c => c.Customer).WithOne();
             });
 
-            //modelBuilder.Entity<CartItem>(cartItem =>
-            //{
-            //    //cartItem
-            //    //    //.HasOne(ci => ci.Cart)
-            //    //    //.WithMany(ca => ca.CartItems)
-            //    //    //.HasForeignKey(ci => ci.CartId);
-            //    //cartItem.HasOne(ci => ci.Product).WithMany().HasForeignKey(ci => ci.ProductId);
-            //});
+            modelBuilder.Entity<CartItem>(cartItem =>
+            {
+                cartItem
+                    .HasOne(ci => ci.Cart)
+                    .WithMany(ca => ca.CartItems)
+                    .HasForeignKey(ci => ci.CartId);
+                cartItem.HasOne(ci => ci.Product).WithMany().HasForeignKey(ci => ci.ProductId);
+            });
 
             modelBuilder.Entity<OrderItem>(orderItem =>
             {

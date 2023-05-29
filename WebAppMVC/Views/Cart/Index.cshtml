@@ -1,4 +1,4 @@
-﻿@model WebAppMVC.Models.SetCart
+﻿@model IEnumerable<CartItem>
 @{
     ViewData["Title"] = "Index";
 }
@@ -6,28 +6,44 @@
 <h1>AddToCart</h1>
 <h2>Hello Cart, dis works!</h2>
 
-@if (Model.CartItems.Count > 0)
+@if (Model.Any())
 {
     <table class="table">
         <thead>
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-            </tr>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var x in Model.CartItems)
-            {
-                var total = x.Product.Price * x.Quantity;
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelitem => x.Product.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelitem => x.Product.Price)
-                    </td>
-                </tr>
-            }
+        @foreach (var x in Model)
+        {
+            var total = x.Product.Price * x.Quantity;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelitem => x.Product.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => x.Product.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => x.Quantity)
+                </td>
+                <td>
+                    <form asp-action="RemoveFromCart" asp-route-id="@x.Id" asp-controller="Cart">
+                        <div class="form-group">
+                            <input type="submit" value="Remove" class="button is-danger"/>
+                        </div>
+                    </form>
+                    <form asp-action="ReduceQuantity" asp-route-id="@x.Id" asp-controller="Cart">
+                        <div class="form-group">
+                            <input type="submit" value="Reduce" class="button is-danger is-light"/>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 }
@@ -35,4 +51,3 @@ else
 {
     <h1>Cart Is empty</h1>
 }
-
