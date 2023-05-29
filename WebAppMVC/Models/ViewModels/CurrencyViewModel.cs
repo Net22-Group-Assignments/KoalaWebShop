@@ -2,6 +2,7 @@
 {
     public class CurrencyViewModel
     {
+        public int Timestamp { get; set; }
         public string Date { get; set; }
         public string Base { get; set; }
         public decimal RateSEK { get; set; }

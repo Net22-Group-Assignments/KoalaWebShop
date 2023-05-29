@@ -39,6 +39,7 @@ namespace WebAppMVC.Controllers
 			{
 				CurrencyViewModel listItem = new CurrencyViewModel();
 
+				listItem.Timestamp = item.TimeStamp;
 				listItem.Date = item.Date;
 				listItem.Base = item.Base;
 				listItem.RateSEK = item.RateSEK;
