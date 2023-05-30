@@ -78,6 +78,7 @@ namespace WebAppMVC.Data
                         firstMidName: "Jon",
                         lastName: "Westman",
                         address: "Fakestreet101"
+                     
                     ),
                     DataGenerators.NewCustomer(
                         email: "bjorn.agnemo@mail.com",
