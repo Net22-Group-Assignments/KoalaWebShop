@@ -18,13 +18,16 @@
 				<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">
 					KOALA
 				</a>
-				
-				<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="AppRoles" asp-action="Index">
-					Roles
-				</a>
-				<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Currency" asp-action="Index">
-					Currency
-				</a>
+				@if (this.User.IsInRole("Admin"))
+				{
+					<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="AppRoles" asp-action="Index">
+						Roles
+					</a>
+					<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Currency" asp-action="Index">
+						Currency
+					</a>
+				}
+
 
 				<form class="navbar-item" asp-action="Index" method="get">
 					<div class="field has-addons">
@@ -44,22 +47,26 @@
 				</a>
 
 			</div>
-
 			<div id="navbar-menu" class="navbar-menu">
 				<div class="navbar-start">
-					<ul class="navbar-nav flex-grow-1">
-						<li>
-							<a class="navbar-item" asp-area="" asp-controller="Home" asp-action="Index">
-								Home
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="navbar-item" asp-area="" asp-controller="Cart" asp-action="Index">
-								Cart
-							</a>
-						<li />
-					</ul>
+					@if (SignInManager.IsSignedIn(User))
+					{
 
+						<ul class="navbar-nav flex-grow-1">
+							<li>
+								<a class="navbar-item" asp-area="" asp-controller="Home" asp-action="Index">
+									Home
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="navbar-item" asp-area="" asp-controller="Cart" asp-action="Index">
+									Cart
+								</a>
+							<li />
+						</ul>
+
+
+					}
 				</div>
 			</div>
 
