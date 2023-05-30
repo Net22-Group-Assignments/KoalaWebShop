@@ -14,10 +14,22 @@
 	<thead>
 		<tr>
 			<th>
+				@Html.DisplayNameFor(model => model.Timestamp)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Date)
+			</th>
+			<th>
 				@Html.DisplayNameFor(model => model.Base)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Rate)
+				@Html.DisplayNameFor(model => model.RateSEK)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.RateUSD)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.RateEUR)
 			</th>
 		</tr>
 	</thead>
@@ -26,10 +38,22 @@
 		{
 			<tr>
 				<td>
+					@Html.DisplayFor(modelItem => item.Timestamp)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Date)
+				</td>
+				<td>
 					@Html.DisplayFor(modelItem => item.Base)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Rate)
+					@Html.DisplayFor(modelItem => item.RateSEK)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.RateUSD)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.RateEUR)
 				</td>
 			</tr>
 		}

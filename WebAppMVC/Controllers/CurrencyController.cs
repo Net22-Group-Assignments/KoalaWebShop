@@ -11,7 +11,7 @@ using WebAppMVC.Models.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
-	[Authorize(Roles ="Admin")]
+	[Authorize(Roles = "Admin")]
 	public class CurrencyController : Controller
 	{
 		private readonly ApplicationDbContext _context;
@@ -19,10 +19,35 @@ namespace WebAppMVC.Controllers
 		{
 			_context = context;
 		}
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
-			var currency = _context.Currencies;
-			return View(currency);
+			List<CurrencyViewModel> currencyViewModels = new List<CurrencyViewModel>();
+
+			var currency = await (from c in _context.Currencies
+								  select new
+								  {
+									  Success = c.success,
+									  TimeStamp = c.timestamp,
+									  Base = c.@base,
+									  Date = c.date,
+									  RateSEK = c.rates.SEK,
+									  RateUSD = c.rates.USD,
+									  RateEUR = c.rates.EUR
+								  }).ToListAsync();
+
+			foreach (var item in currency)
+			{
+				CurrencyViewModel listItem = new CurrencyViewModel();
+
+				listItem.Timestamp = item.TimeStamp;
+				listItem.Date = item.Date;
+				listItem.Base = item.Base;
+				listItem.RateSEK = item.RateSEK;
+				listItem.RateUSD = item.RateUSD;
+				listItem.RateEUR = item.RateEUR;
+				currencyViewModels.Add(listItem);
+			};
+			return View(currencyViewModels);
 		}
 
 		public async Task<ActionResult> GetCurrency()
