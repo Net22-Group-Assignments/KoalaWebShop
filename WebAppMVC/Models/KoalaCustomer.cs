@@ -17,13 +17,11 @@ namespace WebAppMVC.Models
 
         public decimal Credits { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string Address { get; set; }
 
-        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime RegisteredAt { get; set; }
+        public DateTime RegisteredAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<Order> Orders { get; set; }
 
