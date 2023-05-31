@@ -39,8 +39,8 @@ namespace WebAppMVC.Controllers
             {
                 throw new Exception("Cart is empty");
             }
-            items = _db.CartItems
-                .Where(a => a.CartId == a.Cart.Id).ToList();
+            //items = _db.CartItems
+            //    .Where(a => a.CartId == a.Cart.Id).ToList();
             if (items == null)
             {
                 throw new Exception("Cart is empoty");
