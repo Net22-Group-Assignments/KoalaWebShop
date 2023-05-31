@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
 
@@ -6,23 +7,30 @@ namespace WebAppMVC.Services
 {
     public class OrderService
     {
-        private readonly ApplicationDbContext _db;
-        public OrderService(ApplicationDbContext context)
-        {
-            _db = context;
-        }
-        private async Task<Order> InitializeOrder(KoalaCustomer customer)
-        {
-            var order = await _db.Orders
-                .Include(o => o.OrderItems)
-                .ThenInclude(p => p.Product)
-                .FirstOrDefaultAsync(c => c.Customer.Id == customer.Id);
-            //if (order is null)
-            //{order = new Order
+        //private readonly ApplicationDbContext _db;
+        //private readonly HttpContextAccessor _contextAccessor;
+        //private readonly UserManager<KoalaCustomer> _userManager;
+        //private readonly CartService _cartService;
 
-            //}
+        //public OrderService(ApplicationDbContext context, HttpContextAccessor contextAccessor, UserManager<KoalaCustomer> userManager, CartService cartService)
+        //{
+        //    _db = context;
+        //    _contextAccessor = contextAccessor;
+        //    _userManager = userManager;
+        //    _cartService = cartService;
+        //}
+        //private async Task<bool> DoCheckout(KoalaCustomer Boyaa)
+        //{
+        //    var items = await _cartService.GetAllCartItems(customer);
 
-            return order;
-        }
+        //    using var transaction = _db.Database.BeginTransaction();
+        //     if (customer == null)
+        //    {
+        //        throw new Exception("Empty");
+        //    }
+        //     var cart =  GetCart
+        //    return true;
+        //}
+
     }
 }

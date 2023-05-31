@@ -11,13 +11,13 @@ namespace WebAppMVC.Controllers
     {
         private readonly CartService _cartService;
         private readonly UserManager<KoalaCustomer> _userManager;
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
 
-        public CheckoutController(CartService cartService, UserManager<KoalaCustomer> userManager, ApplicationDbContext context)
+        public CheckoutController(CartService cartService, UserManager<KoalaCustomer> userManager, ApplicationDbContext db)
         {
             _cartService = cartService;
             _userManager = userManager;
-            _context = context;
+            _db = db;
         }
         [HttpGet]
         public async Task<ActionResult> GetUserId()
@@ -25,27 +25,59 @@ namespace WebAppMVC.Controllers
             ViewData["Message"] = "Woho  you got here";
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
+
+            await CartOrderTransfer();
+
             return View(items);
         }
         public async Task<bool> CartOrderTransfer()
         {
-            using var transactions = _context.Database.BeginTransaction();
-            var userId = GetUserId();
-            if (userId == null)
-            {
-                throw new Exception("User not logged in");
-
-            }
+            using var transactions = _db.Database.BeginTransaction();
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
+            if (items == null)
+            {
+                throw new Exception("Cart is empty");
+            }
+            var cartDetail = _db.CartItems
+                .Where(a => a.CartId == a.Cart.Id).ToList();
+            if (cartDetail.Count == 0)
+            {
+                throw new Exception("Cart is empoty");
+            }
+            var order = new Order
+            {
+                CustomerId = customer.Id,
+                PlacementTime = DateTime.UtcNow,
+                
+            };
+            _db.Orders.Add(order);
+            _db.SaveChanges();
+            foreach (var item in cartDetail)
+            {
+                var orderItem = new OrderItem
+                {
+                    ProductId = item.ProductId,
+                    OrderId = order.Id,
+                    Quantity = item.Quantity   
+                };
+                _db.OrderItems.Add(orderItem);
+            }
+            _db.SaveChanges();
 
+            //RemoveCartDetails
+            _db.CartItems.RemoveRange(cartDetail);
+            _db.SaveChanges();
+            transactions.Commit();
 
-
+            ViewData["Success"] = "CartOrderTransferComplete";
             return true;
+
+           
         }
         public async Task<Cart> GetCart(int userId)
         {
-            var cart = await _context.Carts.FirstOrDefaultAsync(x => x.CustomerId == userId);
+            var cart = await _db.Carts.FirstOrDefaultAsync(x => x.CustomerId == userId);
             return cart;
         }
 
