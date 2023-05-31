@@ -39,9 +39,9 @@ namespace WebAppMVC.Controllers
             {
                 throw new Exception("Cart is empty");
             }
-            var cartDetail = _db.CartItems
+            items = _db.CartItems
                 .Where(a => a.CartId == a.Cart.Id).ToList();
-            if (cartDetail.Count == 0)
+            if (items == null)
             {
                 throw new Exception("Cart is empoty");
             }
@@ -53,7 +53,7 @@ namespace WebAppMVC.Controllers
             };
             _db.Orders.Add(order);
             _db.SaveChanges();
-            foreach (var item in cartDetail)
+            foreach (var item in items)
             {
                 var orderItem = new OrderItem
                 {
@@ -66,7 +66,7 @@ namespace WebAppMVC.Controllers
             _db.SaveChanges();
 
             //RemoveCartDetails
-            _db.CartItems.RemoveRange(cartDetail);
+            _db.CartItems.RemoveRange(items);
             _db.SaveChanges();
             transactions.Commit();
 
