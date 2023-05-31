@@ -18,7 +18,7 @@ namespace WebAppMVC.Models
         public decimal Credits { get; set; }
 
         [StringLength(50)]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime RegisteredAt { get; set; } = DateTime.UtcNow;

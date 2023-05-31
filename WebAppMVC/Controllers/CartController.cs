@@ -35,7 +35,7 @@ namespace WebAppMVC.Controllers
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             await _cartService.AddToCart(id, 1, customer);
 
-            return RedirectToAction("index", "Cart");
+            return RedirectToAction("index", "Home");
         }
 
         [HttpPost]
