@@ -21,7 +21,9 @@ namespace WebAppMVC.Controllers
             ILogger<ProductController> logger,
             ApplicationDbContext db,
             ImageStorageService imageStorage,
-            IMapper mapper, ProductService productService)
+            IMapper mapper,
+            ProductService productService
+        )
         {
             _db = db;
             _imageStorage = imageStorage;
@@ -34,21 +36,45 @@ namespace WebAppMVC.Controllers
         {
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CurrentFilter"] = searchString;
-            var products = from p in _db.Products.Include(c => c.Category) select p;
+
+            var rateUSD = await _db.Currencies.Select(r => r.rates.USD).FirstOrDefaultAsync();
+
+            var rateEUR = await _db.Currencies.Select(r => r.rates.EUR).FirstOrDefaultAsync();
+
+            var productQuery = from p in _db.Products.Include(c => c.Category) select p;
             if (!string.IsNullOrEmpty(searchString))
             {
-                products = products.Where(
+                productQuery = productQuery.Where(
                     p => p.Title.Contains(searchString) || p.Category.Title.Contains(searchString)
                 );
             }
-            return View(await products.AsNoTracking().ToListAsync());
+
+            var products = await productQuery.AsNoTracking().ToListAsync();
+
+            var productModelList = products.Select(
+                p =>
+                    new ProductViewModel
+                    {
+                        Id = p.Id,
+                        Title = p.Title,
+                        Price = p.Price,
+                        PriceUSD = p.Price * rateUSD,
+                        PriceEUR = p.Price * rateEUR,
+                        Discount = p.Discount,
+                        Content = p.Content,
+                        Quantity = p.Quantity,
+                        ImgURL = p.ImgURL
+                    }
+            );
+
+            return View(productModelList);
         }
 
         // Get: Products/Create
         public async Task<IActionResult> Create()
         {
             var model = await _productService.CreateModifyProductViewModel();
-            
+
             return View(model);
         }
 
