@@ -42,11 +42,6 @@ builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
 builder.Services.AddScoped<IRepository<Review>, Repository<Review>>();
 builder.Services.AddScoped<IRepository<Order>, Repository<Order>>();
 builder.Services.AddScoped<IRepository<OrderItem>, Repository<OrderItem>>();
-builder.Services.AddScoped<Product>();
-builder.Services.AddScoped<Review>();
-builder.Services.AddScoped<Order>();
-builder.Services.AddScoped<OrderItem>();
-builder.Services.AddScoped<KoalaCustomer>();
 
 //End of Pre-load data
 
