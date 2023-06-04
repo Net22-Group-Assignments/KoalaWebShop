@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebAppMVC.Models.ViewModels;
 
 namespace WebAppMVC.Models
 {
@@ -12,8 +15,8 @@ namespace WebAppMVC.Models
         [Required]
         [StringLength(40)]
         public string Title { get; set; }
-
-        [Required]
+        [Column(TypeName = "decimal(18, 6)")]
+        [Precision(18, 6)]
         public decimal Price { get; set; }
 
         public decimal Discount { get; set; }
@@ -27,9 +30,8 @@ namespace WebAppMVC.Models
         public string ImgURL { get; set; }
 
         // Foreign Key
-        public int CategoryId { get; set; }
+		public int CategoryId { get; set; }
         public Category Category { get; set; }
-
         public ICollection<Review> Reviews { get; set; }
     }
 }

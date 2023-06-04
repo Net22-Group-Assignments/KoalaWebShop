@@ -13,6 +13,8 @@ public class OrderItem
 
     public int ProductId { get; set; }
     public Product Product { get; set; }
+    //public int CurrencyId { get; set; }
+    //public Currency Currency { get; set; }
 
     public int Quantity { get; set; }
 }

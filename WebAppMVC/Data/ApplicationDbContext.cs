@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebAppMVC.Models;
-using WebAppMVC.Models.ViewModels;
+using WebAppMVC.Models.CurrencyModel;
 
 namespace WebAppMVC.Data
 {
@@ -21,6 +21,7 @@ namespace WebAppMVC.Data
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Rates> Rates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

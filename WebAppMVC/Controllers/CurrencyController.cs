@@ -61,7 +61,7 @@ namespace WebAppMVC.Controllers
 
 			using (var httpClient = new HttpClient())
 			{
-				httpClient.Timeout = TimeSpan.FromSeconds(90);
+				httpClient.Timeout = TimeSpan.FromSeconds(100);
 
 				using (var response = await httpClient.SendAsync(request))
 				{
