@@ -18,24 +18,23 @@ namespace WebAppMVC.Controllers
         {
             _context = context;
         }
-
-
-        //GET: ProductViewModels
-        //Get all products
-
         public async Task<IActionResult> Index()
         {
             Console.WriteLine(_context.Products.Dump());
 
             List<ProductViewModel> list = new List<ProductViewModel>();
 
+            var rateUSD = _context.Currencies.Select(r => r.rates.USD).ToList();
+
+            var rateEUR = _context.Currencies.Select(r => r.rates.EUR).ToList();
+
             var items = await (from p in _context.Products
                                select new
                                {
                                    title = p.Title,
                                    price = p.Price,
-                                   PriceUSD = p.Price * p.Currency.rates.USD,
-                                   PriceEUR = p.Price * p.Currency.rates.EUR,
+                                   PriceUSD = p.Price * rateUSD.FirstOrDefault(),
+                                   PriceEUR = p.Price * rateEUR.FirstOrDefault(),
                                    discount = p.Discount,
                                    content = p.Content,
                                    quantity = p.Quantity,
