@@ -95,36 +95,35 @@ public class DataFaker
     )
     {
         var productIds = 1;
-
         var productFaker = new Faker<Product>().Rules(
             (
                 (faker, product) =>
-                {
-                    productIds++;
-                    product.Title = faker.Commerce.ProductName();
-                    product.Category = faker.PickRandom(categories);
-                    product.Price = decimal.Parse(faker.Commerce.Price());
-                    product.Content = faker.Commerce.ProductDescription();
-                    // Discounted or not?
-                    if (faker.Random.Float() <= discountChance)
-                    {
-                        product.Discount = 100M / faker.PickRandom(_discountLevels);
-                    }
+        {
+            productIds++;
+            product.Title = faker.Commerce.ProductName();
+            product.Category = faker.PickRandom(categories);
+            product.Price = decimal.Parse(faker.Commerce.Price());
+            product.Content = faker.Commerce.ProductDescription();
+            // Discounted or not?
+            if (faker.Random.Float() <= discountChance)
+            {
+                product.Discount = 100M / faker.PickRandom(_discountLevels);
+            }
 
-                    product.Quantity = faker.Random.Number(maxQuantity);
-                    product.ImgURL = faker.Image.PicsumUrl();
+            product.Quantity = faker.Random.Number(maxQuantity);
+            product.ImgURL = faker.Image.PicsumUrl();
 
-                    if (faker.Random.Bool())
-                    {
-                        product.Reviews =
-                            GenerateReviews(
-                                faker.Random.Number(maxReviews),
-                                productSeed: productIds
-                            ) as ICollection<Review>;
-                    }
-                }
-            )
-        );
+            if (faker.Random.Bool())
+            {
+                product.Reviews =
+                    GenerateReviews(
+                        faker.Random.Number(maxReviews),
+                        productSeed: productIds
+                    ) as ICollection<Review>;
+            }
+        }
+                )
+            );
 
         if (!databaseGeneratedIdentity)
         {

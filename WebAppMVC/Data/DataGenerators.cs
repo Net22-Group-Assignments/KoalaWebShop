@@ -12,6 +12,7 @@ public class DataGenerators
     );
     private static byte[] bytes = new byte[32];
 
+    private static int PriceIdPool = 1;
     private static int idPool = 1;
     private static int productIdPool = 1;
     private static int reviewIdPool = 1;
@@ -49,7 +50,7 @@ public class DataGenerators
 
         return customer;
     }
-
+    // ASk about this changed type from decimal to Price on price
     internal static Product NewProduct(
         string title,
         decimal price,
