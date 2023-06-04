@@ -25,36 +25,37 @@ namespace WebAppMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
+            Console.WriteLine(_context.Products.Dump());
+
             List<ProductViewModel> list = new List<ProductViewModel>();
 
             var items = await (from p in _context.Products
-                               join oi in _context.OrderItems on p.Id equals oi.ProductId
-                               join c in _context.Currencies on oi.CurrencyId equals c.CurrencyId
                                select new
                                {
-                                   Title = p.Title,
-                                   Price = p.Price,
-                                   PriceUSD = p.Price * c.rates.USD,
-                                   PriceEUR = p.Price * c.rates.EUR,
-                                   Discount = p.Discount,
-                                   Content = p.Content,
-                                   Quantity = p.Quantity,
-                                   ImgURL = p.ImgURL,
+                                   title = p.Title,
+                                   price = p.Price,
+                                   PriceUSD = p.Price * p.Currency.rates.USD,
+                                   PriceEUR = p.Price * p.Currency.rates.EUR,
+                                   discount = p.Discount,
+                                   content = p.Content,
+                                   quantity = p.Quantity,
+                                   imgURL = p.ImgURL,
                                }).ToListAsync();
 
-            foreach (var item in items)
-            {
-                ProductViewModel listitem = new ProductViewModel();
-                listitem.Title = item.Title;
-                listitem.Price = item.Price;
-                listitem.PriceUSD = item.PriceUSD;
-                listitem.PriceEUR = item.PriceEUR;
-                listitem.Discount = item.Discount;
-                listitem.Content = item.Content;
-                listitem.Quantity = item.Quantity;
-                listitem.ImgURL = item.ImgURL;
-                list.Add(listitem);
-            }
+                foreach (var item in items)
+                {
+                    ProductViewModel listitem = new ProductViewModel();
+                    listitem.Title = item.title;
+                    listitem.Price = item.price;
+                    listitem.PriceUSD = item.PriceUSD;
+                    listitem.PriceEUR = item.PriceEUR;
+                    listitem.Discount = item.discount;
+                    listitem.Content = item.content;
+                    listitem.Quantity = item.quantity;
+                    listitem.ImgURL = item.imgURL;
+                    list.Add(listitem);
+                }
+          
             return View(list);
         }
     }

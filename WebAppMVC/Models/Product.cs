@@ -29,6 +29,7 @@ namespace WebAppMVC.Models
         // Foreign Key
 		public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public Currency Currency { get; set; }
         public ICollection<Review> Reviews { get; set; }
     }
 }
