@@ -1,0 +1,21 @@
+﻿@model WebAppMVC.Models.ViewModels.InfoBoardViewModel
+@ViewData["Message"]
+
+<h1>InfoBoard</h1>
+
+
+@foreach (var item in Model.OrderItems)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelitem => item.Product.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelitem => item.Product.Quantity)
+        </td>
+    </tr>
+}
+
+<div>
+    <a Class="Button btn-light" asp-area="" asp-controller="Home" asp-action="Index"> Return to store </a>
+</div>

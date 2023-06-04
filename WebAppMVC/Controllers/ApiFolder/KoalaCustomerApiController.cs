@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebAppAPI.Repository.IRepository;
+using WebAppMVC.Repository.IRepository;
 using WebAppMVC.Models;
 
-namespace WebAppMVC.Controllers
+namespace WebAppMVC.Controllers.ApiFolder
 {
     [Route("api/WebAppMVC")]
     [ApiController]

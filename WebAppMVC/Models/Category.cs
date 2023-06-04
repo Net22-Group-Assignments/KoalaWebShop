@@ -7,11 +7,13 @@ namespace WebAppMVC.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CategoryId { get; set; }
+        public int Id { get; set; }
+
         [Required]
         [StringLength(30)]
         public string Title { get; set; }
 
-        public string Content { get; set; } 
+        [StringLength(200)]
+        public string Content { get; set; }
     }
 }

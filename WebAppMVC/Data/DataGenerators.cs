@@ -12,6 +12,7 @@ public class DataGenerators
     );
     private static byte[] bytes = new byte[32];
 
+    private static int PriceIdPool = 1;
     private static int idPool = 1;
     private static int productIdPool = 1;
     private static int reviewIdPool = 1;
@@ -21,17 +22,19 @@ public class DataGenerators
         string email,
         string firstMidName,
         string lastName,
-        string adress
+        string address,
+        decimal credits = 1000
     )
     {
         Random.Shared.NextBytes(bytes);
         var customer = new KoalaCustomer()
         {
             Id = idPool++,
+            Credits = credits,
             UserName = email,
             FirstMidName = firstMidName,
             LastName = lastName,
-            Adress = adress,
+            Address = address,
             NormalizedUserName = email.ToUpper(),
             Email = email,
             NormalizedEmail = email.ToUpper(),
@@ -49,27 +52,29 @@ public class DataGenerators
 
         return customer;
     }
-
+    // ASk about this changed type from decimal to Price on price
     internal static Product NewProduct(
         string title,
         decimal price,
         int quantity,
         string content,
-        Category category = null
+        Category category = null,
+        string imageUrl = null
     )
     {
         var product = new Product()
         {
-            ProductId = productIdPool++,
+            Id = productIdPool++,
             Title = title,
             Price = price,
             Quantity = quantity,
             Content = content,
+            ImgURL = imageUrl
         };
 
         if (category is not null)
         {
-            product.FkCategory = category.CategoryId;
+            product.CategoryId = category.Id;
         }
 
         return product;
@@ -84,8 +89,8 @@ public class DataGenerators
     {
         var productReview = new Review()
         {
-            ProductReviewId = reviewIdPool++,
-            FK_ProductId = fk_productid,
+            Id = reviewIdPool++,
+            ProductId = fk_productid,
             Title = title,
             Content = Content
         };
@@ -96,7 +101,7 @@ public class DataGenerators
     {
         var category = new Category()
         {
-            CategoryId = categoryIdPool++,
+            Id = categoryIdPool++,
             Title = title,
             Content = content
         };

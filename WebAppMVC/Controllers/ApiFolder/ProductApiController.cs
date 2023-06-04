@@ -1,34 +1,35 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebAppAPI.Repository.IRepository;
+using WebAppMVC.Repository.IRepository;
 using Microsoft.AspNetCore.Http.HttpResults;
 using WebAppMVC.Models;
 using WebAppMVC.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 
-namespace WebAppMVC.Controllers
+namespace WebAppMVC.Controllers.ApiFolder
 {
-    [Route("api/WebAppMVC/Product")]
+	[Route("api/WebAppMVC/Product")]
     [ApiController]
     public class ProductApiController : Controller
     {
-
-
         private readonly IRepository<Product> _KoalaDb;
         private readonly IMapper _mapper;
+
         public ProductApiController(IRepository<Product> koalaDb, IMapper mapper)
         {
             _KoalaDb = koalaDb;
             _mapper = mapper;
         }
+
         //GetAllProducts
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllKoalas()
         {
-
             IEnumerable<Product> koalaList = await _KoalaDb.GetAllAsync();
             return Ok(koalaList);
         }
+
         //GetSinglePerson
         [HttpGet("id:int", Name = "GetSingleProduct")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -40,13 +41,14 @@ namespace WebAppMVC.Controllers
             {
                 return BadRequest();
             }
-            var findKoala = await _KoalaDb.GetAsync(p => p.ProductId == koalaId);
+            var findKoala = await _KoalaDb.GetAsync(p => p.Id == koalaId);
             if (findKoala == null)
             {
                 return NotFound();
             }
             return Ok(findKoala);
         }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -59,8 +61,7 @@ namespace WebAppMVC.Controllers
             }
             Product product = _mapper.Map<Product>(productDto);
             await _KoalaDb.CreateAsync(product);
-            return CreatedAtAction("CreateProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("CreateProduct", new { id = product.Id }, product);
         }
-
     }
 }

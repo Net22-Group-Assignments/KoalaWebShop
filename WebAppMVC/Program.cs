@@ -1,12 +1,12 @@
 using CommandLine;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Core.Types;
-using WebAppAPI;
-using WebAppAPI.Repository;
-using WebAppAPI.Repository.IRepository;
+using WebAppMVC.Repository;
+using WebAppMVC.Repository.IRepository;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
+using WebAppMVC.Services;
+using WebAppMVC;
 
 var seedData = false;
 var dryRun = false;
@@ -36,10 +36,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 );
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//Pre-load Data
+//Pre-load Data IRepository
 builder.Services.AddScoped<IRepository<KoalaCustomer>, Repository<KoalaCustomer>>();
 builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
 builder.Services.AddScoped<IRepository<Review>, Repository<Review>>();
+builder.Services.AddScoped<IRepository<Order>, Repository<Order>>();
+builder.Services.AddScoped<IRepository<OrderItem>, Repository<OrderItem>>();
 
 //End of Pre-load data
 
@@ -54,9 +56,15 @@ builder.Services
         options.Password.RequiredLength = 6;
         options.Password.RequiredUniqueChars = 0;
     })
+    .AddRoles<IdentityRole<int>>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+
+//AddServices
+builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<ImageStorageService>();
+builder.Services.AddScoped<ProductService>();
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -110,7 +118,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(name: "default", pattern: "{controller=Product}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

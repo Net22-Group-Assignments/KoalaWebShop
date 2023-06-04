@@ -1,4 +1,4 @@
-﻿@model WebAppMVC.Models.ViewModels.ProductViewModel
+﻿@model WebAppMVC.Models.Product
 
 @{
     ViewData["Title"] = "Details";
@@ -7,48 +7,54 @@
 <h1>Details</h1>
 
 <div>
-    <h4>ProductViewModel</h4>
+    <h4>Product</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Title)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Discount)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Quantity)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Discount)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Quantity)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Summary)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImgURL)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Summary)
+        <dd class="col-sm-10">
+            <img src="@Model.ImgURL" />
+            @* @Html.DisplayFor(model => model.ImgURL) *@
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category.Title)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Content)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Content)
         </dd>
     </dl>
+    <form asp-action="AddToCart" asp-route-id="@Model.Id" asp-controller="Cart">
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ProductViewModelId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

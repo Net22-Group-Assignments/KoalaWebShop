@@ -1,18 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAppMVC.Models.ViewModels
 {
     public class ProductViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ProductViewModelId { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public decimal Price { get; set; }
+        public decimal PriceUSD { get; set; }
+        public decimal PriceEUR { get; set; }
         public decimal Discount { get; set; }
-        public string Summary { get; set; }
-        public int Rating { get; set; }
         public string Content { get; set; }
+        public int Quantity { get; set; }
+        public string ImgURL { get; set; }
     }
 }

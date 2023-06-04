@@ -7,14 +7,15 @@ namespace WebAppMVC.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int cartId { get; set; }
+        public int Id { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime PlacementTime { get; set; }
+
         //ForeignKey for Customer
-        [ForeignKey("koalaId")]
-        public int FkCustomerId { get; set; }
-        public KoalaCustomer koalaId { get; set; }
+        public int CustomerId { get; set; }
+        public KoalaCustomer Customer { get; set; }
 
-        public ICollection<Product> products { get; set; }
-
-
+        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }
