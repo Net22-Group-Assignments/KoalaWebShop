@@ -1,14 +1,10 @@
 using CommandLine;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Core.Types;
-using System.Configuration;
 using WebAppMVC.Repository;
 using WebAppMVC.Repository.IRepository;
-using WebAppMVC.Controllers;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
-using WebAppMVC.Models.ViewModels;
 using WebAppMVC.Services;
 using WebAppMVC;
 
