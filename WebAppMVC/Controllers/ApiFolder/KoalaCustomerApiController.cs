@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebAppAPI.Repository.IRepository;
+using WebAppMVC.Repository.IRepository;
 using WebAppMVC.Models;
 
 namespace WebAppMVC.Controllers.ApiFolder

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using WebAppAPI.Repository.IRepository;
+using WebAppMVC.Repository.IRepository;
 using Microsoft.AspNetCore.Http.HttpResults;
 using WebAppMVC.Models;
 

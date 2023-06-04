@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using WebAppAPI.Repository.IRepository;
+using WebAppMVC.Repository.IRepository;
 using WebAppMVC.Data;
 
-namespace WebAppAPI.Repository
+namespace WebAppMVC.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {

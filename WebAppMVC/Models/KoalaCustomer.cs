@@ -11,7 +11,7 @@ namespace WebAppMVC.Models
         [StringLength(40)]
         public string FirstMidName { get; set; }
 
-        [Required]
+        [Required] 
         [StringLength(40)]
         public string LastName { get; set; }
 

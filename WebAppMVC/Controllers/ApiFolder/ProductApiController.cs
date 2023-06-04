@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebAppAPI.Repository.IRepository;
+using WebAppMVC.Repository.IRepository;
 using Microsoft.AspNetCore.Http.HttpResults;
 using WebAppMVC.Models;
 using WebAppMVC.Models.Dto;

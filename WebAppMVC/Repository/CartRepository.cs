@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using WebAppAPI.Repository.IRepository;
+using WebAppMVC.Repository.IRepository;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
 using WebAppMVC.Repository.IRepository;

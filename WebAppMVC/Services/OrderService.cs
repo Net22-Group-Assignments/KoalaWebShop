@@ -7,31 +7,26 @@ namespace WebAppMVC.Services
 {
     public class OrderService
     {
-        //private readonly ApplicationDbContext _db;
-        //private readonly HttpContextAccessor _contextAccessor;
-        //private readonly UserManager<KoalaCustomer> _userManager;
-        //private readonly CartService _cartService;
+        private readonly ApplicationDbContext _db;
+        public OrderService(ApplicationDbContext context, HttpContextAccessor contextAccessor, UserManager<KoalaCustomer> userManager, CartService cartService)
+        {
+            _db = context;
 
-        //public OrderService(ApplicationDbContext context, HttpContextAccessor contextAccessor, UserManager<KoalaCustomer> userManager, CartService cartService)
-        //{
-        //    _db = context;
-        //    _contextAccessor = contextAccessor;
-        //    _userManager = userManager;
-        //    _cartService = cartService;
-        //}
-        //private async Task<bool> DoCheckout(KoalaCustomer Boyaa)
-        //{
-        //    var items = await _cartService.GetAllCartItems(customer);
+        }
+        private async Task<Order> InitializeOrder()
+        {
+            var order = await _db.Orders
+         .Include(c => c.OrderItems)
+         .ThenInclude(ci => ci.Product)
+         .FirstOrDefaultAsync();
+            return order;
+        }
+        public async Task<IEnumerable<OrderItem>> GetAllOrderItems()
+        {
+            var order = await InitializeOrder();
 
-        //    using var transaction = _db.Database.BeginTransaction();
-        //     if (customer == null)
-        //    {
-        //        throw new Exception("Empty");
-        //    }
-        //     var cart =  GetCart
-        //    return true;
-        //}
-
+            return order.OrderItems;
+        }
     }
 }
 

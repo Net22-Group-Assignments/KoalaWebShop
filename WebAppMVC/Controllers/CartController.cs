@@ -57,38 +57,6 @@ namespace WebAppMVC.Controllers
 
             return RedirectToAction("Index", "Cart");
         }
-        //
-        // public IActionResult IncreaseQuantity(int id)
-        // {
-        //     var selectProduct = GetProductById(id);
-        //     if (selectProduct != null)
-        //     {
-        //         _setcart.IncreaseQuantity(selectProduct);
-        //     }
-        //     return RedirectToAction("Index");
-        // }
-        //
-        // public IActionResult ClearCart()
-        // {
-        //     _setcart.ClearCart();
-        //     return RedirectToAction("Index");
-        // }
-        //
-        // public Product GetProductById(int id)
-        // {
-        //     return _context.Products.FirstOrDefault(p => p.Id == id);
-        // }
-        //Post
-        //[HttpPost]
-        //public async Task<IActionResult> AddToCart(int id)
-        //{
-        //    //Cart cart = new Cart();
-        //    //var user = await _koalaUserManager.GetUserAsync(User);
-        //    //cart.Customer = user; //if logged in
-        //    //_applicationDbContext.Add(cart);
-        //    //await _applicationDbContext.SaveChangesAsync();
-        //    return View();
-        //}
     }
 }
 

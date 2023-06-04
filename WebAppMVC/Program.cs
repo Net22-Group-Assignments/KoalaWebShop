@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using System.Configuration;
-using WebAppAPI;
-using WebAppAPI.Repository;
-using WebAppAPI.Repository.IRepository;
+using WebAppMVC.Repository;
+using WebAppMVC.Repository.IRepository;
+using WebAppMVC.Controllers;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
+using WebAppMVC.Models.ViewModels;
 using WebAppMVC.Services;
+using WebAppMVC;
 
 var seedData = false;
 var dryRun = false;
@@ -42,6 +44,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IRepository<KoalaCustomer>, Repository<KoalaCustomer>>();
 builder.Services.AddScoped<IRepository<Product>, Repository<Product>>();
 builder.Services.AddScoped<IRepository<Review>, Repository<Review>>();
+builder.Services.AddScoped<IRepository<Order>, Repository<Order>>();
+builder.Services.AddScoped<IRepository<OrderItem>, Repository<OrderItem>>();
+builder.Services.AddScoped<Product>();
+builder.Services.AddScoped<Review>();
+builder.Services.AddScoped<Order>();
+builder.Services.AddScoped<OrderItem>();
+builder.Services.AddScoped<KoalaCustomer>();
 
 //End of Pre-load data
 

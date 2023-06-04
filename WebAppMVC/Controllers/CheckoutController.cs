@@ -10,13 +10,15 @@ namespace WebAppMVC.Controllers
     public class CheckoutController : Controller
     {
         private readonly CartService _cartService;
+        private readonly OrderService _orderService;
         private readonly UserManager<KoalaCustomer> _userManager;
         private readonly ApplicationDbContext _db;
 
-        public CheckoutController(CartService cartService, UserManager<KoalaCustomer> userManager, ApplicationDbContext db)
+        public CheckoutController(OrderService orderService, CartService cartService, UserManager<KoalaCustomer> userManager, ApplicationDbContext db)
         {
             _cartService = cartService;
             _userManager = userManager;
+            _orderService = orderService;
             _db = db;
         }
         [HttpGet]
@@ -26,10 +28,12 @@ namespace WebAppMVC.Controllers
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
 
+
             await CartOrderTransfer();
 
             return View(items);
         }
+
         public async Task<bool> CartOrderTransfer()
         {
             using var transactions = _db.Database.BeginTransaction();
@@ -39,8 +43,6 @@ namespace WebAppMVC.Controllers
             {
                 throw new Exception("Cart is empty");
             }
-            //items = _db.CartItems
-            //    .Where(a => a.CartId == a.Cart.Id).ToList();
             if (items == null)
             {
                 throw new Exception("Cart is empoty");

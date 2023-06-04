@@ -2,7 +2,7 @@
 using WebAppMVC.Models;
 using WebAppMVC.Models.Dto;
 
-namespace WebAppAPI
+namespace WebAppMVC
 {
     public class MappingConfig : Profile
     {
