@@ -22,13 +22,15 @@ public class DataGenerators
         string email,
         string firstMidName,
         string lastName,
-        string address
+        string address,
+        decimal credits = 1000
     )
     {
         Random.Shared.NextBytes(bytes);
         var customer = new KoalaCustomer()
         {
             Id = idPool++,
+            Credits = credits,
             UserName = email,
             FirstMidName = firstMidName,
             LastName = lastName,

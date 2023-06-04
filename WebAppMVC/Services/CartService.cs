@@ -77,21 +77,6 @@ public class CartService
         await _db.SaveChangesAsync();
     }
 
-    //
-    // public async Task<int> IncreaseQuantity(Product product)
-    // {
-    //     var cartItem = GetCartItem(product);
-    //     var remainingQuantity = 0;
-    //
-    //     if (cartItem is { Quantity: > 0 })
-    //     {
-    //         remainingQuantity = ++cartItem.Quantity;
-    //     }
-    //     await _db.SaveChangesAsync();
-    //
-    //     return remainingQuantity;
-    // }
-    //
     public async Task RemoveFromCart(int cartItemId, KoalaCustomer customer)
     {
         var cart = await InitializeCart(customer);
@@ -105,28 +90,10 @@ public class CartService
         await _db.SaveChangesAsync();
     }
 
-    //
-    // public async Task ClearCart()
-    // {
-    //     Cart.CartItems.Clear();
-    //
-    //     await _db.SaveChangesAsync();
-    // }
-
     public async Task<IEnumerable<CartItem>> GetAllCartItems(KoalaCustomer customer)
     {
         var cart = await InitializeCart(customer);
 
         return cart.CartItems;
     }
-
-    // private CartItem GetCartItem(int productId)
-    // {
-    //     return _cart.CartItems.FirstOrDefault(p => p.Id == productId);
-    // }
-
-    // public decimal GetCartTotal()
-    // {
-    //     return cart.CartItems.Select(ci => ci.Product.Price * ci.Quantity).Sum();
-    // }
 }

@@ -93,6 +93,7 @@ namespace WebAppMVC.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Last name")]
             public string LastName { get; set; }
+            public decimal Credits { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -146,6 +147,7 @@ namespace WebAppMVC.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 user.FirstMidName = Input.FirstMidName;
                 user.LastName = Input.LastName;
+                user.Credits = 1000;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);

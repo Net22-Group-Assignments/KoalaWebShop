@@ -10,15 +10,13 @@ namespace WebAppMVC.Controllers
     public class CheckoutController : Controller
     {
         private readonly CartService _cartService;
-        private readonly OrderService _orderService;
         private readonly UserManager<KoalaCustomer> _userManager;
         private readonly ApplicationDbContext _db;
 
-        public CheckoutController(OrderService orderService, CartService cartService, UserManager<KoalaCustomer> userManager, ApplicationDbContext db)
+        public CheckoutController(CartService cartService, UserManager<KoalaCustomer> userManager, ApplicationDbContext db)
         {
             _cartService = cartService;
             _userManager = userManager;
-            _orderService = orderService;
             _db = db;
         }
         [HttpGet]
@@ -36,6 +34,7 @@ namespace WebAppMVC.Controllers
 
         public async Task<bool> CartOrderTransfer()
         {
+            decimal Check = 0;
             using var transactions = _db.Database.BeginTransaction();
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
@@ -43,10 +42,20 @@ namespace WebAppMVC.Controllers
             {
                 throw new Exception("Cart is empty");
             }
-            if (items == null)
+            foreach (var item in items)
             {
-                throw new Exception("Cart is empoty");
+                 Check += item.Product.Price;
+                Console.WriteLine(Check);
             }
+            if (customer.Credits < Check)
+            {
+
+                throw new Exception("Shitfuck");
+
+            }
+
+            customer.Credits -= Check;
+
             var order = new Order
             {
                 CustomerId = customer.Id,
@@ -82,6 +91,5 @@ namespace WebAppMVC.Controllers
             var cart = await _db.Carts.FirstOrDefaultAsync(x => x.CustomerId == userId);
             return cart;
         }
-
     }
 }
