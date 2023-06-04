@@ -26,7 +26,10 @@ namespace WebAppMVC.Controllers
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
 
-
+            if ( await CartOrderTransfer() == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             await CartOrderTransfer();
 
             return View(items);
@@ -50,7 +53,7 @@ namespace WebAppMVC.Controllers
             if (customer.Credits < Check)
             {
 
-                throw new Exception("Shitfuck");
+                return false;
 
             }
 
@@ -83,7 +86,6 @@ namespace WebAppMVC.Controllers
 
             ViewData["Success"] = "CartOrderTransferComplete";
             return true;
-
            
         }
         public async Task<Cart> GetCart(int userId)
