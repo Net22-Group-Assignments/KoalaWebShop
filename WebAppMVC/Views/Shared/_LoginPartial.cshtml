@@ -9,7 +9,7 @@
             <a class="button is-primary" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
                 <strong>Hello @User.Identity?.Name!</strong>
             </a>
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Product", new { area = "" })">
                 <button type="submit" class="nav-link btn btn-link text-dark">
                     <strong>Logout</strong>
                 </button>

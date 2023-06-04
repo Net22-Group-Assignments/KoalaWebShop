@@ -55,13 +55,16 @@ builder.Services
         options.Password.RequireUppercase = false;
         options.Password.RequiredLength = 6;
         options.Password.RequiredUniqueChars = 0;
-    }).AddRoles<IdentityRole<int>>()
+    })
+    .AddRoles<IdentityRole<int>>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 
 //AddServices
 builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<ImageStorageService>();
+builder.Services.AddScoped<ProductService>();
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -115,7 +118,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(name: "default", pattern: "{controller=Product}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();
