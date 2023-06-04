@@ -43,7 +43,7 @@ namespace WebAppMVC.Controllers
             var items = await _cartService.GetAllCartItems(customer);
             if (items == null)
             {
-                throw new Exception("Cart is empty");
+                return false;
             }
             foreach (var item in items)
             {
