@@ -93,6 +93,7 @@ namespace WebAppMVC.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Last name")]
             public string LastName { get; set; }
+            public decimal Credits { get; set; }
 
             public decimal Credits { get; set; }
 
