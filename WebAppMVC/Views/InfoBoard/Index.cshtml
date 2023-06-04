@@ -1,12 +1,10 @@
 ﻿@model WebAppMVC.Models.ViewModels.InfoBoardViewModel
-    @ViewData["Message"]
-}
+@ViewData["Message"]
+
 <h1>InfoBoard</h1>
 
 
-
-
-@foreach (var item in Model.Items)
+@foreach (var item in Model.OrderItems)
 {
     <tr>
         <td>

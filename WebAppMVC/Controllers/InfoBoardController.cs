@@ -16,18 +16,16 @@ namespace WebAppMVC.Controllers
         public InfoBoardController(ApplicationDbContext context)
         {
             _context = context;
-
         }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            
-
             var InfoBoardVC = new InfoBoardViewModel()
             {
                 Products = await _context.Products.ToListAsync(),
                 Orders = await _context.Orders.ToListAsync(),
-                Items = await _context.OrderItems.ToListAsync(),
+                OrderItems = await _context.OrderItems.ToListAsync(),
                 Customers = await _context.KoalaCustomers.ToListAsync()
             };
             if (InfoBoardVC == null)
@@ -37,7 +35,5 @@ namespace WebAppMVC.Controllers
 
             return View(InfoBoardVC);
         }
-
     }
 }
-

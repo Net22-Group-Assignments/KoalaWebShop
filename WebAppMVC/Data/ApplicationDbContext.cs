@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Bogus.DataSets;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebAppMVC.Models;
 using WebAppMVC.Models.CurrencyModel;
+using Currency = WebAppMVC.Models.Currency;
 
 namespace WebAppMVC.Data
 {
@@ -22,6 +24,8 @@ namespace WebAppMVC.Data
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Rates> Rates { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -72,14 +76,37 @@ namespace WebAppMVC.Data
             });
 
             modelBuilder
+                .Entity<Role>()
+                .HasData(
+                    new Role
+                    {
+                        Id = 1,
+                        Name = "Admin",
+                        NormalizedName = "ADMIN",
+                        ConcurrencyStamp = Guid.NewGuid().ToString()
+                    }
+                );
+
+            var adminUser = DataGenerators.NewCustomer(
+                email: "admin@koalashop.com",
+                firstMidName: "Shodan",
+                lastName: "Skynet",
+                address: "Cyberspace"
+            );
+
+            modelBuilder
+                .Entity<UserRole>()
+                .HasData(new UserRole { RoleId = 1, UserId = adminUser.Id });
+
+            modelBuilder
                 .Entity<KoalaCustomer>()
                 .HasData(
+                    adminUser,
                     DataGenerators.NewCustomer(
                         email: "jon.westman@mail.com",
                         firstMidName: "Jon",
                         lastName: "Westman",
                         address: "Fakestreet101"
-                     
                     ),
                     DataGenerators.NewCustomer(
                         email: "bjorn.agnemo@mail.com",
