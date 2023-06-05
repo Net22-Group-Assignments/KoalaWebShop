@@ -28,7 +28,7 @@ namespace WebAppMVC.Controllers
 
             if ( await CartOrderTransfer() == false)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "FailedPurchase");
             }
             await CartOrderTransfer();
 
