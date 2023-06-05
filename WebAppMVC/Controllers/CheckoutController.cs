@@ -52,7 +52,6 @@ namespace WebAppMVC.Controllers
             foreach (var item in items)
             {
                  Check += item.Product.Price;
-                Console.WriteLine(Check);
             }
             if (customer.Credits < Check)
             {
@@ -72,7 +71,11 @@ namespace WebAppMVC.Controllers
             {
                 item.Product.Quantity--;
             }
-            customer.Credits -= Check;
+            foreach (var item in items)
+            {
+                customer.Credits -= Check;
+            }
+           
 
             var order = new Order
             {
