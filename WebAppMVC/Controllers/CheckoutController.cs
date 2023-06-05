@@ -12,7 +12,7 @@ namespace WebAppMVC.Controllers
         private readonly CartService _cartService;
         private readonly UserManager<KoalaCustomer> _userManager;
         private readonly ApplicationDbContext _db;
-
+        private int nullcheck = 0;
         public CheckoutController(CartService cartService, UserManager<KoalaCustomer> userManager, ApplicationDbContext db)
         {
             _cartService = cartService;
@@ -28,6 +28,10 @@ namespace WebAppMVC.Controllers
 
             if ( await CartOrderTransfer() == false)
             {
+                if ( nullcheck == 0 )
+                {
+                    return RedirectToAction("Index", "ProductQuantity");
+                }
                 return RedirectToAction("Index", "FailedPurchase");
             }
             await CartOrderTransfer();
@@ -37,8 +41,7 @@ namespace WebAppMVC.Controllers
 
         public async Task<bool> CartOrderTransfer()
         {
-            decimal Check = 0;
-            var nullcheck = 0;
+            decimal Check = 0;;
             using var transactions = _db.Database.BeginTransaction();
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
