@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<KoalaCustomer> SignInManager
 @inject UserManager<KoalaCustomer> UserManager
+@inject KoalaCustomer koalaCustomer
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,9 +78,10 @@
 				</div>
 			</div>
 
-			<div class="navbar-end">
-				<partial name="_CreditPartial" />
+			<div>
+				<a>Credits:</a>@ViewBag.credits
 			</div>
+
 
 			<div class="navbar-end">
 				<partial name="_LoginPartial" />

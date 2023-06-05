@@ -1,3 +1,18 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<KoalaCustomer> SignInManager
+@inject UserManager<KoalaCustomer> UserManager
+
+@{
     Layout = "_Layout";
+}
+
+@{
+    if (SignInManager.IsSignedIn(User))
+    {
+        var customer = await UserManager.FindByNameAsync(User.Identity.Name);
+
+        var credits = customer.Credits;
+
+        ViewBag.credits = credits;
+}
 }
