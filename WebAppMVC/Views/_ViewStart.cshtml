@@ -1,3 +1,18 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using WebAppMVC.Models
+@using WebAppMVC.Services
+@inject CartService CartService
+@inject UserManager<KoalaCustomer> UserManager
+@inject SignInManager<KoalaCustomer> SignInManager
+
+@{
+    if (SignInManager.IsSignedIn(User))
+    {
+        var customer = await UserManager.FindByNameAsync(User.Identity.Name);
+
+        ViewBag.Credits = customer.Credits;
+        
+        ViewBag.CartItems = CartService.GetAllCartItems(customer).Result.Count();
+    }
     Layout = "_Layout";
 }
