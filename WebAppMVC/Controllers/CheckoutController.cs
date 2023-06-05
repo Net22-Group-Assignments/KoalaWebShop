@@ -38,6 +38,7 @@ namespace WebAppMVC.Controllers
         public async Task<bool> CartOrderTransfer()
         {
             decimal Check = 0;
+            var nullcheck = 0;
             using var transactions = _db.Database.BeginTransaction();
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
@@ -56,7 +57,18 @@ namespace WebAppMVC.Controllers
                 return false;
 
             }
-
+            foreach (var item in items)
+            {
+                 nullcheck = item.Product.Quantity;
+            }
+            if (nullcheck == 0)
+            {
+                return false;
+            }
+            foreach(var item in items)
+            {
+                item.Product.Quantity--;
+            }
             customer.Credits -= Check;
 
             var order = new Order
