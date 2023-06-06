@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using WebAppMVC.Data;
 using WebAppMVC.Models;
 using WebAppMVC.Models.ViewModels;
@@ -16,24 +18,32 @@ namespace WebAppMVC.Controllers
         private readonly ImageStorageService _imageStorage;
         private readonly ProductService _productService;
         private readonly IMapper _mapper;
+        private readonly UserManager<KoalaCustomer> _userManager;
 
         public ProductController(
             ILogger<ProductController> logger,
             ApplicationDbContext db,
             ImageStorageService imageStorage,
             IMapper mapper,
-            ProductService productService
+            ProductService productService,
+            UserManager<KoalaCustomer> userManager
         )
         {
             _db = db;
             _imageStorage = imageStorage;
             _mapper = mapper;
             _productService = productService;
+            _userManager = userManager;
             _logger = logger;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var userRoles = await _userManager.GetRolesAsync(user);
+            _logger.LogInformation("Roles: {Roles}", userRoles.Dump());
+
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CurrentFilter"] = searchString;
 

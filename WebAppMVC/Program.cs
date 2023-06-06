@@ -82,6 +82,8 @@ if (seedData)
     builder.Services.AddTransient<DataFaker>();
 }
 
+builder.Services.AddSession();
+
 var app = builder.Build();
 
 //Seed Data

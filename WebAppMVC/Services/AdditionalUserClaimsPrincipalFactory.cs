@@ -5,7 +5,8 @@ using WebAppMVC.Models;
 
 namespace WebAppMVC.Services;
 
-public class AdditionalUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<KoalaCustomer>
+public class AdditionalUserClaimsPrincipalFactory
+    : UserClaimsPrincipalFactory<KoalaCustomer, IdentityRole<int>>
 {
     private readonly UserManager<KoalaCustomer> _userManager;
     private readonly IOptions<IdentityOptions> _optionsAccessor;
@@ -13,10 +14,11 @@ public class AdditionalUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<K
 
     public AdditionalUserClaimsPrincipalFactory(
         UserManager<KoalaCustomer> userManager,
+        RoleManager<IdentityRole<int>> roleManager,
         IOptions<IdentityOptions> optionsAccessor,
         ILogger<AdditionalUserClaimsPrincipalFactory> logger
     )
-        : base(userManager, optionsAccessor)
+        : base(userManager, roleManager, optionsAccessor)
     {
         _userManager = userManager;
         _optionsAccessor = optionsAccessor;

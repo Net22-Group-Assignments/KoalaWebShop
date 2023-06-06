@@ -24,8 +24,6 @@ namespace WebAppMVC.Data
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Rates> Rates { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -76,16 +74,16 @@ namespace WebAppMVC.Data
             });
 
             modelBuilder
-                .Entity<Role>()
+                .Entity<IdentityRole<int>>()
                 .HasData(
-                    new Role
+                    new IdentityRole<int>
                     {
                         Id = 1,
                         Name = "Admin",
                         NormalizedName = "ADMIN",
                         ConcurrencyStamp = Guid.NewGuid().ToString()
                     },
-                    new Role
+                    new IdentityRole<int>
                     {
                         Id = 2,
                         Name = "Customer",
@@ -101,7 +99,7 @@ namespace WebAppMVC.Data
                 address: "Cyberspace"
             );
 
-            var users = new KoalaCustomer[]
+            var users = new[]
             {
                 DataGenerators.NewCustomer(
                     email: "jon.westman@mail.com",
@@ -165,12 +163,14 @@ namespace WebAppMVC.Data
                 )
             };
 
-            var userRoles = users.Select(u => new UserRole { RoleId = 2, UserId = u.Id }).ToList();
+            var userRoles = users
+                .Select(u => new IdentityUserRole<int>() { RoleId = 2, UserId = u.Id })
+                .ToList();
             users = users.Append(adminUser).ToArray();
 
-            userRoles.Add(new UserRole { RoleId = 1, UserId = adminUser.Id });
+            userRoles.Add(new IdentityUserRole<int>() { RoleId = 1, UserId = adminUser.Id });
 
-            modelBuilder.Entity<UserRole>().HasData(userRoles);
+            modelBuilder.Entity<IdentityUserRole<int>>().HasData(userRoles);
 
             modelBuilder.Entity<KoalaCustomer>().HasData(users);
 
