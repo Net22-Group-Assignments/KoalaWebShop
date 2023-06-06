@@ -12,7 +12,7 @@ namespace WebAppMVC.Controllers
         private readonly CartService _cartService;
         private readonly UserManager<KoalaCustomer> _userManager;
         private readonly ApplicationDbContext _db;
-        private int nullcheck = 0;
+        private int nullcheck = 1;
         public CheckoutController(CartService cartService, UserManager<KoalaCustomer> userManager, ApplicationDbContext db)
         {
             _cartService = cartService;
@@ -26,10 +26,11 @@ namespace WebAppMVC.Controllers
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
 
-            if ( await CartOrderTransfer() == false)
+            if (await CartOrderTransfer() == false)
             {
-                if ( nullcheck == 0 )
+                if (nullcheck == 0)
                 {
+                    nullcheck = 1;
                     return RedirectToAction("Index", "ProductQuantity");
                 }
                 return RedirectToAction("Index", "FailedPurchase");
@@ -41,7 +42,7 @@ namespace WebAppMVC.Controllers
 
         public async Task<bool> CartOrderTransfer()
         {
-            decimal Check = 0;;
+            decimal Check = 0; ;
             using var transactions = _db.Database.BeginTransaction();
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
@@ -51,7 +52,7 @@ namespace WebAppMVC.Controllers
             }
             foreach (var item in items)
             {
-                 Check += item.Product.Price;
+                Check += item.Product.Price;
             }
             if (customer.Credits < Check)
             {
@@ -61,27 +62,25 @@ namespace WebAppMVC.Controllers
             }
             foreach (var item in items)
             {
-                 nullcheck = item.Product.Quantity;
+                nullcheck = item.Product.Quantity;
             }
             if (nullcheck == 0)
             {
                 return false;
             }
-            foreach(var item in items)
-            {
+
+            foreach (var item in items)
+            {               
+                customer.Credits -= item.Product.Price;
                 item.Product.Quantity--;
             }
-            foreach (var item in items)
-            {
-                customer.Credits -= Check;
-            }
-           
+
 
             var order = new Order
             {
                 CustomerId = customer.Id,
                 PlacementTime = DateTime.UtcNow,
-                
+
             };
             _db.Orders.Add(order);
             _db.SaveChanges();
@@ -91,7 +90,7 @@ namespace WebAppMVC.Controllers
                 {
                     ProductId = item.ProductId,
                     OrderId = order.Id,
-                    Quantity = item.Quantity   
+                    Quantity = item.Quantity
                 };
                 _db.OrderItems.Add(orderItem);
             }
@@ -104,7 +103,7 @@ namespace WebAppMVC.Controllers
 
             ViewData["Success"] = "CartOrderTransferComplete";
             return true;
-           
+
         }
         public async Task<Cart> GetCart(int userId)
         {
