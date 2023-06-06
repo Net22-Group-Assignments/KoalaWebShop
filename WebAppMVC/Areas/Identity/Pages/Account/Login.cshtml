@@ -4,45 +4,48 @@
 @{
     ViewData["Title"] = "Log in";
 }
+<div class="columns">
+    <div class="column is-half-tablet is-offset-one-quarter-tablet">
+        <div class="box">
+            <h1 class="title">@ViewData["Title"]</h1>
+            <h2 class="subtitle">Use a local account to log in.</h2>
 
-<div class="box">
-    <h1 class="title">@ViewData["Title"]</h1>
-    <h2 class="subtitle">Use a local account to log in.</h2>
-    
-    <form id="account" method="post">
-        <div asp-validation-summary="ModelOnly" class="has-text-danger" role="alert"></div>
-        <div class="field">
-            <label asp-for="Input.Email" class="label">Email</label>
-            <div class="control">
-                <input asp-for="Input.Email" class="input" autocomplete="username" aria-required="true" placeholder="name@example.com"/>
-            </div>
-            <span asp-validation-for="Input.Email" class="has-text-danger"></span>
-        </div>
-        <div class="field">
-            <label asp-for="Input.Password" class="label">Password</label>
-            <div class="control">
-                <input asp-for="Input.Password" class="input" autocomplete="current-password" aria-required="true" placeholder="password"/>
-            </div>
-            <span asp-validation-for="Input.Password" class="has-text-danger"></span>
-        </div>
-        <div class="field">
-            <div class="control">
-                <label asp-for="Input.RememberMe" class="label">
-                    <input asp-for="Input.RememberMe"/>
-                    @Html.DisplayNameFor(m => m.Input.RememberMe)
-                </label>
-            </div>
-        </div>
-        <div class="field">
-            <div class="control">
-                <button id="login-submit" type="submit" class="button is-link">Log in</button>
-            </div>
-        </div>
-        <div>
-            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-        </div>
-    </form>
-</div >
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="has-text-danger" role="alert"></div>
+                <div class="field">
+                    <label asp-for="Input.Email" class="label">Email</label>
+                    <div class="control">
+                        <input asp-for="Input.Email" class="input" autocomplete="username" aria-required="true" placeholder="name@example.com"/>
+                    </div>
+                    <span asp-validation-for="Input.Email" class="has-text-danger"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="Input.Password" class="label">Password</label>
+                    <div class="control">
+                        <input asp-for="Input.Password" class="input" autocomplete="current-password" aria-required="true" placeholder="password"/>
+                    </div>
+                    <span asp-validation-for="Input.Password" class="has-text-danger"></span>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <label asp-for="Input.RememberMe" class="label">
+                            <input asp-for="Input.RememberMe"/>
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button id="login-submit" type="submit" class="button is-link">Log in</button>
+                    </div>
+                </div>
+                <div>
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                </div>
+            </form>
+        </div >
+    </div>
+</div>
 
 
 @section Scripts {
