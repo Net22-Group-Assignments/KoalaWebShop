@@ -65,6 +65,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<ImageStorageService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<
+    IUserClaimsPrincipalFactory<KoalaCustomer>,
+    AdditionalUserClaimsPrincipalFactory
+>();
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
