@@ -1,0 +1,11 @@
+﻿@model IEnumerable<CartItem>
+@{
+    ViewData["Title"] = "Success";
+}
+
+<h1>You tried to perform a purchase with nothing in Cart, please return to the store and add items to your Cart</h1>
+
+
+<div>
+    <a Class="Button btn-light" asp-area="" asp-controller="Home" asp-action="Index"> Return to store </a>
+</div>
