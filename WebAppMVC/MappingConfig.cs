@@ -12,8 +12,6 @@ namespace WebAppMVC
             CreateMap<KoalaCustomer, KoalaCustomerDto>().ReverseMap();
             CreateMap<Review, ReviewDto>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();
-
-            CreateMap<ModifyProductViewModel, Product>().ReverseMap();
         }
     }
 }

@@ -84,7 +84,6 @@ namespace WebAppMVC.Controllers
             {
                 CustomerId = customer.Id,
                 PlacementTime = DateTime.UtcNow,
-
             };
             _db.Orders.Add(order);
             _db.SaveChanges();
