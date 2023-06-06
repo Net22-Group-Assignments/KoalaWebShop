@@ -84,6 +84,13 @@ namespace WebAppMVC.Data
                         Name = "Admin",
                         NormalizedName = "ADMIN",
                         ConcurrencyStamp = Guid.NewGuid().ToString()
+                    },
+                    new Role
+                    {
+                        Id = 2,
+                        Name = "Customer",
+                        NormalizedName = "CUSTOMER",
+                        ConcurrencyStamp = Guid.NewGuid().ToString()
                     }
                 );
 
@@ -94,75 +101,76 @@ namespace WebAppMVC.Data
                 address: "Cyberspace"
             );
 
-            modelBuilder
-                .Entity<UserRole>()
-                .HasData(new UserRole { RoleId = 1, UserId = adminUser.Id });
+            var users = new KoalaCustomer[]
+            {
+                adminUser,
+                DataGenerators.NewCustomer(
+                    email: "jon.westman@mail.com",
+                    firstMidName: "Jon",
+                    lastName: "Westman",
+                    address: "Fakestreet101"
+                ),
+                DataGenerators.NewCustomer(
+                    email: "bjorn.agnemo@mail.com",
+                    firstMidName: "Björn",
+                    lastName: "Agnemo",
+                    address: "Fakestreet102"
+                ),
+                DataGenerators.NewCustomer(
+                    email: "Oskar.Ahling@mail.com",
+                    firstMidName: "Oskar",
+                    lastName: "Åhling",
+                    address: "Fakestreet103"
+                ),
+                DataGenerators.NewCustomer(
+                    email: "Reidar.Nilsen@mail.com",
+                    firstMidName: "Reidar",
+                    lastName: "Nilsen",
+                    address: "Fakestreet104"
+                ),
+                DataGenerators.NewCustomer(
+                    email: "Ina.Nilsson@mail.com",
+                    firstMidName: "Ina",
+                    lastName: "Nilsson",
+                    address: "Fakestreet105"
+                ),
+                DataGenerators.NewCustomer(
+                    email: "Martin.Petersson@mail.com",
+                    firstMidName: "Martin",
+                    lastName: "Petersson",
+                    address: "Fakestreet106"
+                ),
+                DataGenerators.NewCustomer(
+                    email: "Steve.Carell@mail.com",
+                    firstMidName: "Steve",
+                    lastName: "Carell",
+                    address: "Fakestreet107"
+                ),
+                DataGenerators.NewCustomer(
+                    email: "Grogu.Mandelorian@mail.com",
+                    firstMidName: "Grogu",
+                    lastName: "Mandelorian",
+                    address: "Fakestreet108"
+                ),
+                DataGenerators.NewCustomer(
+                    email: "Lotta.Svensson@mail.com",
+                    firstMidName: "Lotta",
+                    lastName: "Svensson",
+                    address: "Fakestreet109"
+                ),
+                DataGenerators.NewCustomer(
+                    email: "Emilia.Ristersson@mail.com",
+                    firstMidName: "Emilia",
+                    lastName: "Ristersson",
+                    address: "Fakestreet110"
+                )
+            };
 
-            modelBuilder
-                .Entity<KoalaCustomer>()
-                .HasData(
-                    adminUser,
-                    DataGenerators.NewCustomer(
-                        email: "jon.westman@mail.com",
-                        firstMidName: "Jon",
-                        lastName: "Westman",
-                        address: "Fakestreet101"
-                    ),
-                    DataGenerators.NewCustomer(
-                        email: "bjorn.agnemo@mail.com",
-                        firstMidName: "Björn",
-                        lastName: "Agnemo",
-                        address: "Fakestreet102"
-                    ),
-                    DataGenerators.NewCustomer(
-                        email: "Oskar.Ahling@mail.com",
-                        firstMidName: "Oskar",
-                        lastName: "Åhling",
-                        address: "Fakestreet103"
-                    ),
-                    DataGenerators.NewCustomer(
-                        email: "Reidar.Nilsen@mail.com",
-                        firstMidName: "Reidar",
-                        lastName: "Nilsen",
-                        address: "Fakestreet104"
-                    ),
-                    DataGenerators.NewCustomer(
-                        email: "Ina.Nilsson@mail.com",
-                        firstMidName: "Ina",
-                        lastName: "Nilsson",
-                        address: "Fakestreet105"
-                    ),
-                    DataGenerators.NewCustomer(
-                        email: "Martin.Petersson@mail.com",
-                        firstMidName: "Martin",
-                        lastName: "Petersson",
-                        address: "Fakestreet106"
-                    ),
-                    DataGenerators.NewCustomer(
-                        email: "Steve.Carell@mail.com",
-                        firstMidName: "Steve",
-                        lastName: "Carell",
-                        address: "Fakestreet107"
-                    ),
-                    DataGenerators.NewCustomer(
-                        email: "Grogu.Mandelorian@mail.com",
-                        firstMidName: "Grogu",
-                        lastName: "Mandelorian",
-                        address: "Fakestreet108"
-                    ),
-                    DataGenerators.NewCustomer(
-                        email: "Lotta.Svensson@mail.com",
-                        firstMidName: "Lotta",
-                        lastName: "Svensson",
-                        address: "Fakestreet109"
-                    ),
-                    DataGenerators.NewCustomer(
-                        email: "Emilia.Ristersson@mail.com",
-                        firstMidName: "Emilia",
-                        lastName: "Ristersson",
-                        address: "Fakestreet110"
-                    )
-                );
+            var userRoles = users.Select(u => new UserRole { RoleId = 2, UserId = u.Id }).ToList();
+            userRoles.Add(new UserRole { RoleId = 1, UserId = adminUser.Id });
+            modelBuilder.Entity<UserRole>().HasData(userRoles);
+
+            modelBuilder.Entity<KoalaCustomer>().HasData(users);
 
             var sportCategory = DataGenerators.NewCategory(
                 title: "Sport",

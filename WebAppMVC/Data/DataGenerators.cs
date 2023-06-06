@@ -4,7 +4,7 @@ using WebAppMVC.Models;
 
 namespace WebAppMVC.Data;
 
-public class DataGenerators
+public static class DataGenerators
 {
     private static readonly string passwordHash = new PasswordHasher<KoalaCustomer>().HashPassword(
         null,
@@ -52,6 +52,7 @@ public class DataGenerators
 
         return customer;
     }
+
     // ASk about this changed type from decimal to Price on price
     internal static Product NewProduct(
         string title,
