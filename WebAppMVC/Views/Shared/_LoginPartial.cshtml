@@ -1,25 +1,42 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 @inject SignInManager<KoalaCustomer> SignInManager
 @inject UserManager<KoalaCustomer> UserManager
 
-<div class="navbar-item">
-    <div class="buttons">
+@if (SignInManager.IsSignedIn(User))
+{
+    <a class="navbar-item is-size-5" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+        Hello, @User.FindFirstValue(ClaimTypes.GivenName)
+    </a>
+}
+
+<div class="navbar-item has-dropdown is-hoverable">
+
+    <a class="navbar-link is-arrowless">
+        <span class="icon is-large">
+            <ion-icon size="large" name="person-circle-outline"></ion-icon>
+        </span>
+    </a>
+    <div class="navbar-dropdown is-right">
         @if (SignInManager.IsSignedIn(User))
-        {
-            <a class="button is-primary" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                <strong>Hello @User.Identity?.Name!</strong>
-            </a>
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Product", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">
-                    <strong>Logout</strong>
-                </button>
-            </form>
+        {<div class="navbar-item">
+             <a class="button is-link is-inverted is-size-5" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                 Profile
+             </a>
+             
+         </div>
+            
+            <div class="navbar-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Product", new { area = "" })">
+                    <input class="button is-link is-inverted is-size-5" type="submit" value="Logout">
+                </form>
+            </div>
         }
         else
         {
-            <a class="button is-info is-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="navbar-item is-size-5" asp-area="Identity" asp-page="/Account/Register">Register</a>
 
-            <a class="button is-info is-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="navbar-item is-size-5" asp-area="Identity" asp-page="/Account/Login">Login</a>
         }
     </div>
 </div>
