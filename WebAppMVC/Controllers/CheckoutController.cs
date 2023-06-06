@@ -33,6 +33,10 @@ namespace WebAppMVC.Controllers
                     nullcheck = 1;
                     return RedirectToAction("Index", "ProductQuantity");
                 }
+                if (!items.Any())
+                {
+                    return RedirectToAction("Index", "NothingInCart");
+                }
                 return RedirectToAction("Index", "FailedPurchase");
             }
             await CartOrderTransfer();
@@ -46,9 +50,9 @@ namespace WebAppMVC.Controllers
             using var transactions = _db.Database.BeginTransaction();
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
-            if (items == null)
+            if (!items.Any())
             {
-                throw new Exception("Cart is empty");
+                return false;
             }
             foreach (var item in items)
             {
