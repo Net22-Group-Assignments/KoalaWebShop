@@ -1,5 +1,4 @@
-﻿@model KoalaCustomer
-@inject SignInManager<KoalaCustomer> SignInManager
+﻿@inject SignInManager<KoalaCustomer> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
