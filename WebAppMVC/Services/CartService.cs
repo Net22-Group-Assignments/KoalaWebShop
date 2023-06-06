@@ -103,4 +103,18 @@ public class CartService
 
         return cart.CartItems;
     }
+
+    public async Task<Dictionary<string, decimal>> GetRates()
+    {
+        var rateUSD = await _db.Currencies.Select(r => r.rates.USD).FirstOrDefaultAsync();
+
+        var rateEUR = await _db.Currencies.Select(r => r.rates.EUR).FirstOrDefaultAsync();
+
+        return new Dictionary<string, decimal>
+        {
+            ["SEK"] = 1.0M,
+            ["USD"] = rateUSD,
+            ["EUR"] = rateEUR
+        };
+    }
 }

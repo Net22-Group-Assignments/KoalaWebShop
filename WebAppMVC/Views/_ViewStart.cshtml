@@ -13,6 +13,12 @@
         ViewBag.Credits = customer.Credits;
         
         ViewBag.CartItems = CartService.GetAllCartItems(customer).Result.Count();
+
+        var rates = await CartService.GetRates();
+
+        ViewBag.CreditsUSD = decimal.Round(customer.Credits * rates["USD"], 2);
+
+        ViewBag.CreditsEUR = decimal.Round(customer.Credits * rates["EUR"], 2);
     }
     Layout = "_Layout";
 }
