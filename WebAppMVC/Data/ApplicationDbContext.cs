@@ -103,7 +103,6 @@ namespace WebAppMVC.Data
 
             var users = new KoalaCustomer[]
             {
-                adminUser,
                 DataGenerators.NewCustomer(
                     email: "jon.westman@mail.com",
                     firstMidName: "Jon",
@@ -167,7 +166,10 @@ namespace WebAppMVC.Data
             };
 
             var userRoles = users.Select(u => new UserRole { RoleId = 2, UserId = u.Id }).ToList();
+            users = users.Append(adminUser).ToArray();
+
             userRoles.Add(new UserRole { RoleId = 1, UserId = adminUser.Id });
+
             modelBuilder.Entity<UserRole>().HasData(userRoles);
 
             modelBuilder.Entity<KoalaCustomer>().HasData(users);
