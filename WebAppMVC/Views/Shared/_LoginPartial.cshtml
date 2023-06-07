@@ -6,7 +6,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <a class="navbar-item is-size-5" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-        Hello, @User.FindFirstValue(ClaimTypes.GivenName) @User.IsInRole("Admin")
+        Hello, @User.FindFirstValue(ClaimTypes.GivenName)
     </a>
 }
 
@@ -14,29 +14,96 @@
 
     <a class="navbar-link is-arrowless">
         <span class="icon is-large">
-            <ion-icon size="large" name="person-circle-outline"></ion-icon>
+            @if (User.IsInRole("Admin"))
+            {
+                <ion-icon size="large" name="settings-outline"></ion-icon>
+            }
+            else
+            {
+                <ion-icon size="large" name="person-circle-outline"></ion-icon>
+            }
         </span>
     </a>
+
     <div class="navbar-dropdown is-right">
-        @if (SignInManager.IsSignedIn(User))
-        {<div class="navbar-item">
-             <a class="button is-link is-inverted is-size-5" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                 Profile
-             </a>
-             
-         </div>
-            
+        @if (User.IsInRole("Admin"))
+        {
             <div class="navbar-item">
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Product", new { area = "" })">
-                    <input class="button is-link is-inverted is-size-5" type="submit" value="Logout">
+                <a class="button is-link is-inverted is-size-5" asp-area="" asp-controller="AppRoles" asp-action="Index">
+                    <span class="icon is-large">
+                        <ion-icon size="large" name="people-outline"></ion-icon>
+                    </span>
+                    <span>Roles</span>
+                </a>
+            </div>
+            <div class="navbar-item">
+                <a class="button is-link is-inverted is-size-5" asp-area="" asp-controller="Currency" asp-action="Index">
+                    <span class="icon is-large">
+                        <ion-icon size="large" name="logo-bitcoin"></ion-icon>
+                    </span>
+                    <span>Currency</span>
+                </a>
+            </div>
+            <div class="navbar-item">
+                <a class="button is-link is-inverted is-size-5" asp-area="" asp-controller="Product" asp-action="Create">
+                    <span class="icon is-large">
+                        <ion-icon size="large" name="hammer-outline"></ion-icon>
+                    </span>
+                    <span>Create</span>
+                </a>
+            </div>
+            <div class="navbar-item">
+                <a class="button is-link is-inverted is-size-5" asp-area="" asp-controller="InfoBoard" asp-action="Index">
+                    <span class="icon is-large">
+                        <ion-icon size="large" name="stats-chart-outline"></ion-icon>
+                    </span>
+                    <span>Stats</span>
+                </a>
+            </div>
+            <hr/>
+        }
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="navbar-item">
+                <a class="button is-link is-inverted is-size-5" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                    <span class="icon is-large">
+                        <ion-icon size="large" name="person-outline"></ion-icon>
+                    </span>
+                    <span>Profile</span>
+                </a>
+
+            </div>
+
+            <div class="navbar-item">
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Product", new { area = "" })">
+                    <button class="button is-link is-inverted is-size-5" type="submit">
+                        <span class="icon is-large">
+                            <ion-icon size="large" name="log-out-outline"></ion-icon>
+                        </span>
+                        <span>Log Out</span>
+                    </button>
                 </form>
             </div>
         }
         else
         {
-            <a class="navbar-item is-size-5" asp-area="Identity" asp-page="/Account/Register">Register</a>
-
-            <a class="navbar-item is-size-5" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <div class="navbar-item">
+                <a class="button is-link is-inverted is-size-5" asp-area="Identity" asp-page="/Account/Register">
+                    <span class="icon is-large">
+                        <ion-icon size="large" name="person-add-outline"></ion-icon>
+                    </span>
+                    <span>Register</span>
+                </a>
+            </div>
+            <div class="navbar-item">
+                <a class="button is-link is-inverted is-size-5" asp-area="Identity" asp-page="/Account/Login">
+                    <span class="icon is-large">
+                        <ion-icon size="large" name="log-in-outline"></ion-icon>
+                    </span>
+                    <span>Login</span>
+                </a>
+            </div>
         }
     </div>
 </div>

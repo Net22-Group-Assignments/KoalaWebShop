@@ -40,23 +40,7 @@
 
         <div id="navMenu" class="navbar-menu">
             <div class="navbar-start">
-
-                @if (User.IsInRole("Admin"))
-                {
-                    <a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="AppRoles" asp-action="Index">
-                        Roles
-                    </a>
-                    <a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Currency" asp-action="Index">
-                        Currency
-                    </a>
-                    <a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Product" asp-action="Create">
-                        Create
-                    </a>
-                    <a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="InfoBoard" asp-action="Index">
-                        InfoBoard
-                    </a>
-                }
-
+                
                 <div class="navbar-item dropdown">
                     <div class="dropdown-trigger">
                         <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">

@@ -11,99 +11,112 @@ using WebAppMVC.Models.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
-	[Authorize(Roles = "Admin")]
-	public class CurrencyController : Controller
-	{
-		private readonly ApplicationDbContext _context;
-		public CurrencyController(ApplicationDbContext context)
-		{
-			_context = context;
-		}
-		public async Task<IActionResult> Index()
-		{
-			List<CurrencyViewModel> currencyViewModels = new List<CurrencyViewModel>();
+    [Authorize(Roles = "Admin")]
+    public class CurrencyController : Controller
+    {
+        private readonly ApplicationDbContext _context;
 
-			var currency = await (from c in _context.Currencies
-								  select new
-								  {
-									  Success = c.success,
-									  TimeStamp = c.timestamp,
-									  Base = c.@base,
-									  Date = c.date,
-									  RateSEK = c.rates.SEK,
-									  RateUSD = c.rates.USD,
-									  RateEUR = c.rates.EUR
-								  }).ToListAsync();
+        public CurrencyController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-			foreach (var item in currency)
-			{
-				CurrencyViewModel listItem = new CurrencyViewModel();
+        public async Task<IActionResult> Index()
+        {
+            List<CurrencyViewModel> currencyViewModels = new List<CurrencyViewModel>();
 
-				listItem.Timestamp = item.TimeStamp;
-				listItem.Date = item.Date;
-				listItem.Base = item.Base;
-				listItem.RateSEK = item.RateSEK;
-				listItem.RateUSD = item.RateUSD;
-				listItem.RateEUR = item.RateEUR;
-				currencyViewModels.Add(listItem);
-			};
-			return View(currencyViewModels);
-		}
+            var currency = await (
+                from c in _context.Currencies
+                select new
+                {
+                    Success = c.success,
+                    TimeStamp = c.timestamp,
+                    Base = c.@base,
+                    Date = c.date,
+                    RateSEK = c.rates.SEK,
+                    RateUSD = c.rates.USD,
+                    RateEUR = c.rates.EUR
+                }
+            ).ToListAsync();
+            if (currency.Any())
+            {
+                foreach (var item in currency)
+                {
+                    CurrencyViewModel listItem = new CurrencyViewModel();
 
-		public async Task<ActionResult> GetCurrency()
-		{
-			string apiUrl = "https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK";
-			string apiKey = "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo";
+                    listItem.Timestamp = item.TimeStamp;
+                    listItem.Date = item.Date;
+                    listItem.Base = item.Base;
+                    listItem.RateSEK = item.RateSEK;
+                    listItem.RateUSD = item.RateUSD;
+                    listItem.RateEUR = item.RateEUR;
+                    currencyViewModels.Add(listItem);
+                }
+                ;
+            }
+            else
+            {
+                currencyViewModels.Add(new CurrencyViewModel { Date = "-", Base = "-" });
+            }
 
-			string fullUrl = $"{apiUrl}&apikey={apiKey}";
+            return View(currencyViewModels);
+        }
 
-			var request = new HttpRequestMessage(HttpMethod.Get, fullUrl);
+        [HttpPost]
+        public async Task<ActionResult> GetCurrency()
+        {
+            string apiUrl =
+                "https://api.apilayer.com/exchangerates_data/latest?symbols=SEK,USD,EUR&base=SEK";
+            string apiKey = "IteZQQFBVQ7bcr481MmJ04hfqwSctgFo";
 
-			using (var httpClient = new HttpClient())
-			{
-				httpClient.Timeout = TimeSpan.FromSeconds(100);
+            string fullUrl = $"{apiUrl}&apikey={apiKey}";
 
-				using (var response = await httpClient.SendAsync(request))
-				{
+            var request = new HttpRequestMessage(HttpMethod.Get, fullUrl);
 
-					if (response.IsSuccessStatusCode)
-					{
-						string responseBody = await response.Content.ReadAsStringAsync();
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.Timeout = TimeSpan.FromSeconds(100);
 
-						var currency = JsonConvert.DeserializeObject<Currency>(responseBody);
+                using (var response = await httpClient.SendAsync(request))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
 
-						if (!_context.Currencies.Any())
-						{
-							_context.Currencies.Add(currency);
-							await _context.SaveChangesAsync();
+                        var currency = JsonConvert.DeserializeObject<Currency>(responseBody);
 
-						}
-						else
-						{
-							var oldCurrency = await _context.Currencies.Include(c => c.rates).FirstOrDefaultAsync();
-							oldCurrency.success = currency.success;
-							oldCurrency.timestamp = currency.timestamp;
-							oldCurrency.@base = currency.@base;
-							oldCurrency.date = currency.date;
-							oldCurrency.rates.SEK = currency.rates.SEK;
-							oldCurrency.rates.USD = currency.rates.USD;
-							oldCurrency.rates.EUR = currency.rates.EUR;
+                        if (!_context.Currencies.Any())
+                        {
+                            _context.Currencies.Add(currency);
+                            await _context.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            var oldCurrency = await _context.Currencies
+                                .Include(c => c.rates)
+                                .FirstOrDefaultAsync();
+                            oldCurrency.success = currency.success;
+                            oldCurrency.timestamp = currency.timestamp;
+                            oldCurrency.@base = currency.@base;
+                            oldCurrency.date = currency.date;
+                            oldCurrency.rates.SEK = currency.rates.SEK;
+                            oldCurrency.rates.USD = currency.rates.USD;
+                            oldCurrency.rates.EUR = currency.rates.EUR;
 
-							await _context.SaveChangesAsync();
+                            await _context.SaveChangesAsync();
+                        }
 
-						}
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        string errorMessage =
+                            $"API request failed with status code: {response.StatusCode}";
 
-						return RedirectToAction("Index");
-					}
-					else
-					{
-						string errorMessage = $"API request failed with status code: {response.StatusCode}";
-
-
-						return View(errorMessage);
-					}
-				}
-			}
-		}
-	}
+                        return View(errorMessage);
+                    }
+                }
+            }
+        }
+    }
 }

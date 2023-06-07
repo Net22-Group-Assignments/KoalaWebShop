@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebAppMVC.Models;
 using WebAppMVC.Models.CurrencyModel;
-using Currency = WebAppMVC.Models.Currency;
+using Currency = WebAppMVC.Models.CurrencyModel.Currency;
 
 namespace WebAppMVC.Data
 {

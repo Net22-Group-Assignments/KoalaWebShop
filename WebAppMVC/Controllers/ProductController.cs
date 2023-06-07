@@ -40,9 +40,9 @@ namespace WebAppMVC.Controllers
         [Authorize]
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var userRoles = await _userManager.GetRolesAsync(user);
-            _logger.LogInformation("Roles: {Roles}", userRoles.Dump());
+            // var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            // var userRoles = await _userManager.GetRolesAsync(user);
+            // _logger.LogInformation("Roles: {Roles}", userRoles.Dump());
 
             ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["CurrentFilter"] = searchString;
