@@ -4,17 +4,97 @@
 <h1>InfoBoard</h1>
 
 
-@foreach (var item in Model.OrderItems)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelitem => item.Product.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelitem => item.Product.Quantity)
-        </td>
-    </tr>
-}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h2>Product Information: </h2>
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                   ProductTitle: @Html.DisplayFor(modelitem => item.Title)
+                </td>
+                <td>
+                   PRoductCategory: @Html.DisplayFor(modelitem => item.Category)
+                </td>
+                <td>
+                   ProductPrice: @Html.DisplayFor(modelitem => item.Price)
+                </td>
+                <td>
+                   ProductQuantity: @Html.DisplayFor(modelitem => item.Quantity)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h2>Customer Information: </h2>
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.Customers)
+        {
+            <tr>
+                <td>
+                    Email: @Html.DisplayFor(modelitem => item.Email)
+                </td>
+                <td>
+                    Firstname: @Html.DisplayFor(modelitem => item.FirstMidName)
+                </td>
+                <td>
+                   Lastname: @Html.DisplayFor(modelitem => item.LastName)
+                </td>
+                <td>
+                   Adress: @Html.DisplayFor(modelitem => item.Address)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h2>Total sold items: </h2>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>
+                   Email: @Html.DisplayFor(modelitem => item.Order.Customer.Email)
+                </td>
+                <td>
+                   Placed order: @Html.DisplayFor(modelitem => item.Order.PlacementTime.Date)
+                </td>
+                <td>
+                   Amount of items:  @Html.DisplayFor(modelitem => item.Quantity)
+                </td> 
+                <td>
+                    TrackingId: @Html.DisplayFor(modelitem => item.Order.Id)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
 
 <div>
     <a Class="Button btn-light" asp-area="" asp-controller="Home" asp-action="Index"> Return to store </a>

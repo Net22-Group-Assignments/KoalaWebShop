@@ -7,31 +7,36 @@
     @foreach (var item in Model)
     {
         <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop is-one-fifth-widescreen">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">@Html.DisplayFor(modelItem => item.Title)</p>
-                </header>
-                <div class="card-image">
-                    <figure class="image is-square">
-                        <img src="@item.ImgURL" alt=""/>
-                    </figure>
+            <a asp-action="Details" asp-route-id="@item.Id">
+                <div class="card has-background-link-light">
+                    <header class="card-header">
+                        <p class="card-header-title has-text-link is-size-6">@Html.DisplayFor(modelItem => item.Title)</p>
+                    </header>
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="@item.ImgURL" alt=""/>
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="level">
+                            <div class="level-item">
+                                <div class="tags are-large has-addons price SEK">
+                                    <span class="tag is-link is-family-monospace">SEK:</span>
+                                    <span class="tag is-link is-family-monospace">@Html.DisplayFor(modelItem => item.Price)</span>
+                                </div>
+                                <div class="tags are-large has-addons price USD is-hidden">
+                                    <span class="tag is-link is-family-monospace">USD:</span>
+                                    <span class="tag is-link is-family-monospace">@Html.DisplayFor(modelItem => item.PriceUSD)</span>
+                                </div>
+                                <div class="tags are-large has-addons price EUR is-hidden">
+                                    <span class="tag is-link is-family-monospace">EUR:</span>
+                                    <span class="tag is-link is-family-monospace">@Html.DisplayFor(modelItem => item.PriceEUR)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <div class="content">
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </div>
-                    <div class="content">
-                        @Html.DisplayFor(modelItem => item.PriceUSD)
-                    </div>
-                    <div class="content">
-                        @Html.DisplayFor(modelItem => item.PriceEUR)
-                    </div>
-                </div>
-                <footer class="card-footer">
-                    <a class="card-footer-item" asp-action="Details" asp-route-id="@item.Id">Detail</a>
-                    <a class="card-footer-item" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                </footer>
-            </div>
+            </a>
         </div>
     }
 </div>

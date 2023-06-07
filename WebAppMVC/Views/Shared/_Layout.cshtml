@@ -4,48 +4,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - WebAppMVC</title>
-	<link rel="stylesheet" href="~/lib/bulma/css/bulma.css" />
-	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/WebAppMVC.styles.css" asp-append-version="true" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - WebAppMVC</title>
+    <link rel="stylesheet" href="~/lib/bulma/css/bulma.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/WebAppMVC.styles.css" asp-append-version="true"/>
 </head>
 <body>
-	<header>
-		<nav class="navbar has-shadow is-link" role="navigation" aria-label="main navigation">
-			<div class="navbar-brand">
-				<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">
-					KOALA
-				</a>
-				@if (User.IsInRole("Admin"))
-				{
-					<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="AppRoles" asp-action="Index">
-						Roles
-					</a>
-					<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Currency" asp-action="Index">
-						Currency
-					</a>
-					<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Product" asp-action="Create">
-						Create
-					</a>
-					<a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="InfoBoard" asp-action="Index">
-						InfoBoard
-					</a>
-				}
-				
-				<form class="navbar-item" asp-action="Index" method="get">
-					<div class="field has-addons">
-						<div class="control">
-							<input class="input is-info is-light is-rounded" type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Productname or category" />
-						</div>
-						<div class="control">
-							<input class="button is-info is-light is-rounded" type="submit" value="Search" />
-						</div>
-					</div>
-				</form>
+<header>
+    <nav class="navbar has-shadow is-link" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item is-size-4 has-text-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                KOALA
+            </a>
 
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
+            <form class="navbar-item" asp-action="Index" method="get">
+                <div class="field has-addons">
+                    <div class="control">
+                        <input class="input is-info is-light is-rounded" type="text" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Productname or category"/>
+                    </div>
+                    <div class="control">
+                        <input class="button is-info is-light is-rounded" type="submit" value="Search"/>
+                    </div>
+                </div>
+            </form>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -53,47 +38,82 @@
 
         </div>
 
-        <div id="navbar-menu" class="navbar-menu">
-	        <div class="navbar-start">
-		        @if (SignInManager.IsSignedIn(User))
-		        {
-			        <ul class="navbar-nav flex-grow-1">
-				        <li>
-					        <a class="navbar-item" asp-area="" asp-controller="Product" asp-action="Index">
-						        Home
-					        </a>
-				        </li>
-				        <li class="nav-item">
-				        <a class="navbar-item" asp-area="" asp-controller="Cart" asp-action="Index">
-					        Cart
-				        </a>
-				        <li/>
-			        </ul>
-		        }
-	        </div>
-			</div>
+        <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+                
+                <div class="navbar-item dropdown">
+                    <div class="dropdown-trigger">
+                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span id="currency-menu">SEK</span>
+                            <span class="icon is-small">
+                                <ion-icon name="chevron-down-outline"></ion-icon>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <a href="#" id="SEK" class="dropdown-item currency-toggle">
+                                SEK
+                            </a>
+                            <a href="#" id="USD" class="dropdown-item currency-toggle">
+                                USD
+                            </a>
+                            <a href="#" id="EUR" class="dropdown-item currency-toggle">
+                                EUR
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-			<div class="navbar-end">
-				<partial name="_LoginPartial" />
-			</div>
+                @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+                {
+                    <div class="navbar-item">
+                        <span id="credits" class="is-size-5 mr-1" data-SEK=@ViewBag.Credits data-USD=@ViewBag.CreditsUSD data-EUR=@ViewBag.CreditsEUR>
+                            @ViewBag.Credits
+                        </span>
+                        <span class="is-size-5 ml-1">
+                            Remaining
+                        </span>
+                    </div>
+                }
+                
+            </div>
+            <div class="navbar-end">
+                <partial name="_LoginPartial"/>
+                @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+                {
+                    <a class="navbar-item" asp-area="" asp-controller="Cart" asp-action="Index">
+                        <span class="icon-text is-large">
+                            <ion-icon size="large" name="cart-outline">
+                            </ion-icon>
+                            <span class="is-hidden-tablet is-size-5">Cart # @ViewBag.CartItems</span>
+                        </span>
+                        <span class="is-overlay">
+                            <p class="mx-auto is-size-6 is-pulled-right pr-2 is-hidden-touch">@ViewBag.CartItems</p>
+                        </span>
+                    </a>
+                }
+            </div>
+        </div>
+    </nav>
+</header>
 
-		</nav>
-	</header>
+<main role="main" class="section has-background-info-light">
+    <div class="container">
+        @RenderBody()
+    </div>
+</main>
 
-	<main role="main" class="section has-background-info-light">
-		<div class="container">
-			@RenderBody()
-		</div>
-	</main>
-
-	<footer class="footer">
-		<div class="container">
-			&copy; 2023 - WebAppMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-		</div>
-	</footer>
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	@* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
-	<script src="~/js/site.js" asp-append-version="true"></script>
-	@await RenderSectionAsync("Scripts", required: false)
+<footer class="footer has-background-link">
+    <div class="container">
+        <span class="has-text-light is-size-5">&copy; 2023 - Team Koala</span>
+    </div>
+</footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+@* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

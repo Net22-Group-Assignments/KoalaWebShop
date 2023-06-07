@@ -32,27 +32,34 @@ public class CartService
 
     public async Task AddToCart(int productId, int quantity, KoalaCustomer customer)
     {
-        var cart = await InitializeCart(customer);
 
+
+        var cart = await InitializeCart(customer);
         var cartItem = cart.CartItems.FirstOrDefault(p => p.ProductId == productId);
 
-        if (cartItem is null)
-        {
-            var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == productId);
+        //if (cartItem is null)
+        //{
+        var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == productId);
 
-            cartItem = new CartItem
-            {
-                Cart = cart,
-                Product = product,
-                Quantity = quantity
-            };
-
-            cart.CartItems.Add(cartItem);
-        }
-        else
+        cartItem = new CartItem
         {
-            cartItem.Quantity += quantity;
-        }
+            Cart = cart,
+            Product = product,
+            Quantity = quantity
+        };
+
+        cart.CartItems.Add(cartItem);
+        //}
+
+        //product = await _db.Products.FirstOrDefaultAsync(p => p.Id == productId);
+
+        //cartItem = new CartItem
+        //{
+        //    Cart = cart,
+        //    Product = product,
+        //    Quantity = quantity
+        //};
+
 
         await _db.SaveChangesAsync();
     }
@@ -95,5 +102,19 @@ public class CartService
         var cart = await InitializeCart(customer);
 
         return cart.CartItems;
+    }
+
+    public async Task<Dictionary<string, decimal>> GetRates()
+    {
+        var rateUSD = await _db.Currencies.Select(r => r.rates.USD).FirstOrDefaultAsync();
+
+        var rateEUR = await _db.Currencies.Select(r => r.rates.EUR).FirstOrDefaultAsync();
+
+        return new Dictionary<string, decimal>
+        {
+            ["SEK"] = 1.0M,
+            ["USD"] = rateUSD,
+            ["EUR"] = rateEUR
+        };
     }
 }

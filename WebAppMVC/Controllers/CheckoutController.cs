@@ -12,23 +12,32 @@ namespace WebAppMVC.Controllers
         private readonly CartService _cartService;
         private readonly UserManager<KoalaCustomer> _userManager;
         private readonly ApplicationDbContext _db;
-
+        private int nullcheck = 1;
         public CheckoutController(CartService cartService, UserManager<KoalaCustomer> userManager, ApplicationDbContext db)
         {
             _cartService = cartService;
             _userManager = userManager;
             _db = db;
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult> GetUserId()
         {
             ViewData["Message"] = "Woho  you got here";
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
 
-            if ( await CartOrderTransfer() == false)
+            if (await CartOrderTransfer() == false)
             {
-                return RedirectToAction("Index", "Home");
+                if (nullcheck == 0)
+                {
+                    nullcheck = 1;
+                    return RedirectToAction("Index", "ProductQuantity");
+                }
+                if (!items.Any())
+                {
+                    return RedirectToAction("Index", "NothingInCart");
+                }
+                return RedirectToAction("Index", "FailedPurchase");
             }
             await CartOrderTransfer();
 
@@ -37,18 +46,17 @@ namespace WebAppMVC.Controllers
 
         public async Task<bool> CartOrderTransfer()
         {
-            decimal Check = 0;
+            decimal Check = 0; ;
             using var transactions = _db.Database.BeginTransaction();
             var customer = await _userManager.FindByNameAsync(User.Identity.Name);
             var items = await _cartService.GetAllCartItems(customer);
-            if (items == null)
+            if (!items.Any())
             {
-                throw new Exception("Cart is empty");
+                return false;
             }
             foreach (var item in items)
             {
-                 Check += item.Product.Price;
-                Console.WriteLine(Check);
+                Check += item.Product.Price;
             }
             if (customer.Credits < Check)
             {
@@ -56,14 +64,26 @@ namespace WebAppMVC.Controllers
                 return false;
 
             }
+            foreach (var item in items)
+            {
+                nullcheck = item.Product.Quantity;
+            }
+            if (nullcheck == 0)
+            {
+                return false;
+            }
 
-            customer.Credits -= Check;
+            foreach (var item in items)
+            {               
+                customer.Credits -= item.Product.Price;
+                item.Product.Quantity--;
+            }
+
 
             var order = new Order
             {
                 CustomerId = customer.Id,
                 PlacementTime = DateTime.UtcNow,
-                
             };
             _db.Orders.Add(order);
             _db.SaveChanges();
@@ -73,7 +93,7 @@ namespace WebAppMVC.Controllers
                 {
                     ProductId = item.ProductId,
                     OrderId = order.Id,
-                    Quantity = item.Quantity   
+                    Quantity = item.Quantity
                 };
                 _db.OrderItems.Add(orderItem);
             }
@@ -86,7 +106,7 @@ namespace WebAppMVC.Controllers
 
             ViewData["Success"] = "CartOrderTransferComplete";
             return true;
-           
+
         }
         public async Task<Cart> GetCart(int userId)
         {
