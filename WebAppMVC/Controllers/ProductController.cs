@@ -164,6 +164,10 @@ namespace WebAppMVC.Controllers
         //Get productDetails
         public async Task<IActionResult> Details(int? id)
         {
+            var rateUSD = await _db.Currencies.Select(r => r.rates.USD).FirstOrDefaultAsync();
+
+            var rateEUR = await _db.Currencies.Select(r => r.rates.EUR).FirstOrDefaultAsync();
+
             if (id == null || _db.Products == null)
             {
                 return NotFound();
@@ -176,7 +180,11 @@ namespace WebAppMVC.Controllers
                 return NotFound();
             }
 
-            return View(product);
+            var model = _mapper.Map<ProductViewModel>(product);
+            model.PriceUSD = model.Price * rateUSD;
+            model.PriceEUR = model.Price * rateEUR;
+
+            return View(model);
         }
 
         //HomeStuff

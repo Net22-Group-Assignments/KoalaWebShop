@@ -3,57 +3,50 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>AddToCart</h1>
-<h2>Hello Cart, dis works!</h2>
-
-@if (Model.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var x in Model)
+<div class="columns">
+    <div class="column is-half-tablet is-offset-one-quarter-tablet">
+        <div class="box">
+            <h1 class="title has-text-centered">
+                Cart Contents
+            </h1>
+            @if (Model.Any())
             {
-                var total = x.Product.Price * x.Quantity;
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelitem => x.Product.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelitem => x.Product.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelitem => x.Quantity)
-                    </td>
-                    <td>
-                        <form asp-action="RemoveFromCart" asp-route-id="@x.Id" asp-controller="Cart">
-                            <div class="form-group">
-                                <input type="submit" value="Remove" class="button is-danger" />
+                foreach (var cartItem in Model)
+                {
+                    <div class="level">
+                        <div class="level-left">
+                            <div class="level-item has-text-centered">
+                                <a class="is-size-5" asp-controller="Product" asp-action="Details" asp-route-id="@cartItem.ProductId">@Html.DisplayFor(item => cartItem.Product.Title)</a>
                             </div>
-                        </form>
-                        <form asp-action="ReduceQuantity" asp-route-id="@x.Id" asp-controller="Cart">
-                            <div class="form-group">
-                                <input type="submit" value="Reduce" class="button is-danger is-light" />
+                            <div class="level-item has-text-centered">
+                                <p class="is-size-5">@Html.DisplayFor(item => cartItem.Product.Price)</p>
                             </div>
-                        </form>
-                    </td>
-                </tr>
+                        </div >
+                        <div class="level-right">
+                            <div class="level-item has-text-centered">
+                                <form asp-action="RemoveFromCart" asp-route-id="@cartItem.Id" asp-controller="Cart">
+                                    <button type="submit" class="button is-danger">
+                                        <span class="icon">
+                                            <ion-icon name="trash-outline"></ion-icon>
+                                        </span>
+                                        <span>Remove</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div >
+                    </div>
+                }
+                <form asp-controller="Checkout" asp-action="GetUserId">
+                    <div class="has-text-centered">
+                        <button class="button is-link is-medium" type="submit">
+                            <span>Checkout</span>
+                            <span class="icon is-large">
+                                <ion-icon size="large" name="arrow-forward-circle-outline"></ion-icon>
+                            </span>
+                        </button>
+                    </div>
+                </form>
             }
-        </tbody>
-
-
-
-    </table>
-}
-else
-{
-    <h1>Cart Is empty</h1>
-}
-<div>
-    <a Class="Button btn-light" asp-area="" asp-controller="Checkout" asp-action="GetUserId"> CHECKOUT </a>
+        </div>
+    </div>
 </div>

@@ -19,7 +19,7 @@ namespace WebAppMVC.Controllers
             _userManager = userManager;
             _db = db;
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult> GetUserId()
         {
             ViewData["Message"] = "Woho  you got here";
